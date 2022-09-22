@@ -9,7 +9,7 @@ private String firstName;
     }
 
     public Sandwich orderSandwich() {
-        return new Sandwich;
+        return new Sandwich();
     }
 
     public String getFirstName() {
