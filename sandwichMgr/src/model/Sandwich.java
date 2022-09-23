@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.SQLOutput;
+
 public class Sandwich {
 
     private SandwichType sandwichType;

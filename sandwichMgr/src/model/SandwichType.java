@@ -48,4 +48,19 @@ public enum SandwichType {
         System.out.println();
     }
 
+    public static void printMenu() {
+        for(SandwichType sd: SandwichType.values()) {
+            System.out.println(sd.name() + ": ");
+            sd.printInfo();
+        }
+    }
+
+    public static SandwichType getSandwichTypeByName(String name) {
+        for (SandwichType sd: SandwichType.values()) {
+            if (sd.name().equalsIgnoreCase(name))
+                return sd;
+        }
+        return null;
+    }
+
 }
