@@ -1,15 +1,15 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Order {
 
-    private List<Sandwich> sandwiches = new ArrayList<>();
+    private Map<Sandwich, Integer> sandwiches = new HashMap<>();
     private LocalDate date = LocalDate.now();
 
-    public List<Sandwich> getSandwiches() {
+    public Map<Sandwich, Integer> getSandwiches() {
         return sandwiches;
     }
 
@@ -18,14 +18,27 @@ public class Order {
     }
 
     public Order(Sandwich sandwich) {
-        this.sandwiches.add(sandwich);
+        this.sandwiches.put(sandwich, 1);
     }
 
-    public Order(List<Sandwich> sandwiches) {
-        this.sandwiches.addAll(sandwiches);
+    public Order(Map<Sandwich, Integer> sandwiches) {
+        this.sandwiches = sandwiches;
+    }
+
+    public void addSandwich(Sandwich sandwich) {
+        if (this.sandwiches.containsKey(sandwich)) {
+            int count = this.sandwiches.get(sandwich);
+            this.sandwiches.put(sandwich, ++count);
+        } else
+            this.sandwiches.put(sandwich, 1);
+    }
+
+    public void addSandwiches(HashMap<Sandwich, Integer> sandwiches) {
+        this.sandwiches.forEach((k, v) -> sandwiches.merge(k, v, (oldV, newV) -> oldV + newV));
     }
 
     public void printOrderInfo() {
-        this.sandwiches.forEach(Sandwich::printContents);
+        System.out.println(this.getClass().getSimpleName() + " " + this.getDate() + ": ");
+        this.sandwiches.forEach((k, v) -> k.printContents());
     }
 }

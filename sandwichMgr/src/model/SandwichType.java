@@ -43,7 +43,9 @@ public enum SandwichType {
     }
 
     public void printInfo() {
-        this.ingredients.forEach(System.out::print);
+        System.out.println(this.name() + ":");
+        this.ingredients.forEach((i) -> System.out.print(i + " "));
+        System.out.println();
     }
 
 }
