@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Order {
 
-    private Map<Sandwich, Integer> sandwiches = new HashMap<>();
+    private Map<Sandwich, Integer> sandwiches = new HashMap<Sandwich, Integer>();
     private LocalDate date = LocalDate.now();
 
     public Map<Sandwich, Integer> getSandwiches() {
@@ -39,6 +39,10 @@ public class Order {
 
     public void printOrderInfo() {
         System.out.println(this.getClass().getSimpleName() + " " + this.getDate() + ": ");
-        this.sandwiches.forEach((k, v) -> k.printContents());
+        this.sandwiches.forEach((k, v) -> {
+            System.out.print(v + " people ordered: ");
+            k.printContents();
+        });
+        System.out.println();
     }
 }

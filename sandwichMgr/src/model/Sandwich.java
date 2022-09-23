@@ -19,7 +19,32 @@ public class Sandwich {
     }
 
     public void printContents() {
+        System.out.print(this.sandwichType.name());
+        if (this.asClub)
+            System.out.print(" as club");
+        if (this.withButter)
+            System.out.print(" with extra butter");
+        System.out.println(":");
         this.sandwichType.printInfo();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = this.sandwichType.name().hashCode();
+        byte boolByteValue = 0;
+        boolByteValue += asClub ? 1 : 0;
+        boolByteValue += withButter ? 2 : 0;
+        hash += boolByteValue ;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Sandwich) {
+            Sandwich s = (Sandwich)obj;
+            return s.sandwichType == this.sandwichType && s.asClub == this.asClub && s.withButter == this.withButter;
+        }
+        return false;
     }
 
 }
