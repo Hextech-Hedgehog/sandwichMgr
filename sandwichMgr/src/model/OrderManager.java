@@ -8,9 +8,17 @@ public class OrderManager extends Person {
 
     public OrderManager(String firstName) {
         super(firstName);
+        this.setSandwichPayedByAbis(false);
     }
 
     public Sandwich[] viewOrders() {
+        return null;
+    }
+
+    public void printOrders(List<Order> orders) {
+        for (Order order: orders) {
+            System.out.println(order);
+        }
 
     }
 
