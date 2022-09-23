@@ -1,24 +1,36 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Bill {
 
-    HashMap<LocalDate, Order> orders;
+    Map<LocalDate, Set<Order>> orders;
 
     public Bill(Set<Order> orders) {
-        this.orders = orders.stream().collect(Collectors.toMap(Order::getDate, o -> o, (k, v) -> v, HashMap::new));
+        this.orders = new HashMap<LocalDate, Set<Order>>();
+        this.addOrders(orders);
     }
 
     public void addOrder(Order order) {
-        this.orders.put(order.getDate(), order);
+        Set<Order> orders = this.orders.get(order.getDate());
+        if (orders == null) {
+            orders = new HashSet<Order>();
+            orders.add(order);
+            this.orders.put(order.getDate(), orders);
+        } else
+            orders.add(order);
     }
 
-    public void addOrders(Order[] orders) {
-        this.orders.putAll(Arrays.stream(orders).collect(Collectors.toMap(Order::getDate, (o) -> o)));
+    public void addOrders(Set<Order> orders) {
+        orders.stream().forEach(o -> addOrder(o));
+    }
+
+    public void viewOrderByDate(LocalDate date) {
+        this.orders.get(date).forEach(Order::printOrderInfo);
     }
 }
