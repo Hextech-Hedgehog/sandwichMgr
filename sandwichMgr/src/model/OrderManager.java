@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class OrderManager extends Person {
@@ -8,9 +9,28 @@ public class OrderManager extends Person {
 
     public OrderManager(String firstName) {
         super(firstName);
+        this.setSandwichPayedByAbis(false);
     }
 
-    public Sandwich[] viewOrders() {
+    public List<Sandwich> viewTotalOrdersInEternity() {
+        // call upon
+        return null;
+    }
+
+    public List<Sandwich> viewOrdersByDate(LocalDate date) {
+        // call upon method in Bill Class / Order Repo
+        return null;
+    }
+
+    public List<Sandwich> viewOrdersFromDateToDate(LocalDate startDate, LocalDate endDate) {
+        // call upon method in Bill Class / Order Repo
+        return null;
+    }
+
+    public void printOrders(List<Order> orders) {
+        for (Order order: orders) {
+            order.printOrderInfo();
+        }
 
     }
 

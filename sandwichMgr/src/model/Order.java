@@ -9,14 +9,6 @@ public class Order {
     private Map<Sandwich, Integer> sandwiches = new HashMap<Sandwich, Integer>();
     private LocalDate date = LocalDate.now();
 
-    public Map<Sandwich, Integer> getSandwiches() {
-        return sandwiches;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
     public Order(Sandwich sandwich) {
         this.sandwiches.put(sandwich, 1);
     }
@@ -45,4 +37,13 @@ public class Order {
         });
         System.out.println();
     }
+
+    public Map<Sandwich, Integer> getSandwiches() {
+        return sandwiches;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
 }

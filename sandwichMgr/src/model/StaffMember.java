@@ -6,6 +6,7 @@ public class StaffMember extends Person {
 
     public StaffMember(String firstName) {
         super(firstName);
+        this.setSandwichPayedByAbis(false);
     }
 
     public Course getCourse() {
@@ -14,5 +15,6 @@ public class StaffMember extends Person {
 
     public void setCourse(Course course) {
         this.course = course;
+        this.setSandwichPayedByAbis(course != null);
     }
 }

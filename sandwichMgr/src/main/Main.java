@@ -16,7 +16,7 @@ public class Main {
             put(new Sandwich(SandwichType.HAM, true, true), 1);
         }};
 
-        Map<Sandwich, Integer> sandwiches2 = new HashMap<>(){{
+        Map<Sandwich, Integer> sandwiches2 = new HashMap<Sandwich, Integer>(){{
             put(new Sandwich(SandwichType.SALAMI, false, false), 4);
             put(new Sandwich(SandwichType.HAM, true, false), 2);
         }};
