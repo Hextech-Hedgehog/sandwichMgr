@@ -43,9 +43,24 @@ public enum SandwichType {
     }
 
     public void printInfo() {
-        System.out.println(this.name() + ":");
+        System.out.print("\tIngredients: ");
         this.ingredients.forEach((i) -> System.out.print(i + " "));
         System.out.println();
+    }
+
+    public static void printMenu() {
+        for(SandwichType sd: SandwichType.values()) {
+            System.out.println(sd.name() + ": ");
+            sd.printInfo();
+        }
+    }
+
+    public static SandwichType getSandwichTypeByName(String name) {
+        for (SandwichType sd: SandwichType.values()) {
+            if (sd.name().equalsIgnoreCase(name))
+                return sd;
+        }
+        return null;
     }
 
 }
