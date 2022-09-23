@@ -5,28 +5,28 @@ import java.util.List;
 
 public enum SandwichType {
 
-    HAM(new ArrayList<>(){{
+    HAM(new ArrayList<Ingredient>(){{
         add(new Ingredient("Bread"));
         add(new Ingredient("Salad"));
         add(new Ingredient("Ham"));
         add(new Ingredient("Mayonnaise"));
     }}),
-    ROAST_BEEF(new ArrayList<>(){{
+    ROAST_BEEF(new ArrayList<Ingredient>(){{
         add(new Ingredient("Bread"));
         add(new Ingredient("Roasted beef"));
         add(new Ingredient("Mayonnaise"));
     }}),
-    SALAMI(new ArrayList<>(){{
+    SALAMI(new ArrayList<Ingredient>(){{
         add(new Ingredient("Bread"));
         add(new Ingredient("Salami"));
         add(new Ingredient("Mayonnaise"));
     }}),
-    MEAT_BALL(new ArrayList<>(){{
+    MEAT_BALL(new ArrayList<Ingredient>(){{
         add(new Ingredient("Bread"));
         add(new Ingredient("Beef"));
         add(new Ingredient("Mayonnaise"));
     }}),
-    MARTINO(new ArrayList<>(){{
+    MARTINO(new ArrayList<Ingredient>(){{
         add(new Ingredient("Bread"));
         add(new Ingredient("Beef"));
         add(new Ingredient("Eggs"));
