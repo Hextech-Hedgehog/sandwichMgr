@@ -36,7 +36,7 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
         try(BufferedReader reader = new BufferedReader(new FileReader(shop.getPathWay()))) {
             String sandwichType;
             while ((sandwichType = reader.readLine()) != null) {
-                StringTokenizer tokenizer = new StringTokenizer(sandwichType, ";");
+                StringTokenizer tokenizer = new StringTokenizer(sandwichType, ";");  //  TODO String.split()
                 String[] elements = new String[tokenizer.countTokens()];
                 for (int i = 0; i < tokenizer.countTokens(); i++) {
                     elements[i] = tokenizer.nextToken();
