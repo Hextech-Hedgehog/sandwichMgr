@@ -1,5 +1,7 @@
 package model;
 
+import exception.SandwichNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,12 +57,16 @@ public enum SandwichType {
         }
     }
 
-    public static SandwichType getSandwichTypeByName(String name) {
+    public static SandwichType getSandwichTypeByName(String name) throws SandwichNotFoundException {
+        SandwichType sandwichType = null;
         for (SandwichType sd: SandwichType.values()) {
             if (sd.name().equalsIgnoreCase(name))
-                return sd;
+                sandwichType = sd;
         }
-        return null;
+
+        if (sandwichType == null)
+            throw new SandwichNotFoundException("Sandwich " + name + " doesn't exist");
+        return sandwichType;
     }
 
 }

@@ -5,21 +5,20 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Bill {
 
     Map<LocalDate, Set<Order>> orders;
 
     public Bill(Set<Order> orders) {
-        this.orders = new HashMap<LocalDate, Set<Order>>();
+        this.orders = new HashMap<>();
         this.addOrders(orders);
     }
 
     public void addOrder(Order order) {
         Set<Order> orders = this.orders.get(order.getDate());
         if (orders == null) {
-            orders = new HashSet<Order>();
+            orders = new HashSet<>();
             orders.add(order);
             this.orders.put(order.getDate(), orders);
         } else
@@ -32,5 +31,9 @@ public class Bill {
 
     public void viewOrderByDate(LocalDate date) {
         this.orders.get(date).forEach(Order::printOrderInfo);
+    }
+
+    public Set<Order> getOrdersByDate(LocalDate date) {
+        return this.orders.get(date);
     }
 }

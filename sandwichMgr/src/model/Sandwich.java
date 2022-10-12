@@ -1,13 +1,17 @@
 package model;
 
-import java.sql.SQLOutput;
-
 public class Sandwich {
 
     private SandwichType sandwichType;
     private boolean asClub;
     private boolean withButter;
     private String optionalRequirement;
+
+    public Sandwich(SandwichType sandwichType) {
+        this.sandwichType = sandwichType;
+        this.asClub = false;
+        this.withButter = false;
+    }
 
     public Sandwich(SandwichType sandwichType, boolean asClub, boolean withButter) {
         this.sandwichType = sandwichType;
@@ -47,6 +51,14 @@ public class Sandwich {
             return s.sandwichType == this.sandwichType && s.asClub == this.asClub && s.withButter == this.withButter;
         }
         return false;
+    }
+
+    public void setAsClub(boolean asClub) {
+        this.asClub = asClub;
+    }
+
+    public void setWithButter(boolean withButter) {
+        this.withButter = withButter;
     }
 
 }
