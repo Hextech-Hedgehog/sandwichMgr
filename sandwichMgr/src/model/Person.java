@@ -9,11 +9,13 @@ import java.util.Scanner;
 public abstract class Person {
 
     private String firstName;
-    private boolean sandwichPayedByAbis;
+    private boolean isSandwichPayedByAbis;
 
     public Person(String firstName) {
         this.firstName = firstName;
     }
+
+    public abstract void makeOrder();
 
     public Sandwich orderSandwich() {
         System.out.println("Please type in the sandwich of your choice ");
@@ -40,7 +42,7 @@ public abstract class Person {
             if (sd != null) {
                 boolean asClub = selectExtra("Would you like your sandwich as a club ?");
                 boolean withButter = selectExtra("Do you want butter on your sandwich ?");
-                sandwich = SandwichFactory.getSandwichFactory().orderSandwich(sandwichName).asClub(asClub).withButter(withButter).toSandwich();
+                sandwich = SandwichFactory.getSandwichFactory().makeSandwich(sandwichName).asClub(asClub).withButter(withButter).toSandwich();
                 break;
             }
             System.out.println("Please type in a correct sandwich option");
@@ -77,10 +79,10 @@ public abstract class Person {
     }
 
     public boolean isSandwichPayedByAbis() {
-        return sandwichPayedByAbis;
+        return isSandwichPayedByAbis;
     }
 
     public void setSandwichPayedByAbis(boolean sandwichPayedByAbis) {
-        this.sandwichPayedByAbis = sandwichPayedByAbis;
+        this.isSandwichPayedByAbis = sandwichPayedByAbis;
     }
 }

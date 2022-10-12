@@ -16,7 +16,7 @@ public class SandwichFactory {
         return sandwichFactory;
     }
 
-    public SandwichFactory orderSandwich(String sandwichName) {
+    public SandwichFactory makeSandwich(String sandwichName) {
         try {
             this.sandwich = new Sandwich(SandwichType.getSandwichTypeByName(sandwichName));
         } catch (SandwichNotFoundException e) {

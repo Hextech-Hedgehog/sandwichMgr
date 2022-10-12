@@ -50,7 +50,7 @@ public enum SandwichType {
         System.out.println();
     }
 
-    public static void printMenu() {
+    public static void printSandwiches() {
         for(SandwichType sd: SandwichType.values()) {
             System.out.println(sd.name() + ": ");
             sd.printInfo();

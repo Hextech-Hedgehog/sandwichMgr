@@ -3,11 +3,9 @@ package model;
 import java.time.LocalDate;
 import java.util.List;
 
-public class OrderManager extends Person {
+public class Admin extends Person {
 
-    private List<Order> orders;
-
-    public OrderManager(String firstName) {
+    public Admin(String firstName) {
         super(firstName);
         this.setSandwichPayedByAbis(false);
     }
@@ -31,16 +29,8 @@ public class OrderManager extends Person {
         for (Order order: orders) {
             order.printOrderInfo();
         }
-
     }
 
-
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
+    @Override
+    public void makeOrder() {}
 }

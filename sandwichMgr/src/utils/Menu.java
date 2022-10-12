@@ -10,7 +10,7 @@ public class Menu {
         System.out.println("You can even add extras along with your desired sandwich!");
         System.out.println("===========================================================================");
         System.out.println("SANDWICHES: \n");
-        SandwichType.printMenu();
+        SandwichType.printSandwiches();
         System.out.println("===========================================================================");
         System.out.println("EXTRAS: \n");
         System.out.println("As club: Salad, tomato, carrot or pickles, scrambled eggs, mayonnaise");

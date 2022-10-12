@@ -1,6 +1,8 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Course {
 
@@ -40,5 +42,11 @@ public class Course {
 
     public void setSessions(List<Session> sessions) {
         this.sessions = sessions;
+    }
+
+    public List<Session> getSessionByDate(LocalDate date) {
+        List<Session> sessions = this.sessions.stream().filter(elem -> (elem.getStartDate().isBefore(date) || elem.getStartDate().isEqual(date)) &&
+                (elem.getEndDate().isAfter(date) || elem.getEndDate().isEqual(date))).collect(Collectors.toList());
+        return sessions;
     }
 }
