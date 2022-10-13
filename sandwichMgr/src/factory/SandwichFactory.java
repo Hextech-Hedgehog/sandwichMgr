@@ -1,9 +1,7 @@
 package factory;
 
-import exception.SandwichNotFoundException;
 import model.Sandwich;
 import model.SandwichType;
-import org.apache.logging.log4j.LogManager;
 
 public class SandwichFactory {
 
@@ -16,12 +14,8 @@ public class SandwichFactory {
         return sandwichFactory;
     }
 
-    public SandwichFactory makeSandwich(String sandwichName) {
-        try {
-            this.sandwich = new Sandwich(SandwichType.getSandwichTypeByName(sandwichName));
-        } catch (SandwichNotFoundException e) {
-            LogManager.getLogger("error").error(e.getMessage());
-        }
+    public SandwichFactory makeSandwich(SandwichType sandwichType) {
+        this.sandwich = new Sandwich(sandwichType);
         return this;
     }
 

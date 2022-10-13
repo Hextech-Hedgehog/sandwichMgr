@@ -35,10 +35,10 @@ public class KimMain {
         sandwichTypes.add(club); sandwichTypes.add(special);
 
 
-        SandwichTypeFileRepo.getInstance().writeToRepo(sandwichTypes, Shop.VLEUGELS);
+        SandwichTypeFileRepo.getInstance().writeSandwichesToFile(sandwichTypes, Shop.VLEUGELS);
 
-        Set<SandwichType> sandwiches =  SandwichTypeFileRepo.getInstance().readFromRepo(Shop.VLEUGELS);
-        sandwiches.forEach(SandwichType::printInfo);
+        Set<SandwichType> sandwiches =  SandwichTypeFileRepo.getInstance().getSandwiches(Shop.VLEUGELS);
+        sandwiches.forEach(SandwichType::printContents);
 
     }
 }

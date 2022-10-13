@@ -1,10 +1,6 @@
 package test;
 
-import model.Bill;
-import model.Order;
-import model.Sandwich;
-import model.SandwichType;
-import org.junit.jupiter.api.BeforeAll;
+import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,19 +19,19 @@ class BillTest {
     @BeforeEach
     void setup() {
         Map<Sandwich, Integer> sandwiches = new HashMap<Sandwich, Integer>(){{
-            put(new Sandwich(SandwichType.MEAT_BALL, true, false), 5);
-            put(new Sandwich(SandwichType.MARTINO, false, false), 2);
-            put(new Sandwich(SandwichType.HAM, true, true), 1);
+            put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "meat ball"), true, false), 5);
+            put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "martino"), false, false), 2);
+            put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "ham"), true, true), 1);
         }};
 
         Map<Sandwich, Integer> sandwiches2 = new HashMap<Sandwich, Integer>(){{
-            put(new Sandwich(SandwichType.SALAMI, false, false), 4);
-            put(new Sandwich(SandwichType.HAM, true, false), 2);
+            put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "salami"), false, false), 4);
+            put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "ham"), true, false), 2);
         }};
 
         Map<Sandwich, Integer> sandwiches3 = new HashMap<Sandwich, Integer>(){{
-            put(new Sandwich(SandwichType.ROAST_BEEF, true, false), 1);
-            put(new Sandwich(SandwichType.MARTINO, false, false), 1);
+            put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "roast beef"), true, false), 1);
+            put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "martino"), false, false), 1);
         }};
         Set<Order> orders = new HashSet<Order>(){{
             add(new Order(sandwiches));
@@ -47,7 +43,7 @@ class BillTest {
 
     @Test
     void addOrder() {
-        Order order = new Order(new Sandwich(SandwichType.ROAST_BEEF, true, false));
+        Order order = new Order(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "roast beef"), true, false));
         b.addOrder(order);
         assertEquals(true, b.getOrdersByDate(LocalDate.now()).contains(order));
     }

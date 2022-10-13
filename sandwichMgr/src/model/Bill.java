@@ -1,5 +1,7 @@
 package model;
 
+import org.apache.logging.log4j.LogManager;
+
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,7 +32,11 @@ public class Bill {
     }
 
     public void viewOrderByDate(LocalDate date) {
-        this.orders.get(date).forEach(Order::printOrderInfo);
+        Set<Order> orders = this.orders.get(date);
+        if (orders == null)
+            LogManager.getLogger().error("No order found at date " + date);
+        else
+            orders.forEach(Order::printOrderInfo);
     }
 
     public Set<Order> getOrdersByDate(LocalDate date) {
