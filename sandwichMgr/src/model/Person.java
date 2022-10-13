@@ -15,8 +15,6 @@ public abstract class Person {
         this.firstName = firstName;
     }
 
-    public abstract void makeOrder();
-
     public Sandwich orderSandwich() {
         System.out.println("Please type in the sandwich of your choice ");
         Sandwich sandwich = selectSandwich();
