@@ -1,8 +1,10 @@
 package repository;
 
+import exception.SandwichNotFoundException;
 import model.Ingredient;
 import model.SandwichType;
 import model.Shop;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.*;
 import java.util.*;
@@ -11,12 +13,10 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
 
     public static SandwichTypeFileRepo sandwichRepo;
 
-
-    private SandwichTypeFileRepo() {
-    }
+    private SandwichTypeFileRepo() {}
 
     @Override
-    public void writeToRepo(List<SandwichType> sandwichTypes, Shop shop) {
+    public void writeSandwichesToFile(List<SandwichType> sandwichTypes, Shop shop) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(shop.getPathWay()))) {
             for (SandwichType sandwichType : sandwichTypes) {
                 StringBuilder line = new StringBuilder(sandwichType.getSandwichName() + ";");
@@ -26,12 +26,12 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
                 writer.write(line + "\n");
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            LogManager.getLogger("error").error(e.getMessage());
         }
     }
 
     @Override
-    public Set<SandwichType> readFromRepo(Shop shop) {
+    public Set<SandwichType> getSandwiches(Shop shop) {
         Set<SandwichType> sandwichTypes = new HashSet<>();
         try(BufferedReader reader = new BufferedReader(new FileReader(shop.getPathWay()))) {
             String sandwichType;
@@ -45,15 +45,43 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
                 sandwichTypes.add(sandwich);
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            LogManager.getLogger("error").error(e.getMessage());
         }
         return sandwichTypes;
     }
 
+    @Override
+    public SandwichType getSandwich(Shop shop, String sandwichName) throws SandwichNotFoundException {
+        SandwichType sandwichType = null;
+        try(BufferedReader reader = new BufferedReader(new FileReader(shop.getPathWay()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] elements = line.split(";");
+                if (elements[0].equalsIgnoreCase(sandwichName)) {
+                    List<Ingredient> ingredients = new ArrayList<>();
+                    for (int i = 1; i < elements.length; i++)
+                        ingredients.add(new Ingredient(elements[i]));
+                    sandwichType = new SandwichType(elements[0], ingredients);
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            LogManager.getLogger("error").error(e.getMessage());
+        }
+        if (sandwichType == null)
+            throw new SandwichNotFoundException("Sandwich " + sandwichName + " doesn't exist.");
+        return sandwichType;
+    }
 
+    public void printSandwiches(Shop shop) {
+        for (SandwichType sandwich: this.getSandwiches(shop))
+            sandwich.printContents();
+    }
 
     public static SandwichTypeFileRepo getInstance() {
-        if (sandwichRepo == null) sandwichRepo = new SandwichTypeFileRepo();
+        if (sandwichRepo == null)
+            sandwichRepo = new SandwichTypeFileRepo();
         return sandwichRepo;
     }
+
 }

@@ -11,9 +11,13 @@ public class Session {
     private LocalDate endDate;
     private Order dailyOrder;
 
-    public Session(String sessionName, StaffMember instructor, Period period) {
+    public Session(String sessionName, StaffMember instructor, LocalDate startDate, LocalDate endDate) throws IllegalArgumentException {
         this.sessionName = sessionName;
         this.instructor = instructor;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        if (!startDate.isBefore(endDate))
+            throw new IllegalArgumentException("startDate should be < than endDate");
     }
 
     public void printInfo() {
@@ -50,5 +54,16 @@ public class Session {
 
     public void setInstructor(StaffMember instructor) {
         this.instructor = instructor;
+    }
+
+    public boolean coversDate(LocalDate date) {
+        return (this.getStartDate().isBefore(date) || this.getStartDate().isEqual(date)) &&
+            (this.getEndDate().isAfter(date) || this.getEndDate().isEqual(date));
+    }
+
+    public Order getDailyOrder() {
+        if (dailyOrder == null || !dailyOrder.getDate().isEqual(LocalDate.now()))
+            dailyOrder = new Order();
+        return dailyOrder;
     }
 }

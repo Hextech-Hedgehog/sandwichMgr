@@ -7,15 +7,29 @@ import java.util.Map;
 public class Order {
 
     private Map<Sandwich, Integer> sandwiches = new HashMap<Sandwich, Integer>();
-    private LocalDate date = LocalDate.now();
+    private LocalDate date;
 
-    public Order () {}
+    public Order () {
+        this.date = LocalDate.now();
+    }
 
     public Order(Sandwich sandwich) {
+        this();
+        this.sandwiches.put(sandwich, 1);
+    }
+
+    public Order(Sandwich sandwich, LocalDate date) {
+        this.date = date;
         this.sandwiches.put(sandwich, 1);
     }
 
     public Order(Map<Sandwich, Integer> sandwiches) {
+        this();
+        this.sandwiches = sandwiches;
+    }
+
+    public Order(Map<Sandwich, Integer> sandwiches, LocalDate date) {
+        this.date = date;
         this.sandwiches = sandwiches;
     }
 

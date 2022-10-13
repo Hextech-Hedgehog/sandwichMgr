@@ -1,13 +1,17 @@
 package model;
 
+import exception.ParticipantNotFoundException;
+import exception.SessionNotFoundException;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Course {
 
     private String name;
-    private List<CourseParticipant> courseParticipants;
+    private List<CourseParticipant> courseParticipants = new ArrayList<>();
     private List<Session> sessions;
 
     public Course(String name) {
@@ -32,8 +36,13 @@ public class Course {
         return courseParticipants;
     }
 
-    public void setCourseParticipants(List<CourseParticipant> courseParticipants) {
-        this.courseParticipants = courseParticipants;
+    public CourseParticipant getCourseParticipantByName(String firstName) throws ParticipantNotFoundException {
+        return this.courseParticipants.stream().filter(e -> e.getFirstName().equalsIgnoreCase(firstName)).findFirst().orElseThrow(() -> new ParticipantNotFoundException("Particpant " + firstName + " not found"));
+    }
+
+    public void addParticipants(List<CourseParticipant> courseParticipants) {
+        this.courseParticipants.addAll(courseParticipants);
+        this.courseParticipants.forEach(participant -> participant.follow(this));
     }
 
     public List<Session> getSessions() {
@@ -44,9 +53,11 @@ public class Course {
         this.sessions = sessions;
     }
 
-    public List<Session> getSessionByDate(LocalDate date) {
-        List<Session> sessions = this.sessions.stream().filter(elem -> (elem.getStartDate().isBefore(date) || elem.getStartDate().isEqual(date)) &&
-                (elem.getEndDate().isAfter(date) || elem.getEndDate().isEqual(date))).collect(Collectors.toList());
-        return sessions;
+    public Session getSessionByDate(LocalDate date) throws SessionNotFoundException {
+        return this.sessions.stream().filter(elem -> elem.coversDate(date)).findFirst().orElseThrow(() -> new SessionNotFoundException("No session found at this date: " + date));
+    }
+
+    public void addParticipant(CourseParticipant participant) {
+        this.courseParticipants.add(participant);
     }
 }

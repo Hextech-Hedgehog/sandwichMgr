@@ -31,7 +31,7 @@ public class Sandwich {
         if (this.withButter)
             System.out.print(" with extra butter");
         System.out.println(":");
-        this.sandwichType.printInfo();
+        this.sandwichType.printContents();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Sandwich {
     public boolean equals(Object obj) {
         if (obj instanceof Sandwich) {
             Sandwich s = (Sandwich)obj;
-            return s.sandwichType == this.sandwichType && s.asClub == this.asClub && s.withButter == this.withButter;
+            return s.sandwichType.equals(this.sandwichType) && s.asClub == this.asClub && s.withButter == this.withButter;
         }
         return false;
     }

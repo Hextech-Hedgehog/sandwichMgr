@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public enum Shop {
-    PINKYS("sandwichtypePinkys.txt"),
-    VLEUGELS("sandwichtypeVleugels.txt");
+    PINKYS("sandwichTypePinkys.txt"),
+    VLEUGELS("sandwichTypeVleugels.txt");
 
     private final String pathWay;
 

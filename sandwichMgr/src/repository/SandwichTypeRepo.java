@@ -1,5 +1,6 @@
 package repository;
 
+import exception.SandwichNotFoundException;
 import model.SandwichType;
 import model.Shop;
 
@@ -8,7 +9,8 @@ import java.util.Set;
 
 public interface SandwichTypeRepo {
 
-    void writeToRepo(List<SandwichType> sandwichTypes, Shop shop);
-    Set<SandwichType> readFromRepo(Shop shop);
+    void writeSandwichesToFile(List<SandwichType> sandwichTypes, Shop shop);
+    Set<SandwichType> getSandwiches(Shop shop);
+    SandwichType getSandwich(Shop shop, String sandwichName) throws SandwichNotFoundException;
 
 }
