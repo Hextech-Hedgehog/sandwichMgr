@@ -13,8 +13,10 @@ public class StaffMember extends Person {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void teachCourse(Course course) {
         this.course = course;
-        this.setSandwichPayedByAbis(course != null);
     }
+
+    @Override
+    public void makeOrder() {}
 }

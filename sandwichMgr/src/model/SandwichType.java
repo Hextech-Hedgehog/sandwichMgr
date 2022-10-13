@@ -1,5 +1,7 @@
 package model;
 
+import exception.SandwichNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,19 +56,23 @@ public class SandwichType {
         System.out.println();
     }
 
-    public static void printMenu() {
-  /*      for(SandwichType sd: SandwichType.values()) {         // TODO redo printMenu()
+    public static void printSandwiches() {
+        for(SandwichType sd: SandwichType.values()) {
             System.out.println(sd.name() + ": ");
             sd.printInfo();
         }
-*/    }
+   }
 
-    public static SandwichType getSandwichTypeByName(String name) {
-  /*      for (SandwichType sd: SandwichType.values()) {
+    public static SandwichType getSandwichTypeByName(String name) throws SandwichNotFoundException {
+        SandwichType sandwichType = null;
+        for (SandwichType sd: SandwichType.values()) {
             if (sd.name().equalsIgnoreCase(name))
-                return sd;
+                sandwichType = sd;
         }
-    */    return null;
+
+        if (sandwichType == null)
+            throw new SandwichNotFoundException("Sandwich " + name + " doesn't exist");
+        return sandwichType;
     }
 
 

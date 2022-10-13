@@ -14,9 +14,12 @@ public class CourseParticipant extends Person {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void follow(Course course) {
         if (course != null) {
             this.course = course;
         }
     }
+
+    @Override
+    public void makeOrder() {}
 }
