@@ -7,6 +7,7 @@ import repository.SandwichTypeFileRepo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class KimMain {
 
@@ -35,6 +36,9 @@ public class KimMain {
 
 
         SandwichTypeFileRepo.getInstance().writeToRepo(sandwichTypes, Shop.VLEUGELS);
+
+        Set<SandwichType> sandwiches =  SandwichTypeFileRepo.getInstance().readFromRepo(Shop.VLEUGELS);
+        sandwiches.forEach(SandwichType::printInfo);
 
     }
 }
