@@ -9,6 +9,7 @@ public class Session {
     private StaffMember instructor;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Order dailyOrder;
 
     public Session(String sessionName, StaffMember instructor, Period period) {
         this.sessionName = sessionName;

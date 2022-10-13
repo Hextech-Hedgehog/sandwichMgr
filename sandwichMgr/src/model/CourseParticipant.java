@@ -19,7 +19,4 @@ public class CourseParticipant extends Person {
             this.course = course;
         }
     }
-
-    @Override
-    public void makeOrder() {}
 }

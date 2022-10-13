@@ -16,7 +16,4 @@ public class StaffMember extends Person {
     public void teachCourse(Course course) {
         this.course = course;
     }
-
-    @Override
-    public void makeOrder() {}
 }
