@@ -5,8 +5,9 @@ import exception.SandwichNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum SandwichType {
+public class SandwichType {
 
+    /*
     HAM(new ArrayList<Ingredient>(){{
         add(new Ingredient("Bread"));
         add(new Ingredient("Salad"));
@@ -38,10 +39,15 @@ public enum SandwichType {
         add(new Ingredient("Martino sauce"));
     }});
 
-    private List<Ingredient> ingredients = new ArrayList<>();
+     */
 
-    private SandwichType(List<Ingredient> ingredients) {
-            this.ingredients.addAll(ingredients);
+    private final String sandwichName;
+    private final List<Ingredient> ingredients = new ArrayList<>();
+
+
+    public SandwichType(String sandwichName, List<Ingredient> ingredients) {
+        this.sandwichName = sandwichName;
+        this.ingredients.addAll(ingredients);
     }
 
     public void printInfo() {
@@ -55,7 +61,7 @@ public enum SandwichType {
             System.out.println(sd.name() + ": ");
             sd.printInfo();
         }
-    }
+   }
 
     public static SandwichType getSandwichTypeByName(String name) throws SandwichNotFoundException {
         SandwichType sandwichType = null;
@@ -69,4 +75,12 @@ public enum SandwichType {
         return sandwichType;
     }
 
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public String getSandwichName() {
+        return sandwichName;
+    }
 }
