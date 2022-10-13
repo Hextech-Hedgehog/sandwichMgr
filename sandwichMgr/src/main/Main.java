@@ -10,7 +10,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        Map<Sandwich, Integer> sandwiches = new HashMap<Sandwich, Integer>(){{
+  /*      Map<Sandwich, Integer> sandwiches = new HashMap<Sandwich, Integer>(){{
             put(new Sandwich(SandwichType.MEAT_BALL, true, false), 5);
             put(new Sandwich(SandwichType.MARTINO, false, false), 2);
             put(new Sandwich(SandwichType.HAM, true, true), 1);

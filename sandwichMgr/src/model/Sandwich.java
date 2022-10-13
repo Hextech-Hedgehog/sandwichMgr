@@ -21,7 +21,7 @@ public class Sandwich {
     }
 
     public void printContents() {
-        System.out.print(this.sandwichType.name());
+        System.out.print(this.sandwichType.getSandwichName());
         if (this.asClub)
             System.out.print(" as club");
         if (this.withButter)
@@ -32,7 +32,7 @@ public class Sandwich {
 
     @Override
     public int hashCode() {
-        int hash = this.sandwichType.name().hashCode();
+        int hash = this.sandwichType.getSandwichName().hashCode();
         byte boolByteValue = 0;
         boolByteValue += asClub ? 1 : 0;
         boolByteValue += withButter ? 2 : 0;
