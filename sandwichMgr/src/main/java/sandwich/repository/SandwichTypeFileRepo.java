@@ -16,7 +16,7 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
     private SandwichTypeFileRepo() {}
 
     @Override
-    public void writeSandwichesToFile(List<SandwichType> sandwichTypes, Shop shop) {
+    public void writeSandwichesToFile(List<SandwichType> sandwichTypes, Shop shop) throws IOException {
         try (PrintWriter writer = new PrintWriter(new FileWriter(shop.getPathWay()))) {
             for (SandwichType sandwichType : sandwichTypes) {
                 StringBuilder line = new StringBuilder(sandwichType.getSandwichName() + ";");
@@ -25,8 +25,6 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
                 }
                 writer.write(line + "\n");
             }
-        } catch (IOException e) {
-            LogManager.getLogger("error").error(e.getMessage());
         }
     }
 
