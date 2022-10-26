@@ -11,7 +11,7 @@ import java.util.Set;
 public interface SandwichTypeRepo {
 
     void writeSandwichesToFile(List<SandwichType> sandwichTypes, Shop shop) throws IOException;
-    Set<SandwichType> getSandwiches(Shop shop);
-    SandwichType getSandwich(Shop shop, String sandwichName) throws SandwichNotFoundException;
+    Set<SandwichType> getSandwiches(Shop shop) throws IOException;
+    SandwichType getSandwich(Shop shop, String sandwichName) throws SandwichNotFoundException, IOException;
 
 }

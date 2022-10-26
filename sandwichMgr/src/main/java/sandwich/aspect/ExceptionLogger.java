@@ -20,6 +20,7 @@ public class ExceptionLogger {
 
     @AfterThrowing(pointcut = "sandwich.aspect.PointCuts.executeGetCourseParticipant()", throwing = "e")
     public void afterParticipantNotFoundExceptionIsThrown(ParticipantNotFoundException e) {
+ //       System.out.println("ExceptionLogger called");
         logger.error("Participant not found: " + e.getMessage());
     }
 
@@ -35,7 +36,7 @@ public class ExceptionLogger {
 
     @AfterThrowing(pointcut = "sandwich.aspect.PointCuts.executeGetSandwich()", throwing = "e")
     public void afterSandwichNotFoundException(SandwichNotFoundException e) {
-        logger.error("Sandwich not found: " + e.getMessage());
+        logger.error("Sandwich not found or IO File Exception: " + e.getMessage());
     }
 
 

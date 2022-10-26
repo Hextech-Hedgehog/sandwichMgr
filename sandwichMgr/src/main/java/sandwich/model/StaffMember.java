@@ -1,7 +1,9 @@
 package sandwich.model;
 
 import org.apache.logging.log4j.LogManager;
+import sandwich.exception.SandwichNotFoundException;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -26,7 +28,7 @@ public class StaffMember extends Person {
     }
 
     @Override
-    public Sandwich orderSandwich(Shop shop) {
+    public Sandwich orderSandwich(Shop shop) throws IOException, SandwichNotFoundException {
         Sandwich sandwich = super.orderSandwich(shop);
         this.getSessionByDate(LocalDate.now()).getDailyOrder().addSandwich(sandwich);
         return sandwich;

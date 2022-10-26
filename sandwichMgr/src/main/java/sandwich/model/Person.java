@@ -1,7 +1,9 @@
 package sandwich.model;
 
+import sandwich.exception.SandwichNotFoundException;
 import sandwich.factory.SandwichFactory;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public abstract class Person {
@@ -13,7 +15,7 @@ public abstract class Person {
         this.firstName = firstName;
     }
 
-    public Sandwich orderSandwich(Shop shop) {
+    public Sandwich orderSandwich(Shop shop) throws IOException, SandwichNotFoundException {
         System.out.println("Please type in the sandwich of your choice ");
         Sandwich sandwich = selectSandwich(shop);
         System.out.println("Here is your sandwich: ");
@@ -22,7 +24,7 @@ public abstract class Person {
         return sandwich;
     }
 
-    private static Sandwich selectSandwich(Shop shop) {
+    private static Sandwich selectSandwich(Shop shop) throws IOException, SandwichNotFoundException {
         Scanner sc = new Scanner(System.in);
         Sandwich sandwich;
 

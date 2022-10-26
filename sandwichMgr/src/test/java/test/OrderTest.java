@@ -1,5 +1,6 @@
 package test;
 
+import sandwich.exception.SandwichNotFoundException;
 import sandwich.model.Order;
 import sandwich.model.Sandwich;
 import sandwich.model.SandwichType;
@@ -7,6 +8,7 @@ import sandwich.model.Shop;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,14 +24,14 @@ class OrderTest {
     }
 
     @Test
-    void addSandwich() {
+    void addSandwich() throws IOException, SandwichNotFoundException {
         Sandwich sandwich = new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "meat ball"), true, false);
         order.addSandwich(sandwich);
         assertEquals(true, order.hasSandwich(sandwich));
     }
 
     @Test
-    void addSandwiches() {
+    void addSandwiches() throws IOException, SandwichNotFoundException {
         Map<Sandwich, Integer> sandwiches2 = new HashMap<Sandwich, Integer>(){{
             put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "salami"), false, false), 4);
             put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "ham"), true, false), 2);

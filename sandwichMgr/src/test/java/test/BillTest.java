@@ -3,8 +3,10 @@ package test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import sandwich.exception.SandwichNotFoundException;
 import sandwich.model.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,7 +21,7 @@ class BillTest {
     Bill b;
 
     @BeforeEach
-    void setup() {
+    void setup() throws IOException, SandwichNotFoundException {
         Map<Sandwich, Integer> sandwiches = new HashMap<Sandwich, Integer>(){{
             put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "meat ball"), true, false), 5);
             put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "martino"), false, false), 2);
@@ -44,7 +46,7 @@ class BillTest {
     }
 
     @Test
-    void addOrder() {
+    void addOrder() throws IOException, SandwichNotFoundException {
         Order order = new Order(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "roast beef"), true, false));
         b.addOrder(order);
         assertEquals(true, b.getOrdersByDate(LocalDate.now()).contains(order));

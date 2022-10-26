@@ -1,5 +1,6 @@
 package sandwich.repository;
 
+import org.springframework.stereotype.Repository;
 import sandwich.exception.SandwichNotFoundException;
 import sandwich.model.Ingredient;
 import sandwich.model.SandwichType;
@@ -8,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 
 import java.io.*;
 import java.util.*;
+
 
 public class SandwichTypeFileRepo implements SandwichTypeRepo {
 
@@ -29,7 +31,7 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
     }
 
     @Override
-    public Set<SandwichType> getSandwiches(Shop shop) {
+    public Set<SandwichType> getSandwiches(Shop shop) throws IOException {
         Set<SandwichType> sandwichTypes = new HashSet<>();
         try(BufferedReader reader = new BufferedReader(new FileReader(shop.getPathWay()))) {
             String sandwichType;
@@ -42,14 +44,12 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
                 SandwichType sandwich = new SandwichType(elements[0], ingredients);
                 sandwichTypes.add(sandwich);
             }
-        } catch (IOException e) {
-            LogManager.getLogger("error").error(e.getMessage());
         }
         return sandwichTypes;
     }
 
     @Override
-    public SandwichType getSandwich(Shop shop, String sandwichName) throws SandwichNotFoundException {
+    public SandwichType getSandwich(Shop shop, String sandwichName) throws SandwichNotFoundException, IOException {
         SandwichType sandwichType = null;
         try(BufferedReader reader = new BufferedReader(new FileReader(shop.getPathWay()))) {
             String line;
@@ -63,15 +63,13 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
                     break;
                 }
             }
-        } catch (IOException e) {
-            LogManager.getLogger("error").error(e.getMessage());
         }
         if (sandwichType == null)
             throw new SandwichNotFoundException("Sandwich " + sandwichName + " doesn't exist.");
         return sandwichType;
     }
 
-    public void printSandwiches(Shop shop) {
+    public void printSandwiches(Shop shop) throws IOException {
         for (SandwichType sandwich: this.getSandwiches(shop))
             sandwich.printContents();
     }

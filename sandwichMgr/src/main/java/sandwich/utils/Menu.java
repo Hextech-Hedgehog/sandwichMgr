@@ -3,9 +3,11 @@ package sandwich.utils;
 import sandwich.model.Shop;
 import sandwich.repository.SandwichTypeFileRepo;
 
+import java.io.IOException;
+
 public class Menu {
 
-    public static void printMenuDetails(Shop shop) {
+    public static void printMenuDetails(Shop shop) throws IOException {
         System.out.println("Welcome to the sandwich manager terminal!");
         System.out.println("We have a few sandwiches options on the menu for you today!");
         System.out.println("They have been freshly prepared by " + shop.name());

@@ -36,6 +36,7 @@ public class Course {
     }
 
     public CourseParticipant getCourseParticipantByName(String firstName) throws ParticipantNotFoundException {
+  //      System.out.println("getCourseParticipant called");
         return this.courseParticipants.stream().filter(e -> e.getFirstName().equalsIgnoreCase(firstName)).findFirst().orElseThrow(() -> new ParticipantNotFoundException("Particpant " + firstName + " not found"));
     }
 

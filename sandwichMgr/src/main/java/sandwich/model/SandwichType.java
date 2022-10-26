@@ -4,6 +4,7 @@ import sandwich.exception.SandwichNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import sandwich.repository.SandwichTypeFileRepo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,15 +33,8 @@ public class SandwichType {
         return ingredients;
     }
 
-    public static SandwichType getSandwichByName(Shop shop, String sandwichName) {
-        SandwichType sd = null;
-        try {
-            sd = SandwichTypeFileRepo.getInstance().getSandwich(shop, sandwichName);
-        } catch (SandwichNotFoundException e) {
-            LogManager.getLogger("error").error(e.getMessage());
-        }
-
-        return sd;
+    public static SandwichType getSandwichByName(Shop shop, String sandwichName) throws IOException, SandwichNotFoundException {
+        return SandwichTypeFileRepo.getInstance().getSandwich(shop, sandwichName);
     }
 
     @Override

@@ -10,12 +10,14 @@ public class PointCuts {
     */
 
     @Pointcut("execution(* sandwich.model.Course.getCourseParticipant*(..))")
-    public void executeGetCourseParticipant() { }
+    public void executeGetCourseParticipant() {
+  //      System.out.println("PointCut called");
+    }
 
     @Pointcut("execution(* sandwich.model.*.getSession*(..))")
     public void executeGetSession() { }
 
-    @Pointcut("execution(* sandwich.repository.*.write*(..))")
+    @Pointcut("execution(* sandwich.repository.*.write(..))")
     public void executeWriteToFile() { }
 
     @Pointcut("execution(* sandwich.repository.*.getSandwich*(..))")
