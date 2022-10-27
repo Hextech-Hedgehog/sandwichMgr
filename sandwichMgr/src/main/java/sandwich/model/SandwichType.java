@@ -2,16 +2,22 @@ package sandwich.model;
 
 import sandwich.exception.SandwichNotFoundException;
 import org.apache.logging.log4j.LogManager;
-import sandwich.repository.SandwichTypeFileRepo;
+import sandwich.repository.SandwichTypeFileRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class SandwichType {
 
     private final String sandwichName;
     private final List<Ingredient> ingredients = new ArrayList<>();
+
+    public SandwichType(String ...sandwichTypeContents) {
+        sandwichName = sandwichTypeContents[0];
+        IntStream.range(1, sandwichTypeContents.length).forEach(idx -> ingredients.add(new Ingredient(sandwichTypeContents[idx])));
+    }
 
     public SandwichType(String sandwichName, List<Ingredient> ingredients) {
         this.sandwichName = sandwichName;
@@ -33,8 +39,20 @@ public class SandwichType {
         return ingredients;
     }
 
+<<<<<<< HEAD
     public static SandwichType getSandwichByName(Shop shop, String sandwichName) throws IOException, SandwichNotFoundException {
         return SandwichTypeFileRepo.getInstance().getSandwich(shop, sandwichName);
+=======
+    public static SandwichType getSandwichByName(Shop shop, String sandwichName) {
+        SandwichType sd = null;
+        try {
+            sd = SandwichTypeFileRepository.getInstance().getSandwich(shop, sandwichName);
+        } catch (SandwichNotFoundException e) {
+            LogManager.getLogger("error").error(e.getMessage());
+        }
+
+        return sd;
+>>>>>>> developHH
     }
 
     @Override

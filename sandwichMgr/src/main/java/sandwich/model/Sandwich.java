@@ -61,4 +61,19 @@ public class Sandwich {
         this.withButter = withButter;
     }
 
+    public SandwichType getSandwichType() {
+        return sandwichType;
+    }
+
+    public String getOptionalRequirement() {
+        return optionalRequirement;
+    }
+
+    public boolean isAsClub() {
+        return asClub;
+    }
+
+    public boolean isWithButter() {
+        return withButter;
+    }
 }
