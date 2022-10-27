@@ -9,7 +9,7 @@ import sandwich.exception.ParticipantNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+/*@SpringBootTest
 class CourseTest {
 
     Course course;
@@ -29,4 +29,4 @@ class CourseTest {
         assertThrows(ParticipantNotFoundException.class, () -> course.getCourseParticipantByName(null));
     }
 
-}
+}*/
