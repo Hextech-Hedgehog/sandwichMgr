@@ -39,10 +39,7 @@ public class SandwichType {
         return ingredients;
     }
 
-<<<<<<< HEAD
-    public static SandwichType getSandwichByName(Shop shop, String sandwichName) throws IOException, SandwichNotFoundException {
-        return SandwichTypeFileRepo.getInstance().getSandwich(shop, sandwichName);
-=======
+
     public static SandwichType getSandwichByName(Shop shop, String sandwichName) {
         SandwichType sd = null;
         try {
@@ -52,7 +49,6 @@ public class SandwichType {
         }
 
         return sd;
->>>>>>> developHH
     }
 
     @Override
