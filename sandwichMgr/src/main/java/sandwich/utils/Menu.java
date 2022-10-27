@@ -1,7 +1,7 @@
 package sandwich.utils;
 
 import sandwich.model.Shop;
-import sandwich.repository.SandwichTypeFileRepo;
+import sandwich.repository.SandwichTypeFileRepository;
 
 public class Menu {
 
@@ -12,7 +12,7 @@ public class Menu {
         System.out.println("You can even add extras along with your desired sandwich!");
         System.out.println("===========================================================================");
         System.out.println("SANDWICHES: \n");
-        SandwichTypeFileRepo.getInstance().printSandwiches(shop);
+        SandwichTypeFileRepository.getInstance().printSandwiches(shop);
         System.out.println("===========================================================================");
         System.out.println("EXTRAS: \n");
         System.out.println("As club: Salad, tomato, carrot or pickles, scrambled eggs, mayonnaise");

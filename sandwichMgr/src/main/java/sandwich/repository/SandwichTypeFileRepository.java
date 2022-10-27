@@ -1,5 +1,6 @@
 package sandwich.repository;
 
+import org.springframework.stereotype.Repository;
 import sandwich.exception.SandwichNotFoundException;
 import sandwich.model.Ingredient;
 import sandwich.model.SandwichType;
@@ -9,14 +10,27 @@ import org.apache.logging.log4j.LogManager;
 import java.io.*;
 import java.util.*;
 
-public class SandwichTypeFileRepo implements SandwichTypeRepo {
+@Repository
+public class SandwichTypeFileRepository implements SandwichTypeRepository {
 
-    public static SandwichTypeFileRepo sandwichRepo;
+    public static SandwichTypeFileRepository sandwichRepo;
 
-    private SandwichTypeFileRepo() {}
+    private SandwichTypeFileRepository() {}
 
     @Override
-    public void writeSandwichesToFile(List<SandwichType> sandwichTypes, Shop shop) {
+    public void addSandwichType(Shop shop, SandwichType sandwich) {
+        try (PrintWriter pw = new PrintWriter(shop.getPathWay())) {
+            String sandwichLine = sandwich.getSandwichName() + ";";
+            for (Ingredient ingredient: sandwich.getIngredients())
+                sandwichLine += ingredient.getName() + ";";
+            pw.write(sandwichLine);
+        } catch(IOException e) {
+            LogManager.getLogger("error").error(e.getMessage());
+        }
+    }
+
+    @Override
+    public void addSandwichTypes(Shop shop, List<SandwichType> sandwichTypes) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(shop.getPathWay()))) {
             for (SandwichType sandwichType : sandwichTypes) {
                 StringBuilder line = new StringBuilder(sandwichType.getSandwichName() + ";");
@@ -37,11 +51,7 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
             String sandwichType;
             while ((sandwichType = reader.readLine()) != null) {
                 String[] elements = sandwichType.split(";");
-                List<Ingredient> ingredients = new ArrayList<>();
-                for (int i = 1; i < elements.length; i++) {
-                    ingredients.add(new Ingredient(elements[i]));
-                }
-                SandwichType sandwich = new SandwichType(elements[0], ingredients);
+                SandwichType sandwich = new SandwichType(elements);
                 sandwichTypes.add(sandwich);
             }
         } catch (IOException e) {
@@ -58,10 +68,7 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
             while ((line = reader.readLine()) != null) {
                 String[] elements = line.split(";");
                 if (elements[0].equalsIgnoreCase(sandwichName)) {
-                    List<Ingredient> ingredients = new ArrayList<>();
-                    for (int i = 1; i < elements.length; i++)
-                        ingredients.add(new Ingredient(elements[i]));
-                    sandwichType = new SandwichType(elements[0], ingredients);
+                    sandwichType = new SandwichType(elements);
                     break;
                 }
             }
@@ -73,14 +80,30 @@ public class SandwichTypeFileRepo implements SandwichTypeRepo {
         return sandwichType;
     }
 
+    @Override
+    public void removeSandwichType(Shop shop, SandwichType sandwich) {
+        List<SandwichType> sandwiches = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(shop.getPathWay()))) {
+            String str;
+            while ((str = br.readLine()) != null) {
+                SandwichType sandwichType = new SandwichType(str.split(";"));
+                if (!sandwichType.equals(sandwich))
+                    sandwiches.add(sandwichType);
+            }
+            this.addSandwichTypes(shop, sandwiches);
+        } catch (IOException e) {
+            LogManager.getLogger("error").error(e.getMessage());
+        }
+    }
+
     public void printSandwiches(Shop shop) {
         for (SandwichType sandwich: this.getSandwiches(shop))
             sandwich.printContents();
     }
 
-    public static SandwichTypeFileRepo getInstance() {
+    public static SandwichTypeFileRepository getInstance() {
         if (sandwichRepo == null)
-            sandwichRepo = new SandwichTypeFileRepo();
+            sandwichRepo = new SandwichTypeFileRepository();
         return sandwichRepo;
     }
 

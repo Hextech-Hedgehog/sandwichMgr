@@ -10,11 +10,14 @@ import java.util.Set;
 
 public class Bill {
 
-    Map<LocalDate, Set<Order>> orders;
+    private Map<LocalDate, Set<Order>> orders;
+    private LocalDate billDate;
 
     public Bill(Set<Order> orders) {
         this.orders = new HashMap<>();
         this.addOrders(orders);
+        LocalDate now = LocalDate.now();
+        this.billDate = LocalDate.of(now.getYear(), now.getMonth(), 1);
     }
 
     public void addOrder(Order order) {
@@ -41,5 +44,21 @@ public class Bill {
 
     public Set<Order> getOrdersByDate(LocalDate date) {
         return this.orders.get(date);
+    }
+
+    public Map<LocalDate, Set<Order>> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Map<LocalDate, Set<Order>> orders) {
+        this.orders = orders;
+    }
+
+    public LocalDate getBillDate() {
+        return billDate;
+    }
+
+    public void setBillDate(LocalDate billDate) {
+        this.billDate = billDate;
     }
 }
