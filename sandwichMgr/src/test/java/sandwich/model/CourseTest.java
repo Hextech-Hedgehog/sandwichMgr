@@ -9,7 +9,7 @@ import sandwich.exception.ParticipantNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/*@SpringBootTest
+/*@SpringBootTest(classes = SpringSandwichApplication.class)
 class CourseTest {
 
     Course course;

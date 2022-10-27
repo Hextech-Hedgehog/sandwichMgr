@@ -2,6 +2,7 @@ package sandwich.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sandwich.exception.PersonNotFoundException;
 import sandwich.model.Person;
 import sandwich.repository.PersonRepository;
 
@@ -23,12 +24,12 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public Person findPerson(String firstName) {
+    public Person findPerson(String firstName) throws PersonNotFoundException {
         return this.personRepository.findPerson(firstName);
     }
 
     @Override
-    public List<Person> findPeople(List<String> firstNames) {
+    public List<Person> findPeople(List<String> firstNames) throws PersonNotFoundException {
         return this.personRepository.findPeople(firstNames);
     }
 

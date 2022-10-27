@@ -3,6 +3,7 @@ package sandwich.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import sandwich.SpringSandwichApplication;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.model.Course;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(classes = SpringSandwichApplication.class)
 class CourseMemoryRepositoryTest {
 
     @Autowired
@@ -67,7 +68,7 @@ class CourseMemoryRepositoryTest {
 
     @Test
     public void findCoursesWithOneFakeNameInArrayTest() throws CourseNotFoundException {
-        List<String> names = new ArrayList<>();         // TODO give a list of 2 names, and/or an Exception?
+        List<String> names = new ArrayList<>();
         names.add("Medieval fencing"); names.add("Java Se programming"); names.add(null);
         assertThrows(CourseNotFoundException.class, () -> courseRepository.findCourses(names));
     }

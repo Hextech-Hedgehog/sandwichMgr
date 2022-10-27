@@ -1,6 +1,7 @@
 package sandwich.repository;
 
 import org.springframework.stereotype.Repository;
+import sandwich.exception.PersonNotFoundException;
 import sandwich.model.Admin;
 import sandwich.model.CourseParticipant;
 import sandwich.model.Person;
@@ -40,12 +41,13 @@ public class PersonMemoryRepository implements PersonRepository {
     }
 
     @Override
-    public Person findPerson(String firstName) {
-        return this.people.stream().filter(p -> p.getFirstName().equals(firstName)).findFirst().orElse(null);
+    public Person findPerson(String firstName) throws PersonNotFoundException {
+        return this.people.stream().filter(p -> p.getFirstName().equals(firstName)).findFirst()
+                .orElseThrow( ()-> new PersonNotFoundException("No person with this first name found"));
     }
 
     @Override
-    public List<Person> findPeople(List<String> firstNames) {
+    public List<Person> findPeople(List<String> firstNames) throws PersonNotFoundException {
         return this.people.stream().filter(p -> firstNames.contains(p.getFirstName())).collect(Collectors.toList());
     }
 

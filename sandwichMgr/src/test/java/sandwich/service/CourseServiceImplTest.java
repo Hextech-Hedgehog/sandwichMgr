@@ -3,6 +3,7 @@ package sandwich.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import sandwich.SpringSandwichApplication;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.model.Course;
 
@@ -12,11 +13,11 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(classes = SpringSandwichApplication.class)
 class CourseServiceImplTest {
 
     @Autowired
-    private CourseServiceImpl courseService;
+    private CourseService courseService;
 
     @Test
     public void findCourseFencingTest() throws CourseNotFoundException {
