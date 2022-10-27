@@ -1,6 +1,7 @@
 package sandwich.model;
 
 import sandwich.exception.SandwichNotFoundException;
+import sandwich.exception.SessionNotFoundException;
 import sandwich.factory.SandwichFactory;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ public abstract class Person {
         this.firstName = firstName;
     }
 
-    public Sandwich orderSandwich(Shop shop) throws IOException, SandwichNotFoundException {
+    public Sandwich orderSandwich(Shop shop) throws IOException, SandwichNotFoundException, SessionNotFoundException {
         System.out.println("Please type in the sandwich of your choice ");
         Sandwich sandwich = selectSandwich(shop);
         System.out.println("Here is your sandwich: ");
