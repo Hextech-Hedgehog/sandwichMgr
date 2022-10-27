@@ -1,6 +1,7 @@
 package sandwich.service;
 
 import sandwich.exception.NonAuthorizedPersonnelException;
+import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
 
 import java.time.LocalDate;
@@ -29,28 +30,26 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public Bill viewBillByDate(Person person, LocalDate date) throws NonAuthorizedPersonnelException {
-        if (person instanceof StaffMember)
+        if (person instanceof Admin)
             return this.billService.findBillByMonth(date);
         throw new NonAuthorizedPersonnelException();
     }
 
     @Override
     public Set<Order> viewOrdersByDate(Person person, LocalDate date) throws NonAuthorizedPersonnelException {
-        if (person instanceof StaffMember)
+        if (person instanceof Admin)
             return this.billService.findBillByMonth(date).getOrdersByDate(date);
         throw new NonAuthorizedPersonnelException();
     }
 
     @Override
-    public void orderSandwich(Person person, String shopName, Sandwich sandwich) throws NonAuthorizedPersonnelException {
-        //get the monthly bill, create it if it doesn't exist
-        // get the session of the day, if it doesn't exist or the person is not authorized to order, cancel
-        // add the sandwich to the session order and that order if is a new one, add it to the monthly bill
-        //if the order is updated, so should it in the bill
-        //if (person instanceof StaffMember)
-            //this
-            //this.billService.findBillByMonth(LocalDate.now()).addOrder(new Order());
-        throw new NonAuthorizedPersonnelException();
+    public void orderSandwich(Person person, String shopName) throws NonAuthorizedPersonnelException {
+        if (this.personService.getAllPeople().contains(person)) {
+            Bill bill = this.billService.getThisMonthBill();
+            Order order = personService.getOrderByCurrentCourseSession(person);
+            if (bill.containsOrder(order))
+                order.addSandwich(this.billService.orderSandwich(Shop.valueOf(shopName), person));
+        }
     }
 
     public void setBillService(BillService billService) {

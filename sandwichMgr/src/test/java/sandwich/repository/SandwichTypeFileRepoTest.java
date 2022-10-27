@@ -10,7 +10,7 @@ import sandwich.model.Shop;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+/*@SpringBootTest
 class SandwichTypeFileRepoTest {
 
     SandwichTypeRepo repo;
@@ -30,4 +30,4 @@ class SandwichTypeFileRepoTest {
         assertThrows(SandwichNotFoundException.class, ()-> repo.getSandwich(Shop.VLEUGELS, null));
     }
 
-}
+}*/

@@ -17,6 +17,6 @@ public interface AppService {
     PersonService getPersonService();
     Bill viewBillByDate(Person person, LocalDate date) throws NonAuthorizedPersonnelException;
     Set<Order> viewOrdersByDate(Person person, LocalDate date) throws NonAuthorizedPersonnelException;
-    void orderSandwich(Person person, String shopName, Sandwich sandwich) throws NonAuthorizedPersonnelException;
+    void orderSandwich(Person person, String shopName) throws NonAuthorizedPersonnelException;
 
 }

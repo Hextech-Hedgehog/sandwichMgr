@@ -1,6 +1,7 @@
 package sandwich.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import sandwich.model.Course;
 import sandwich.repository.CourseRepository;
@@ -8,6 +9,7 @@ import sandwich.repository.CourseRepository;
 import java.util.List;
 
 @Service
+@Profile("production")
 public class CourseServiceImpl implements CourseService {
 
     private CourseRepository courseRepository;

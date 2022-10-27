@@ -13,10 +13,6 @@ import java.util.*;
 @Repository
 public class SandwichTypeFileRepository implements SandwichTypeRepository {
 
-    public static SandwichTypeFileRepository sandwichRepo;
-
-    private SandwichTypeFileRepository() {}
-
     @Override
     public void addSandwichType(Shop shop, SandwichType sandwich) {
         try (PrintWriter pw = new PrintWriter(shop.getPathWay())) {
@@ -99,12 +95,6 @@ public class SandwichTypeFileRepository implements SandwichTypeRepository {
     public void printSandwiches(Shop shop) {
         for (SandwichType sandwich: this.getSandwiches(shop))
             sandwich.printContents();
-    }
-
-    public static SandwichTypeFileRepository getInstance() {
-        if (sandwichRepo == null)
-            sandwichRepo = new SandwichTypeFileRepository();
-        return sandwichRepo;
     }
 
 }

@@ -1,5 +1,6 @@
 package sandwich.service;
 
+import sandwich.model.Order;
 import sandwich.model.Person;
 
 import java.util.List;
@@ -13,5 +14,6 @@ public interface PersonService {
     void removePerson(Person person);
     void removePeople(List<Person> people);
     List<Person> getAllPeople();
+    Order getOrderByCurrentCourseSession(Person person);
 
 }

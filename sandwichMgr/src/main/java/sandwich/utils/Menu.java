@@ -14,7 +14,8 @@ public class Menu {
         System.out.println("You can even add extras along with your desired sandwich!");
         System.out.println("===========================================================================");
         System.out.println("SANDWICHES: \n");
-        SandwichTypeFileRepository.getInstance().printSandwiches(shop);
+        SandwichTypeFileRepository sandwichTypeFileRepository = new SandwichTypeFileRepository();
+        sandwichTypeFileRepository.printSandwiches(shop);
         System.out.println("===========================================================================");
         System.out.println("EXTRAS: \n");
         System.out.println("As club: Salad, tomato, carrot or pickles, scrambled eggs, mayonnaise");

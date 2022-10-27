@@ -15,7 +15,8 @@ public class CourseMemoryRepository implements CourseRepository {
     private List<Course> courses = new ArrayList<>();
     private PersonRepository personRepository;
 
-    public CourseMemoryRepository() {
+    public CourseMemoryRepository(@Autowired PersonRepository personRepository) {
+        this.personRepository = personRepository;
         Course java = new Course("Java Se programming");
         Course fencing = new Course("Medieval fencing");
         Course baseJump = new Course("Base jumping");
@@ -41,8 +42,6 @@ public class CourseMemoryRepository implements CourseRepository {
             add(new Session(baseJump.getName(), (StaffMember) teacher3, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
             add(new Session(baseJump.getName(), (StaffMember) teacher3, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
         }};
-
-        // TODO add daily orders to session from order repo
 
         java.setSessions(sessionsJava);
         fencing.setSessions(sessionsFencing);
@@ -82,8 +81,4 @@ public class CourseMemoryRepository implements CourseRepository {
         this.courses.removeAll(courses);
     }
 
-    @Autowired
-    public void setPersonRepository(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
 }

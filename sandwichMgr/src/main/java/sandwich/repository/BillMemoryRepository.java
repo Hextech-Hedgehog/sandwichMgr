@@ -16,7 +16,8 @@ public class BillMemoryRepository implements BillRepository {
     private List<Bill> bills = new ArrayList<>();
     private OrderRepository or;
 
-    public BillMemoryRepository() {
+    public BillMemoryRepository(@Autowired OrderRepository orderRepository) {
+        this.or = orderRepository;
         List<Bill> bills = new ArrayList<Bill>(){{
             add(new Bill(or.getAllOrders().stream().limit(2).collect(Collectors.toSet())));
             add(new Bill(or.getAllOrders().stream().skip(2).collect(Collectors.toSet())));
@@ -51,10 +52,5 @@ public class BillMemoryRepository implements BillRepository {
     @Override
     public List<Bill> getAllBills() {
         return this.bills;
-    }
-
-    @Autowired
-    public void setOrderRepository(OrderRepository or) {
-        this.or = or;
     }
 }

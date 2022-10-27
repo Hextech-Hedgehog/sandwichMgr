@@ -2,9 +2,9 @@ package sandwich.model;
 
 import sandwich.exception.SandwichNotFoundException;
 import org.apache.logging.log4j.LogManager;
+import sandwich.repository.SandwichRepository;
 import sandwich.repository.SandwichTypeFileRepository;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -40,10 +40,11 @@ public class SandwichType {
     }
 
 
+    //TODO move function inside repo
     public static SandwichType getSandwichByName(Shop shop, String sandwichName) {
         SandwichType sd = null;
         try {
-            sd = SandwichTypeFileRepository.getInstance().getSandwich(shop, sandwichName);
+            sd = new SandwichTypeFileRepository().getSandwich(shop, sandwichName);
         } catch (SandwichNotFoundException e) {
             LogManager.getLogger("error").error(e.getMessage());
         }

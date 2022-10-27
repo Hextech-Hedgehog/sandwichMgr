@@ -13,11 +13,15 @@ public class Bill {
     private Map<LocalDate, Set<Order>> orders;
     private LocalDate billDate;
 
-    public Bill(Set<Order> orders) {
+    public Bill () {
         this.orders = new HashMap<>();
-        this.addOrders(orders);
         LocalDate now = LocalDate.now();
         this.billDate = LocalDate.of(now.getYear(), now.getMonth(), 1);
+    }
+
+    public Bill(Set<Order> orders) {
+        this();
+        this.addOrders(orders);
     }
 
     public void addOrder(Order order) {
@@ -60,5 +64,9 @@ public class Bill {
 
     public void setBillDate(LocalDate billDate) {
         this.billDate = billDate;
+    }
+
+    public boolean containsOrder(Order order) {
+        return this.orders.get(order.getDate()).contains(order);
     }
 }

@@ -25,11 +25,4 @@ public class CourseParticipant extends Person {
         }
     }
 
-    @Override
-    public Sandwich orderSandwich(Shop shop) throws IOException, SandwichNotFoundException, SessionNotFoundException {
-        Sandwich sandwich = super.orderSandwich(shop);
-        this.getCourse().getSessionByDate(LocalDate.now()).getDailyOrder().addSandwich(sandwich);
-        return sandwich;
-    }
-
 }

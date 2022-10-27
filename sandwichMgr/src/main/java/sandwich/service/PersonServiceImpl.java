@@ -1,13 +1,18 @@
 package sandwich.service;
 
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import sandwich.model.Person;
+import sandwich.exception.SessionNotFoundException;
+import sandwich.model.*;
 import sandwich.repository.PersonRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@Profile("production")
 public class PersonServiceImpl implements PersonService{
 
     private PersonRepository personRepository;
@@ -45,6 +50,20 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public List<Person> getAllPeople() {
         return this.personRepository.getAllPeople();
+    }
+
+    @Override
+    public Order getOrderByCurrentCourseSession(Person person) {
+        if (!(person instanceof CourseParticipant) || ((CourseParticipant)person).getCourse() == null)
+            return null;
+
+        Order order = null;
+        try {
+            order = ((CourseParticipant)person).getCourse().getSessionByDate(LocalDate.now()).getDailyOrder();
+        } catch (SessionNotFoundException e) {
+            LogManager.getLogger("error").error("bubu");
+        }
+        return order;
     }
 
     @Autowired

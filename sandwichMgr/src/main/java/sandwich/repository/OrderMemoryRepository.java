@@ -14,7 +14,8 @@ public class OrderMemoryRepository implements OrderRepository {
     private Set<Order> orders = new HashSet<>();
     private SandwichRepository sr;
 
-    public OrderMemoryRepository() {
+    public OrderMemoryRepository(@Autowired SandwichRepository sandwichRepository) {
+        this.sr = sandwichRepository;
         List<String> sandwichNames = new ArrayList<String>(){{
             addAll(Arrays.asList("martino", "meat ball", "ham", "salami", "roast beef"));
         }};
@@ -59,10 +60,5 @@ public class OrderMemoryRepository implements OrderRepository {
     @Override
     public Set<Order> getAllOrders() {
         return this.orders;
-    }
-
-    @Autowired
-    public void setSandwichRepository(SandwichRepository sr) {
-        this.sr = sr;
     }
 }

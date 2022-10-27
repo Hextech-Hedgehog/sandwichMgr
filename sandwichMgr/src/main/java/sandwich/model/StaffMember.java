@@ -1,16 +1,15 @@
 package sandwich.model;
 
 import org.apache.logging.log4j.LogManager;
-import sandwich.exception.SandwichNotFoundException;
 import sandwich.exception.SessionNotFoundException;
 
-import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 public class StaffMember extends Person {
 
-    private Set<Session> sessions;
+    private Set<Session> sessions = new HashSet<>();
 
     public StaffMember(String firstName) {
         super(firstName);
@@ -28,10 +27,4 @@ public class StaffMember extends Person {
         this.sessions.add(session);
     }
 
-    @Override
-    public Sandwich orderSandwich(Shop shop) throws IOException, SandwichNotFoundException, SessionNotFoundException {
-        Sandwich sandwich = super.orderSandwich(shop);
-        this.getSessionByDate(LocalDate.now()).getDailyOrder().addSandwich(sandwich);
-        return sandwich;
-    }
 }
