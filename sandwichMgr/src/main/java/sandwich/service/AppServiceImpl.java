@@ -49,7 +49,7 @@ public class AppServiceImpl implements AppService {
     public void orderSandwich(User user, String shopName) {
         if (this.personService.getAllPeople().contains(user)) {
             Bill bill = this.billService.getThisMonthBill();
-            Order order = personService.getOrderByCurrentCourseSession(user);
+            Order order = personService.getOrderByUserForCurrentCourseSession(user);
             if (bill.containsOrder(order))
                 order.addSandwich(this.billService.orderSandwich(Shop.valueOf(shopName), user));
         }
