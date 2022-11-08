@@ -1,16 +1,21 @@
 package sandwich.service;
 
-import sandwich.exception.NonAuthorizedPersonnelException;
-import sandwich.exception.SessionNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
+import org.springframework.stereotype.Service;
 import sandwich.model.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.util.Set;
-
+@Service
 public class AppServiceImpl implements AppService {
 
+    @Autowired
     private BillService billService;
+    @Autowired
     private CourseService courseService;
+    @Autowired
     private PersonService personService;
 
     @Override
@@ -29,26 +34,24 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public Bill viewBillByDate(Person person, LocalDate date) throws NonAuthorizedPersonnelException {
-        if (person instanceof Admin)
-            return this.billService.findBillByMonth(date);
-        throw new NonAuthorizedPersonnelException();
+    @RolesAllowed("ADMIN")
+    public Bill viewBillByDate(User user, LocalDate date) {
+        return this.billService.findBillByMonth(date);
     }
 
     @Override
-    public Set<Order> viewOrdersByDate(Person person, LocalDate date) throws NonAuthorizedPersonnelException {
-        if (person instanceof Admin)
-            return this.billService.findBillByMonth(date).getOrdersByDate(date);
-        throw new NonAuthorizedPersonnelException();
+    @RolesAllowed("ADMIN")
+    public Set<Order> viewOrdersByDate(User user, LocalDate date) {
+        return this.billService.findBillByMonth(date).getOrdersByDate(date);
     }
 
     @Override
-    public void orderSandwich(Person person, String shopName) throws NonAuthorizedPersonnelException {
-        if (this.personService.getAllPeople().contains(person)) {
+    public void orderSandwich(User user, String shopName) {
+        if (this.personService.getAllPeople().contains(user)) {
             Bill bill = this.billService.getThisMonthBill();
-            Order order = personService.getOrderByCurrentCourseSession(person);
+            Order order = personService.getOrderByCurrentCourseSession(user);
             if (bill.containsOrder(order))
-                order.addSandwich(this.billService.orderSandwich(Shop.valueOf(shopName), person));
+                order.addSandwich(this.billService.orderSandwich(Shop.valueOf(shopName), user));
         }
     }
 

@@ -1,4 +1,4 @@
-package main;
+/*package main;
 
 import model.Ingredient;
 import model.SandwichType;
@@ -41,4 +41,4 @@ public class KimMain {
         sandwiches.forEach(SandwichType::printContents);
 
     }
-}
+}*/

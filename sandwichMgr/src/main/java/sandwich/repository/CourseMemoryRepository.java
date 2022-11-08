@@ -6,6 +6,7 @@ import sandwich.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,35 +21,41 @@ public class CourseMemoryRepository implements CourseRepository {
         Course java = new Course("Java Se programming");
         Course fencing = new Course("Medieval fencing");
         Course baseJump = new Course("Base jumping");
-        Person teacher = new StaffMember("Albus");
-        Person teacher2 = new StaffMember("Jeff");
-        Person teacher3 = new StaffMember("Melene");
+        User teacher = new User("Albus", "password", new HashSet<UserRole>() {{
+            add(UserRole.TEACHER);
+        }});
+        User teacher2 = new User("Jeff", "password", new HashSet<UserRole>() {{
+            add(UserRole.TEACHER);
+        }});
+        User teacher3 = new User("Melene", "password", new HashSet<UserRole>() {{
+            add(UserRole.TEACHER);
+        }});
 
         List<Session> sessionsJava = new ArrayList<Session>(){{
-            add(new Session(java.getName(), (StaffMember) teacher, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
-            add(new Session(java.getName(), (StaffMember) teacher, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
-            add(new Session(java.getName(), (StaffMember) teacher, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
-            add(new Session(java.getName(), (StaffMember) teacher, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
+            add(new Session(java.getName(), teacher, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
+            add(new Session(java.getName(), teacher, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
+            add(new Session(java.getName(),  teacher, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
+            add(new Session(java.getName(),  teacher, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
         }};
         List<Session> sessionsFencing = new ArrayList<Session>(){{
-            add(new Session(fencing.getName(), (StaffMember) teacher2, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
-            add(new Session(fencing.getName(), (StaffMember) teacher2, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
-            add(new Session(fencing.getName(), (StaffMember) teacher2, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
-            add(new Session(fencing.getName(), (StaffMember) teacher2, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
+            add(new Session(fencing.getName(), teacher2, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
+            add(new Session(fencing.getName(), teacher2, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
+            add(new Session(fencing.getName(),  teacher2, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
+            add(new Session(fencing.getName(),  teacher2, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
         }};
         List<Session> sessionsBaseJump = new ArrayList<Session>(){{
-            add(new Session(baseJump.getName(), (StaffMember) teacher3, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
-            add(new Session(baseJump.getName(), (StaffMember) teacher3, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
-            add(new Session(baseJump.getName(), (StaffMember) teacher3, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
-            add(new Session(baseJump.getName(), (StaffMember) teacher3, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
+            add(new Session(baseJump.getName(),teacher3, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
+            add(new Session(baseJump.getName(),  teacher3, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
+            add(new Session(baseJump.getName(), teacher3, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
+            add(new Session(baseJump.getName(), teacher3, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
         }};
 
         java.setSessions(sessionsJava);
         fencing.setSessions(sessionsFencing);
         baseJump.setSessions(sessionsBaseJump);
-        java.addParticipants(this.personRepository.getAllPeople().stream().filter(CourseParticipant.class::isInstance).limit(2).map(CourseParticipant.class::cast).collect(Collectors.toList()));
-        fencing.addParticipants(this.personRepository.getAllPeople().stream().filter(CourseParticipant.class::isInstance).skip(2).limit(2).map(CourseParticipant.class::cast).collect(Collectors.toList()));
-        baseJump.addParticipants(this.personRepository.getAllPeople().stream().filter(CourseParticipant.class::isInstance).skip(4).map(CourseParticipant.class::cast).collect(Collectors.toList()));
+        java.addParticipants(this.personRepository.getAllPeople().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).limit(2).collect(Collectors.toList()));
+        fencing.addParticipants(this.personRepository.getAllPeople().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).skip(2).limit(2).collect(Collectors.toList()));
+        baseJump.addParticipants(this.personRepository.getAllPeople().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).skip(4).collect(Collectors.toList()));
     }
 
     @Override

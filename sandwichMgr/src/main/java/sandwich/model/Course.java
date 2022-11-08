@@ -10,7 +10,7 @@ import java.util.List;
 public class Course {
 
     private String name;
-    private List<CourseParticipant> courseParticipants = new ArrayList<>();
+    private List<User> courseParticipants = new ArrayList<>();
     private List<Session> sessions;
 
     public Course(String name) {
@@ -18,7 +18,7 @@ public class Course {
     }
 
     public void printParticipants() {
-        for (CourseParticipant participant: courseParticipants) {
+        for (User participant: courseParticipants) {
             System.out.println(participant.getFirstName());
         }
     }
@@ -31,16 +31,16 @@ public class Course {
         this.name = name;
     }
 
-    public List<CourseParticipant> getCourseParticipants() {
+    public List<User> getCourseParticipants() {
         return courseParticipants;
     }
 
-    public CourseParticipant getCourseParticipantByName(String firstName) throws ParticipantNotFoundException {
+    public User getCourseParticipantByName(String firstName) throws ParticipantNotFoundException {
   //      System.out.println("getCourseParticipant called");
         return this.courseParticipants.stream().filter(e -> e.getFirstName().equalsIgnoreCase(firstName)).findFirst().orElseThrow(() -> new ParticipantNotFoundException("Particpant " + firstName + " not found"));
     }
 
-    public void addParticipants(List<CourseParticipant> courseParticipants) {
+    public void addParticipants(List<User> courseParticipants) {
         this.courseParticipants.addAll(courseParticipants);
         this.courseParticipants.forEach(participant -> participant.follow(this));
     }
@@ -57,7 +57,7 @@ public class Course {
         return this.sessions.stream().filter(elem -> elem.coversDate(date)).findFirst().orElseThrow(() -> new SessionNotFoundException("No session found at this date: " + date));
     }
 
-    public void addParticipant(CourseParticipant participant) {
+    public void addParticipant(User participant) {
         this.courseParticipants.add(participant);
     }
 }

@@ -1,13 +1,10 @@
 package sandwich.service;
 
-import sandwich.exception.NonAuthorizedPersonnelException;
 import sandwich.model.Bill;
 import sandwich.model.Order;
-import sandwich.model.Person;
-import sandwich.model.Sandwich;
+import sandwich.model.User;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 public interface AppService {
@@ -15,8 +12,8 @@ public interface AppService {
     BillService getBillService();
     CourseService getCourseService();
     PersonService getPersonService();
-    Bill viewBillByDate(Person person, LocalDate date) throws NonAuthorizedPersonnelException;
-    Set<Order> viewOrdersByDate(Person person, LocalDate date) throws NonAuthorizedPersonnelException;
-    void orderSandwich(Person person, String shopName) throws NonAuthorizedPersonnelException;
+    Bill viewBillByDate(User user, LocalDate date) throws NonAuthorizedPersonnelException;
+    Set<Order> viewOrdersByDate(User user, LocalDate date) throws NonAuthorizedPersonnelException;
+    void orderSandwich(User user, String shopName) throws NonAuthorizedPersonnelException;
 
 }

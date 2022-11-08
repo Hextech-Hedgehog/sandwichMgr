@@ -4,15 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import sandwich.SpringSandwichApplication;
 import sandwich.model.Sandwich;
 import sandwich.model.SandwichType;
 import sandwich.repository.SandwichRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 
-@SpringBootTest(classes = SpringSandwichApplication.class)
+//@SpringBootTest(classes = SpringSandwichApplication.class)
 class SandwichRepositoryTest {
 
     @Autowired

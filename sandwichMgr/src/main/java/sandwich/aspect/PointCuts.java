@@ -23,9 +23,4 @@ public class PointCuts {
     @Pointcut("execution(* sandwich.repository.*.getSandwich*(..))")
     public void executeGetSandwich() { }
 
-    @Pointcut("execution(* sandwich.model.CourseParticipant.orderSandwich(..))")
-    public void executeOrderSandwich() { }
-
-
-
 }

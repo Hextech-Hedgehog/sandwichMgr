@@ -3,11 +3,11 @@ package sandwich.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import sandwich.exception.NonAuthorizedPersonnelException;
 import sandwich.factory.SandwichFactory;
 import sandwich.model.*;
 import sandwich.repository.BillRepository;
 
+import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -17,6 +17,7 @@ import java.util.Set;
 @Profile("production")
 public class BillServiceImpl implements BillService {
 
+    @Autowired
     private BillRepository billRepository;
 
     @Override
@@ -62,11 +63,9 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public Sandwich orderSandwich(Shop shop, Person person) throws NonAuthorizedPersonnelException {
-        if (person instanceof CourseParticipant) {
-            return this.makeSandwich(shop);
-        } else
-            throw new NonAuthorizedPersonnelException();
+    @RolesAllowed("ADMIN")
+    public Sandwich orderSandwich(Shop shop, User person) {
+        return this.makeSandwich(shop);
     }
 
     private Sandwich makeSandwich(Shop shop) {

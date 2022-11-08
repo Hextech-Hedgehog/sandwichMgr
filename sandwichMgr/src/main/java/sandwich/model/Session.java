@@ -5,12 +5,12 @@ import java.time.LocalDate;
 public class Session {
 
     private String sessionName;
-    private StaffMember instructor;
+    private User instructor;
     private LocalDate startDate;
     private LocalDate endDate;
     private Order dailyOrder;
 
-    public Session(String sessionName, StaffMember instructor, LocalDate startDate, LocalDate endDate) throws IllegalArgumentException {
+    public Session(String sessionName, User instructor, LocalDate startDate, LocalDate endDate) throws IllegalArgumentException {
         this.sessionName = sessionName;
         this.instructor = instructor;
         this.startDate = startDate;
@@ -47,11 +47,11 @@ public class Session {
         this.sessionName = sessionName;
     }
 
-    public StaffMember getInstructor() {
+    public User getInstructor() {
         return instructor;
     }
 
-    public void setInstructor(StaffMember instructor) {
+    public void setInstructor(User instructor) {
         this.instructor = instructor;
     }
 

@@ -2,10 +2,11 @@ package sandwich;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import sandwich.repository.OrderRepository;
-import sandwich.repository.PersonRepository;
-import sandwich.repository.SandwichRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.client.RestTemplate;
+import sandwich.repository.*;
 import sandwich.service.*;
 
 @SpringBootApplication
@@ -25,18 +26,13 @@ public class SpringSandwichApplication {
     }
 
     @Bean
-    public OrderRepository orderRepository(OrderRepository orderRepository) {
-        return orderRepository;
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
     }
 
     @Bean
-    public SandwichRepository sandwichRepository(SandwichRepository sandwichRepository) {
-        return sandwichRepository;
-    }
-
-    @Bean
-    public PersonRepository personRepository(PersonRepository personRepository) {
-        return personRepository;
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

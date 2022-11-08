@@ -1,8 +1,6 @@
 package sandwich.service;
 
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import sandwich.exception.NonAuthorizedPersonnelException;
 import sandwich.model.*;
 
 import java.time.LocalDate;
@@ -19,6 +17,6 @@ public interface BillService {
     void removeBills(Set<Bill> bills);
     List<Bill> getAllBills();
     Bill getThisMonthBill();
-    Sandwich orderSandwich(Shop shop, Person person) throws NonAuthorizedPersonnelException;
+    Sandwich orderSandwich(Shop shop, User user);
 
 }

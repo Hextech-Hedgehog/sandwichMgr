@@ -8,6 +8,7 @@ import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
 import sandwich.repository.PersonRepository;
 
+import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,50 +19,51 @@ public class PersonServiceImpl implements PersonService{
     private PersonRepository personRepository;
 
     @Override
-    public void addPerson(Person person) {
+    public void addPerson(User person) {
         this.personRepository.addPerson(person);
     }
 
     @Override
-    public void addPeople(List<Person> people) {
+    public void addPeople(List<User> people) {
         this.personRepository.addPeople(people);
     }
 
     @Override
-    public Person findPerson(String firstName) {
+    public User findPerson(String firstName) {
         return this.personRepository.findPerson(firstName);
     }
 
     @Override
-    public List<Person> findPeople(List<String> firstNames) {
+    public List<User> findPeople(List<String> firstNames) {
         return this.personRepository.findPeople(firstNames);
     }
 
     @Override
-    public void removePerson(Person person) {
+    public void removePerson(User person) {
         this.personRepository.removePerson(person);
     }
 
     @Override
-    public void removePeople(List<Person> people) {
+    public void removePeople(List<User> people) {
         this.personRepository.removePeople(people);
     }
 
     @Override
-    public List<Person> getAllPeople() {
+    public List<User> getAllPeople() {
         return this.personRepository.getAllPeople();
     }
 
     @Override
-    public Order getOrderByCurrentCourseSession(Person person) {
-        if (!(person instanceof CourseParticipant) || ((CourseParticipant)person).getCourse() == null)
+    @RolesAllowed("ADMIN")
+    public Order getOrderByUserForCurrentCourseSession(User user) {
+        if (user.getCourse() == null)
             return null;
 
         Order order = null;
         try {
-            order = ((CourseParticipant)person).getCourse().getSessionByDate(LocalDate.now()).getDailyOrder();
+            order = user.getCourse().getSessionByDate(LocalDate.now()).getDailyOrder();
         } catch (SessionNotFoundException e) {
-            LogManager.getLogger("error").error("bubu");
+            //LogManager.getLogger("error").error("bubu");
         }
         return order;
     }

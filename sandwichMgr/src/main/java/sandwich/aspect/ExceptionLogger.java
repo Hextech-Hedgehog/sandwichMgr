@@ -39,11 +39,6 @@ public class ExceptionLogger {
         logger.error("Sandwich not found or IO File Exception: " + e.getMessage());
     }
 
-    @AfterThrowing(pointcut = "sandwich.aspect.PointCuts.executeOrderSandwich()", throwing = "e")
-    public void afterSessionNotFoundException2(SessionNotFoundException e) {
-        logger.error("Session not found: " + e.getMessage());
-    }
-
 
 
 

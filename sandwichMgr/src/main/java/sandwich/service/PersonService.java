@@ -1,19 +1,19 @@
 package sandwich.service;
 
 import sandwich.model.Order;
-import sandwich.model.Person;
+import sandwich.model.User;
 
 import java.util.List;
 
 public interface PersonService {
 
-    void addPerson(Person person);
-    void addPeople(List<Person> people);
-    Person findPerson(String firstName);
-    List<Person> findPeople(List<String> firstNames);
-    void removePerson(Person person);
-    void removePeople(List<Person> people);
-    List<Person> getAllPeople();
-    Order getOrderByCurrentCourseSession(Person person);
+    void addPerson(User person);
+    void addPeople(List<User> people);
+    User findPerson(String firstName);
+    List<User> findPeople(List<String> firstNames);
+    void removePerson(User person);
+    void removePeople(List<User> people);
+    List<User> getAllPeople();
+    Order getOrderByUserForCurrentCourseSession(User person);
 
 }
