@@ -6,7 +6,6 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
-import sandwich.repository.*;
 import sandwich.service.*;
 
 @SpringBootApplication
@@ -17,7 +16,7 @@ public class SpringSandwichApplication {
     }
 
     @Bean
-    public AppService appService(BillService billService, CourseService courseService, PersonService personService) {
+    public AppService appService(BillService billService, CourseService courseService, UserService personService) {
         AppServiceImpl appService = new AppServiceImpl();
         appService.setBillService(billService);
         appService.setCourseService(courseService);

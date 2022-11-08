@@ -11,7 +11,7 @@ public interface AppService {
 
     BillService getBillService();
     CourseService getCourseService();
-    PersonService getPersonService();
+    UserService getPersonService();
     Bill viewBillByDate(User user, LocalDate date);
     Set<Order> viewOrdersByDate(User user, LocalDate date);
     void orderSandwich(User user, String shopName);

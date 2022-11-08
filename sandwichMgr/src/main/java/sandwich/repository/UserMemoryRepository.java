@@ -1,23 +1,21 @@
 package sandwich.repository;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
 import sandwich.model.User;
 import sandwich.model.UserRole;
-import sandwich.exception.PersonNotFoundException;
+import sandwich.exception.UserNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
-public class PersonMemoryRepository implements PersonRepository {
+public class UserMemoryRepository implements UserRepository {
 
     List<User> users = new ArrayList<>();
 
-    public PersonMemoryRepository() {
+    public UserMemoryRepository() {
         users.add(new User("Albus", "password", new HashSet<UserRole>(){{
             add(UserRole.ADMIN);
         }}));
@@ -36,37 +34,41 @@ public class PersonMemoryRepository implements PersonRepository {
     }
 
     @Override
-    public void addPerson(User user) {
+    public void addUser(User user) {
         this.users.add(user);
     }
 
     @Override
-    public void addPeople(List<User> people) {
+    public void addUsers(List<User> people) {
         this.users.addAll(people);
     }
 
     @Override
-    public User findPerson(String firstName) throws PersonNotFoundException {
-        return this.users.stream().filter(p -> p.getFirstName().equals(firstName)).findFirst().orElseThrow(()-> new PersonNotFoundException("No person with this first name found"));
+    public User findUser(String firstName) throws UserNotFoundException {
+        return this.users.stream().filter(p -> p.getFirstName().equals(firstName)).findFirst().orElseThrow(()-> new UserNotFoundException("No user with this first name found"));
     }
 
     @Override
-    public List<User> findPeople(List<String> firstNames) throws PersonNotFoundException {
+    public List<User> findUsers(List<String> firstNames) throws UserNotFoundException {
+        // users.forEach(user -> findUser(user.getFirstName())); // requires a try-catch
+        if (users.stream().filter(user -> firstNames.contains(user.getFirstName())).count() != firstNames.size()) {
+            throw new UserNotFoundException("At least one of the users passed was not found");
+        }
         return this.users.stream().filter(p -> firstNames.contains(p.getFirstName())).collect(Collectors.toList());
     }
 
     @Override
-    public void removePerson(User user) {
+    public void removeUser(User user) {
         this.users.remove(user);
     }
 
     @Override
-    public void removePeople(List<User> people) {
+    public void removeUsers(List<User> people) {
         this.users.removeAll(people);
     }
 
     @Override
-    public List<User> getAllPeople() {
+    public List<User> getAllUsers() {
         return this.users;
     }
 }

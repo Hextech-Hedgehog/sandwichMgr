@@ -13,13 +13,14 @@ public class User extends org.springframework.security.core.userdetails.User {
     private Course course;
 
     public User(String username) {
-        super(username, "password", new HashSet<UserRole>() {{
+        this(username, "password", new HashSet<UserRole>() {{
             add(UserRole.USER);
         }});
     }
 
     public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
+        this.firstName = username;
     }
 
     public String getFirstName() {

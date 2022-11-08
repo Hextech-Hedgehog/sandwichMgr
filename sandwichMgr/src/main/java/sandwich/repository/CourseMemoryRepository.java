@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 public class CourseMemoryRepository implements CourseRepository {
 
     private List<Course> courses = new ArrayList<>();
-    private PersonRepository personRepository;
+    private UserRepository personRepository;
 
-    public CourseMemoryRepository(@Autowired PersonRepository personRepository) {
+    public CourseMemoryRepository(@Autowired UserRepository personRepository) {
         this.personRepository = personRepository;
         Course java = new Course("Java Se programming");
         Course fencing = new Course("Medieval fencing");
@@ -54,9 +54,9 @@ public class CourseMemoryRepository implements CourseRepository {
         java.setSessions(sessionsJava);
         fencing.setSessions(sessionsFencing);           // TODO this.personRepository is null
         baseJump.setSessions(sessionsBaseJump);
-        java.addParticipants(this.personRepository.getAllPeople().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).limit(2).collect(Collectors.toList()));
-        fencing.addParticipants(this.personRepository.getAllPeople().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).skip(2).limit(2).collect(Collectors.toList()));
-        baseJump.addParticipants(this.personRepository.getAllPeople().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).skip(4).collect(Collectors.toList()));
+        java.addParticipants(this.personRepository.getAllUsers().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).limit(2).collect(Collectors.toList()));
+        fencing.addParticipants(this.personRepository.getAllUsers().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).skip(2).limit(2).collect(Collectors.toList()));
+        baseJump.addParticipants(this.personRepository.getAllUsers().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).skip(4).collect(Collectors.toList()));
     }
 
     @Override

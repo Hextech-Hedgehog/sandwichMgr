@@ -1,7 +1,6 @@
 package sandwich.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Service;
 import sandwich.model.*;
 
@@ -16,7 +15,7 @@ public class AppServiceImpl implements AppService {
     @Autowired
     private CourseService courseService;
     @Autowired
-    private PersonService personService;
+    private UserService personService;
 
     @Override
     public BillService getBillService() {
@@ -29,7 +28,7 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public PersonService getPersonService() {
+    public UserService getPersonService() {
         return this.personService;
     }
 
@@ -47,7 +46,7 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public void orderSandwich(User user, String shopName) {
-        if (this.personService.getAllPeople().contains(user)) {
+        if (this.personService.getAllUsers().contains(user)) {
             Bill bill = this.billService.getThisMonthBill();
             Order order = personService.getOrderByUserForCurrentCourseSession(user);
             if (bill.containsOrder(order))
@@ -63,7 +62,7 @@ public class AppServiceImpl implements AppService {
         this.courseService = courseService;
     }
 
-    public void setPersonService(PersonService personService) {
+    public void setPersonService(UserService personService) {
         this.personService = personService;
     }
 }
