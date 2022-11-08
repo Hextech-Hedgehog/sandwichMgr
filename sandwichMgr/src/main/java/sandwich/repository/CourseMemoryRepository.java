@@ -2,6 +2,7 @@ package sandwich.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import sandwich.exception.CourseNotFoundException;
 import sandwich.model.*;
 
 import java.time.LocalDate;
@@ -51,7 +52,7 @@ public class CourseMemoryRepository implements CourseRepository {
         }};
 
         java.setSessions(sessionsJava);
-        fencing.setSessions(sessionsFencing);
+        fencing.setSessions(sessionsFencing);           // TODO this.personRepository is null
         baseJump.setSessions(sessionsBaseJump);
         java.addParticipants(this.personRepository.getAllPeople().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).limit(2).collect(Collectors.toList()));
         fencing.addParticipants(this.personRepository.getAllPeople().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).skip(2).limit(2).collect(Collectors.toList()));
@@ -69,13 +70,15 @@ public class CourseMemoryRepository implements CourseRepository {
     }
 
     @Override
-    public Course findCourse(String name) {
-        return this.courses.stream().filter(c -> c.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    public Course findCourse(String name) throws CourseNotFoundException {
+        return this.courses.stream().filter(c -> c.getName().equalsIgnoreCase(name)).findFirst()
+                .orElseThrow(() -> new CourseNotFoundException("No course found with this name"));
     }
 
     @Override
     public List<Course> findCourses(List<String> names) {
         return this.courses.stream().filter(c -> courses.contains(c.getName())).collect(Collectors.toList());
+
     }
 
     @Override

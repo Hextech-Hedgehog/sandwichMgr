@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
 import sandwich.model.User;
 import sandwich.model.UserRole;
+import sandwich.exception.PersonNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -45,12 +46,12 @@ public class PersonMemoryRepository implements PersonRepository {
     }
 
     @Override
-    public User findPerson(String firstName) {
-        return this.users.stream().filter(p -> p.getFirstName().equals(firstName)).findFirst().orElse(null);
+    public User findPerson(String firstName) throws PersonNotFoundException {
+        return this.users.stream().filter(p -> p.getFirstName().equals(firstName)).findFirst().orElseThrow(()-> new PersonNotFoundException("No person with this first name found"));
     }
 
     @Override
-    public List<User> findPeople(List<String> firstNames) {
+    public List<User> findPeople(List<String> firstNames) throws PersonNotFoundException {
         return this.users.stream().filter(p -> firstNames.contains(p.getFirstName())).collect(Collectors.toList());
     }
 

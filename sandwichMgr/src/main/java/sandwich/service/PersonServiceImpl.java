@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
+import sandwich.exception.PersonNotFoundException;
 import sandwich.repository.PersonRepository;
 
 import javax.annotation.security.RolesAllowed;
@@ -29,12 +30,12 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public User findPerson(String firstName) {
+    public User findPerson(String firstName) throws PersonNotFoundException {
         return this.personRepository.findPerson(firstName);
     }
 
     @Override
-    public List<User> findPeople(List<String> firstNames) {
+        public List<User> findPeople(List<String> firstNames) throws PersonNotFoundException {
         return this.personRepository.findPeople(firstNames);
     }
 

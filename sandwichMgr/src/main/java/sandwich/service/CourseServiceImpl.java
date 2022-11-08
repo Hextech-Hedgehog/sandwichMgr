@@ -3,6 +3,7 @@ package sandwich.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import sandwich.exception.CourseNotFoundException;
 import sandwich.model.Course;
 import sandwich.repository.CourseRepository;
 
@@ -25,7 +26,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course findCourse(String name) {
+    public Course findCourse(String name) throws CourseNotFoundException {
         return this.courseRepository.findCourse(name);
     }
 

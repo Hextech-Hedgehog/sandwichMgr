@@ -44,7 +44,7 @@ class BillTest {
         }};
         b = new Bill(orders);
     }
-
+/*
     @Test
     void addOrder() throws IOException, SandwichNotFoundException {
         Order order = new Order(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "roast beef"), true, false));
@@ -56,4 +56,7 @@ class BillTest {
     void getOrdersByDate() {
         assertEquals(3, b.getOrdersByDate(LocalDate.now()).size());
     }
+
+
+ */
 }
