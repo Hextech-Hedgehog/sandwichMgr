@@ -46,27 +46,27 @@ class UserServiceImplTest {
     public void findUsersByNamesWith3NamesInArrayTest() throws UserNotFoundException {
         Set<String> names = new HashSet<>();
         names.add("Bob"); names.add("Peter"); names.add("Mary");
-        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
+        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toSet()));
     }
 
     @Test
     public void findUsersByNamesWith2NamesInArrayTest() throws UserNotFoundException {
         Set<String> names = new HashSet<>();
         names.add("Gwen"); names.add("Charlie");
-        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
+        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toSet()));
     }
 
     @Test
     public void findUsersByNamesWith1NameInArrayTest() throws UserNotFoundException {
         Set<String> names = new HashSet<>();
         names.add("Archibald");
-        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
+        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toSet()));
     }
 
     @Test
     public void findUsersByNamesWithEmptyArrayTest() throws UserNotFoundException {
         Set<String> names = new HashSet<>();
-        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
+        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toSet()));
     }
 
     @Test
@@ -82,6 +82,8 @@ class UserServiceImplTest {
         names.add("Bob"); names.add("Albus"); names.add(null);
         assertThrows(UserNotFoundException.class, () -> userService.findUsers(names));
     }
+
+
 
 
 
