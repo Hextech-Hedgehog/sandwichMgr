@@ -36,12 +36,13 @@ public class SandwichTypeFileRepository implements SandwichTypeRepository {
                 writer.write(line + "\n");
             }
         } catch (IOException e) {
-            // catch in aspect : LogManager.getLogger("error").error(e.getMessage());
+            // catch in aspect :
+            LogManager.getLogger("error").error(e.getMessage());
         }
     }
 
     @Override
-    public Set<SandwichType> getSandwiches(Shop shop) {
+    public Set<SandwichType> getSandwichesFromShop(Shop shop) {
         Set<SandwichType> sandwichTypes = new HashSet<>();
         try(BufferedReader reader = new BufferedReader(new FileReader(shop.getPathWay()))) {
             String sandwichType;
@@ -71,7 +72,7 @@ public class SandwichTypeFileRepository implements SandwichTypeRepository {
         } catch (IOException e) {
             // catch in aspect LogManager.getLogger("error").error(e.getMessage());
         }
-        if (sandwichType == null)
+        if (sandwichType == null)           // TODO Aspect Exception Logger
             throw new SandwichNotFoundException("Sandwich " + sandwichName + " doesn't exist.");
         return sandwichType;
     }
@@ -93,7 +94,7 @@ public class SandwichTypeFileRepository implements SandwichTypeRepository {
     }
 
     public void printSandwiches(Shop shop) {
-        for (SandwichType sandwich: this.getSandwiches(shop))
+        for (SandwichType sandwich: this.getSandwichesFromShop(shop))
             sandwich.printContents();
     }
 
