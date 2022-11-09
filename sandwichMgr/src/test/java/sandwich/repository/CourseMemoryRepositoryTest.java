@@ -7,8 +7,8 @@ import sandwich.SpringSandwichApplication;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.model.Course;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,56 +21,63 @@ class CourseMemoryRepositoryTest {
 
     @Test
     public void findCourseFencingTest() throws CourseNotFoundException {
-        assertEquals("Medieval fencing", courseRepository.findCourse("Medieval fencing").getName());
+        assertEquals("Medieval fencing", courseRepository.findCourseByName("Medieval fencing").getName());
     }
 
     @Test
     public void findCourseJavaTest() throws CourseNotFoundException {
-        assertEquals("Java Se programming", courseRepository.findCourse("Java Se programming").getName());
+        assertEquals("Java SE programming", courseRepository.findCourseByName("Java SE programming").getName());
     }
 
     @Test
     public void findCourseBaseJumpingTest() throws CourseNotFoundException {
-        assertEquals("Base jumping", courseRepository.findCourse("Base jumping").getName());
+        assertEquals("Base jumping", courseRepository.findCourseByName("Base jumping").getName());
     }
 
     @Test
-    public void findCourseThrowsCourseNotFoundExceptionTest() throws CourseNotFoundException {
-        assertThrows(CourseNotFoundException.class, () -> courseRepository.findCourse(null));
+    public void findCourseThrowsCourseNotFoundExceptionTest() {
+        assertThrows(CourseNotFoundException.class, () -> courseRepository.findCourseByName(null));
     }
 
     @Test
     public void findCoursesByNamesWith3NamesInArrayTest() throws CourseNotFoundException {
-        List<String> names = new ArrayList<>();         // TODO might work better with a Set than a List
-        names.add("Medieval fencing"); names.add("Java Se programming"); names.add("Base jumping");
-        assertEquals(names, courseRepository.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
-    }
+        Set<String> names = new HashSet<>();
+        names.add("Medieval fencing"); names.add("Java SE programming"); names.add("Base jumping");
+        assertEquals(names, courseRepository.findCoursesByName(names).stream().map(Course::getName).collect(Collectors.toSet()));
+    }                   // TODO finds all three but in different order
 
     @Test
     public void findCoursesByNamesWith2NamesInArrayTest() throws CourseNotFoundException {
-        List<String> names = new ArrayList<>();         // TODO might work better with a Set than a List
-        names.add("Medieval fencing"); names.add("Java Se programming");
-        assertEquals(names, courseRepository.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
-    }
+        Set<String> names = new HashSet<>();
+        names.add("Medieval fencing"); names.add("Java SE programming");
+        assertEquals(names, courseRepository.findCoursesByName(names).stream().map(Course::getName).collect(Collectors.toSet()));
+    }               // TODO finds all two but in different order
 
     @Test
     public void findCoursesByNamesWith1NameInArrayTest() throws CourseNotFoundException {
-        List<String> names = new ArrayList<>();         // TODO might work better with a Set than a List
+        Set<String> names = new HashSet<>();
         names.add("Medieval fencing");
-        assertEquals(names, courseRepository.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
+        assertEquals(names, courseRepository.findCoursesByName(names).stream().map(Course::getName).collect(Collectors.toSet()));
     }
 
     @Test
     public void findCoursesByNamesWithEmptyArrayTest() throws CourseNotFoundException {
-        List<String> names = new ArrayList<>(); // TODO check if this produces a NullPointerException or not?
-        assertEquals(names, courseRepository.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
+        Set<String> names = new HashSet<>();
+        assertEquals(names, courseRepository.findCoursesByName(names).stream().map(Course::getName).collect(Collectors.toSet()));
     }
 
     @Test
-    public void findCoursesWithOneFakeNameInArrayTest() throws CourseNotFoundException {
-        List<String> names = new ArrayList<>();
-        names.add("Medieval fencing"); names.add("Java Se programming"); names.add(null);
-        assertThrows(CourseNotFoundException.class, () -> courseRepository.findCourses(names));
+    public void findCoursesWithNullNameInArrayTest() throws CourseNotFoundException {
+        Set<String> names = new HashSet<>();
+        names.add("Medieval fencing"); names.add("Java SE programming"); names.add(null);
+        assertThrows(CourseNotFoundException.class, () -> courseRepository.findCoursesByName(names));
+    }
+
+    @Test
+    public void findCoursesWithFakeNameInArrayTest() throws CourseNotFoundException {
+        Set<String> names = new HashSet<>();
+        names.add("Medieval fencing"); names.add("Java SE programming"); names.add("Mastodon");
+        assertThrows(CourseNotFoundException.class, () -> courseRepository.findCoursesByName(names));
     }
 
 

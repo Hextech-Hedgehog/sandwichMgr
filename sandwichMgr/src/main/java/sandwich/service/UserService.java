@@ -4,17 +4,17 @@ import sandwich.model.Order;
 import sandwich.model.User;
 import sandwich.exception.UserNotFoundException;
 
-import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
     void addPerson(User person);
-    void addPeople(List<User> people);
+    void addPeople(Set<User> people);
     User findUser(String firstName) throws UserNotFoundException;
-    List<User> findUsers(List<String> firstNames) throws UserNotFoundException;
+    Set<User> findUsers(Set<String> firstNames) throws UserNotFoundException;
     void removeUser(User person);
-    void removeUser(List<User> people);
-    List<User> getAllUsers();
+    void removeUser(Set<User> people);
+    Set<User> getAllUsers();
     Order getOrderByUserForCurrentCourseSession(User person);
 
 }

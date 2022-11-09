@@ -10,10 +10,11 @@ import java.util.List;
 public class Course {
 
     private String name;
-    private List<User> courseParticipants = new ArrayList<>();
+    private final List<User> courseParticipants = new ArrayList<>();
     private List<Session> sessions;
 
-    public Course(String name) {
+    public Course(String name) throws IllegalArgumentException {
+        if (name == null) throw new IllegalArgumentException("Name is a required parameter for course");
         this.name = name;
     }
 
@@ -27,7 +28,8 @@ public class Course {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws IllegalArgumentException {
+        if (name == null) throw new IllegalArgumentException("Name is a required parameter for course");
         this.name = name;
     }
 

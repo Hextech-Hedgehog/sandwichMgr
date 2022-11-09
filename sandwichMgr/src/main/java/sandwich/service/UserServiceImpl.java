@@ -11,6 +11,7 @@ import sandwich.repository.UserRepository;
 import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Profile("production")
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addPeople(List<User> users) {
+    public void addPeople(Set<User> users) {
         this.userRepository.addUsers(users);
     }
 
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-        public List<User> findUsers(List<String> firstNames) throws UserNotFoundException {
+        public Set<User> findUsers(Set<String> firstNames) throws UserNotFoundException {
         return this.userRepository.findUsers(firstNames);
     }
 
@@ -44,13 +45,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void removeUser(List<User> users) {
+    public void removeUser(Set<User> users) {
         this.userRepository.removeUsers(users);
     }
 
 
     @Override
-    public List<User> getAllUsers() {
+    public Set<User> getAllUsers() {
         return this.userRepository.getAllUsers();
     }
 
