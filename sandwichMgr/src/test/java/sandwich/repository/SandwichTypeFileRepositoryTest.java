@@ -77,15 +77,45 @@ class SandwichTypeFileRepositoryTest {
         Set<SandwichType> sandwichTypes = sandwichTypeRepo.getSandwichesFromShop(Shop.VLEUGELS);
         assertTrue(sandwichTypes.contains(sandwichTypeRepo.getSandwich(Shop.VLEUGELS, "club")));
         assertTrue(sandwichTypes.contains(sandwichTypeRepo.getSandwich(Shop.VLEUGELS, "special")));
-        assertEquals("club", sandwichTypes.stream().findAny()
-                .orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop")).getSandwichName());
-        assertEquals("salad", sandwichTypes.stream().findAny()
-                .orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop")).getIngredients().get(2).getName());
-        assertEquals("bacon", sandwichTypes.stream().findAny()
-                .orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop")).getIngredients().get(0).getName());
 
+        assertEquals("club", sandwichTypes.stream().filter(sandwichType -> sandwichType.getSandwichName()
+                .equals("club")).findFirst().orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop"))
+                .getSandwichName());
+        assertEquals("salad", sandwichTypes.stream().filter(sandwichType -> sandwichType.getSandwichName()
+                .equals("club")).findFirst().orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop"))
+                .getIngredients().get(2).getName());
+        assertEquals("bacon", sandwichTypes.stream().filter(sandwichType -> sandwichType.getSandwichName()
+                .equals("special")).findFirst().orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop"))
+                .getIngredients().get(0).getName());
+        assertEquals("mayonnaise", sandwichTypes.stream().filter(sandwichType -> sandwichType.getSandwichName()
+                .equals("special")).findFirst().orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop"))
+                .getIngredients().get(1).getName());
+    }
 
+    @Test
+    void getSandwichesFromShopPinkys() throws SandwichNotFoundException {
+        Set<SandwichType> sandwichTypes = sandwichTypeRepo.getSandwichesFromShop(Shop.PINKYS);
+        assertTrue(sandwichTypes.contains(sandwichTypeRepo.getSandwich(Shop.PINKYS, "meat ball")));
+        assertTrue(sandwichTypes.contains(sandwichTypeRepo.getSandwich(Shop.PINKYS, "martino")));
+        assertTrue(sandwichTypes.contains(sandwichTypeRepo.getSandwich(Shop.PINKYS, "ham")));
+        assertTrue(sandwichTypes.contains(sandwichTypeRepo.getSandwich(Shop.PINKYS, "salami")));
+        assertTrue(sandwichTypes.contains(sandwichTypeRepo.getSandwich(Shop.PINKYS, "roast beef")));
 
+        assertEquals("roast beef", sandwichTypes.stream().filter(sandwichType -> sandwichType.getSandwichName()
+                .equals("roast beef")).findFirst().orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop"))
+                .getSandwichName());
+        assertEquals("Beef", sandwichTypes.stream().filter(sandwichType -> sandwichType.getSandwichName()
+                        .equals("meat ball")).findFirst().orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop"))
+                .getIngredients().get(1).getName());
+        assertEquals("Martino sauce", sandwichTypes.stream().filter(sandwichType -> sandwichType.getSandwichName()
+                        .equals("martino")).findFirst().orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop"))
+                .getIngredients().get(6).getName());
+        assertEquals("Ham", sandwichTypes.stream().filter(sandwichType -> sandwichType.getSandwichName()
+                        .equals("ham")).findFirst().orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop"))
+                .getIngredients().get(2).getName());
+        assertEquals("Bread", sandwichTypes.stream().filter(sandwichType -> sandwichType.getSandwichName()
+                        .equals("salami")).findFirst().orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop"))
+                .getIngredients().get(0).getName());
     }
 
 
