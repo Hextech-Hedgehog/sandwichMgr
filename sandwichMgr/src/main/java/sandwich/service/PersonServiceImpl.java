@@ -61,7 +61,6 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    @RolesAllowed("ADMIN")
     public Order getOrderByUserForCurrentCourseSession(User user) throws SessionNotFoundException, CourseNotFoundException {
         if (user.getCourse() == null)
             throw new CourseNotFoundException(user.getFirstName() + " isn't sign in any course.");
