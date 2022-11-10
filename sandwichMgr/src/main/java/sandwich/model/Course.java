@@ -36,7 +36,6 @@ public class Course {
     }
 
     public User getCourseParticipantByName(String firstName) throws ParticipantNotFoundException {
-  //      System.out.println("getCourseParticipant called");
         return this.courseParticipants.stream().filter(e -> e.getFirstName().equalsIgnoreCase(firstName)).findFirst().orElseThrow(() -> new ParticipantNotFoundException("Particpant " + firstName + " not found"));
     }
 
@@ -55,6 +54,10 @@ public class Course {
 
     public Session getSessionByDate(LocalDate date) throws SessionNotFoundException {
         return this.sessions.stream().filter(elem -> elem.coversDate(date)).findFirst().orElseThrow(() -> new SessionNotFoundException("No session found at this date: " + date));
+    }
+
+    public boolean hasSession(LocalDate date) {
+        return this.sessions.stream().anyMatch(elem -> elem.coversDate(date));
     }
 
     public void addParticipant(User participant) {

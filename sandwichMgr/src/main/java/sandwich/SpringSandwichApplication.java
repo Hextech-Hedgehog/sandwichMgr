@@ -16,14 +16,14 @@ public class SpringSandwichApplication {
         SpringApplication.run(SpringSandwichApplication.class, args);
     }
 
-    @Bean
+    /*@Bean
     public AppService appService(BillService billService, CourseService courseService, PersonService personService) {
         AppServiceImpl appService = new AppServiceImpl();
         appService.setBillService(billService);
         appService.setCourseService(courseService);
         appService.setPersonService(personService);
         return appService;
-    }
+    }*/
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {

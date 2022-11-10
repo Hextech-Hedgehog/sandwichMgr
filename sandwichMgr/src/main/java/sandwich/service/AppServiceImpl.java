@@ -3,6 +3,8 @@ package sandwich.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Service;
+import sandwich.exception.CourseNotFoundException;
+import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -34,35 +36,39 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    @RolesAllowed("ADMIN")
-    public Bill viewBillByDate(User user, LocalDate date) {
+    public Bill viewBillByDate(LocalDate date) {
         return this.billService.findBillByMonth(date);
     }
 
     @Override
-    @RolesAllowed("ADMIN")
-    public Set<Order> viewOrdersByDate(User user, LocalDate date) {
+    public Set<Order> viewOrdersByDate(LocalDate date) {
         return this.billService.findBillByMonth(date).getOrdersByDate(date);
     }
 
     @Override
-    public void orderSandwich(User user, String shopName) {
+    public Sandwich orderSandwich(User user, String shopName) throws SessionNotFoundException, CourseNotFoundException {
+        Sandwich sandwich = null;
         if (this.personService.getAllPeople().contains(user)) {
-            Bill bill = this.billService.getThisMonthBill();
             Order order = personService.getOrderByUserForCurrentCourseSession(user);
-            if (bill.containsOrder(order))
-                order.addSandwich(this.billService.orderSandwich(Shop.valueOf(shopName), user));
+            sandwich = this.billService.orderSandwich(Shop.valueOf(shopName));
+            order.addSandwich(sandwich);
+            this.billService.getThisMonthBill().addOrder(order);
         }
+
+        return sandwich;
     }
 
+    @Override
     public void setBillService(BillService billService) {
         this.billService = billService;
     }
 
+    @Override
     public void setCourseService(CourseService courseService) {
         this.courseService = courseService;
     }
 
+    @Override
     public void setPersonService(PersonService personService) {
         this.personService = personService;
     }

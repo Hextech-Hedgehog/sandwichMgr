@@ -3,9 +3,11 @@ package sandwich.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import sandwich.exception.SessionNotFoundException;
 import sandwich.factory.SandwichFactory;
 import sandwich.model.*;
 import sandwich.repository.BillRepository;
+import sandwich.utils.SandwichMaker;
 
 import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
@@ -58,61 +60,14 @@ public class BillServiceImpl implements BillService {
     }
 
     @Autowired
+    @Override
     public void setBillRepository(BillRepository billRepository) {
         this.billRepository = billRepository;
     }
 
     @Override
-    @RolesAllowed("ADMIN")
-    public Sandwich orderSandwich(Shop shop, User person) {
-        return this.makeSandwich(shop);
+    public Sandwich orderSandwich(Shop shop) {
+        return SandwichMaker.makeSandwich(shop);
     }
 
-    private Sandwich makeSandwich(Shop shop) {
-        System.out.println("Please type in the sandwich of your choice ");
-        Sandwich sandwich = selectSandwich(shop);
-        System.out.println("Here is your sandwich: ");
-        sandwich.printContents();
-        System.out.println("Have a nice meal!");
-        return sandwich;
-    }
-
-    private static Sandwich selectSandwich(Shop shop) {
-        Scanner sc = new Scanner(System.in);
-        Sandwich sandwich;
-
-        while(true) {
-            String sandwichName = sc.nextLine();
-            SandwichType sd = SandwichType.getSandwichByName(shop, sandwichName);
-
-            if (sd != null) {
-                boolean asClub = selectExtra("Would you like your sandwich as a club ?");
-                boolean withButter = selectExtra("Do you want butter on your sandwich ?");
-                sandwich = SandwichFactory.getSandwichFactory().makeSandwich(sd).asClub(asClub).withButter(withButter).toSandwich();
-                break;
-            }
-            System.out.println("Please type in a correct sandwich option");
-        }
-
-        return sandwich;
-    }
-
-    private static boolean selectExtra(String extraDescription) {
-        System.out.println(extraDescription);
-        System.out.println("Type in y or n");
-        Scanner sc = new Scanner(System.in);
-        boolean extra;
-
-        while(true) {
-            String sandwichName = sc.nextLine();
-            boolean result = sandwichName.equalsIgnoreCase("y");
-            if (result || sandwichName.equalsIgnoreCase("n")) {
-                extra = result;
-                break;
-            }
-            System.out.println("Please type in Y or N");
-        }
-
-        return extra;
-    }
 }

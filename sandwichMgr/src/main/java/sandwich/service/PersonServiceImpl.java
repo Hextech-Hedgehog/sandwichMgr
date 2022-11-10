@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
 import sandwich.exception.PersonNotFoundException;
@@ -30,23 +31,28 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public User findPerson(String firstName) throws PersonNotFoundException {
-        return this.personRepository.findPerson(firstName);
+    public User findUserByName(String firstName) throws PersonNotFoundException {
+        return this.personRepository.findUserByName(firstName);
     }
 
     @Override
-        public List<User> findPeople(List<String> firstNames) throws PersonNotFoundException {
+    public User findUser(User user) throws PersonNotFoundException {
+        return this.personRepository.findUser(user);
+    }
+
+    @Override
+        public List<User> findUsers(List<String> firstNames) throws PersonNotFoundException {
         return this.personRepository.findPeople(firstNames);
     }
 
     @Override
-    public void removePerson(User person) {
-        this.personRepository.removePerson(person);
+    public void removePerson(User user) {
+        this.personRepository.removePerson(user);
     }
 
     @Override
-    public void removePeople(List<User> people) {
-        this.personRepository.removePeople(people);
+    public void removePeople(List<User> users) {
+        this.personRepository.removePeople(users);
     }
 
     @Override
@@ -56,17 +62,11 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     @RolesAllowed("ADMIN")
-    public Order getOrderByUserForCurrentCourseSession(User user) {
+    public Order getOrderByUserForCurrentCourseSession(User user) throws SessionNotFoundException, CourseNotFoundException {
         if (user.getCourse() == null)
-            return null;
+            throw new CourseNotFoundException(user.getFirstName() + " isn't sign in any course.");
 
-        Order order = null;
-        try {
-            order = user.getCourse().getSessionByDate(LocalDate.now()).getDailyOrder();
-        } catch (SessionNotFoundException e) {
-            //LogManager.getLogger("error").error("bubu");
-        }
-        return order;
+        return user.getCourse().getSessionByDate(LocalDate.now()).getDailyOrder();
     }
 
     @Autowired

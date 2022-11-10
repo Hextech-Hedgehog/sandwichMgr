@@ -9,7 +9,8 @@ public interface PersonRepository {
 
     void addPerson(User user);
     void addPeople(List<User> users);
-    User findPerson(String firstName) throws PersonNotFoundException;
+    User findUserByName(String firstName) throws PersonNotFoundException;
+    User findUser(User user) throws PersonNotFoundException;
     List<User> findPeople(List<String> firstNames) throws PersonNotFoundException;
     void removePerson(User user);
     void removePeople(List<User> users);

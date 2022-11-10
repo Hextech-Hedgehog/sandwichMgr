@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import sandwich.model.Bill;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,17 @@ public class BillMemoryRepository implements BillRepository {
 
     public BillMemoryRepository(@Autowired OrderRepository orderRepository) {
         this.or = orderRepository;
+    }
+
+    @PostConstruct
+    private void init() {
         List<Bill> bills = new ArrayList<Bill>(){{
             add(new Bill(or.getAllOrders().stream().limit(2).collect(Collectors.toSet())));
             add(new Bill(or.getAllOrders().stream().skip(2).collect(Collectors.toSet())));
         }};
+        bills.get(0).setBillDate(bills.get(0).getOrders().keySet().stream().findFirst().get());
+        bills.get(1).setBillDate(bills.get(1).getOrders().keySet().stream().findFirst().get());
+        this.bills.addAll(bills);
     }
 
     @Override

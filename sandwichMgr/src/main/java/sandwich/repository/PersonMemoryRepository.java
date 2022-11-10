@@ -46,8 +46,13 @@ public class PersonMemoryRepository implements PersonRepository {
     }
 
     @Override
-    public User findPerson(String firstName) throws PersonNotFoundException {
+    public User findUserByName(String firstName) throws PersonNotFoundException {
         return this.users.stream().filter(p -> p.getFirstName().equals(firstName)).findFirst().orElseThrow(()-> new PersonNotFoundException("No person with this first name found"));
+    }
+
+    @Override
+    public User findUser(User user) throws PersonNotFoundException {
+        return this.users.stream().filter(u -> u.equals(user)).findFirst().orElseThrow(() -> new PersonNotFoundException("Person not found"));
     }
 
     @Override
