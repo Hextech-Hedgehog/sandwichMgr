@@ -64,7 +64,8 @@ public class CourseMemoryRepository implements CourseRepository {
     }
 
     @Override
-    public Course findCourseByName(String name) throws CourseNotFoundException {
+    public Course findCourseByName(String name) throws CourseNotFoundException, IllegalArgumentException {
+        if (name == null) throw new IllegalArgumentException("No name was passed");
         return this.courses.stream().filter(c -> c.getName().equalsIgnoreCase(name)).findFirst()
                 .orElseThrow(() -> new CourseNotFoundException("No course found with this name"));
     }
@@ -88,4 +89,8 @@ public class CourseMemoryRepository implements CourseRepository {
         courses.forEach(this.courses::remove);
     }
 
+    @Override
+    public List<Course> getAllCourses() {
+        return courses;
+    }
 }

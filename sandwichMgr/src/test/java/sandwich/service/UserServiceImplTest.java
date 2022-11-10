@@ -1,12 +1,16 @@
 package sandwich.service;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import sandwich.SpringSandwichApplication;
+import sandwich.exception.SessionNotFoundException;
 import sandwich.exception.UserNotFoundException;
-import sandwich.model.User;
+import sandwich.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +22,18 @@ class UserServiceImplTest {
 
     @Autowired
     private UserService userService;
+
+    @Mock
+    private User user;
+    @Spy
+    private ArrayList<User> users;
+
+    @Mock private Course course;
+    @Mock private Session session;
+    @Spy  private ArrayList<Session> sessions;
+    @Mock private Order order;
+    @Mock private Sandwich sandwich;
+
 
     @Test
     public void findUserAlbusTest() throws UserNotFoundException {
@@ -36,7 +52,7 @@ class UserServiceImplTest {
 
     @Test
     public void findUserThrowsUSerNotFoundExceptionTest() {
-        assertThrows(UserNotFoundException.class, () -> userService.findUser(null));
+        assertThrows(IllegalArgumentException.class, () -> userService.findUser(null));
     }
 
     @Test
@@ -77,8 +93,59 @@ class UserServiceImplTest {
     public void findUsersWithNullNameInArrayTest() {
         List<String> names = new ArrayList<>();;
         names.add("Bob"); names.add("Albus"); names.add(null);
-        assertThrows(UserNotFoundException.class, () -> userService.findUsers(names));
+        assertThrows(IllegalArgumentException.class, () -> userService.findUsers(names));
     }
+
+
+
+    @Test
+    public void addUserTest() {
+        int size = userService.getAllUsers().size();
+        userService.addUser(user);
+        assertEquals(size +1, userService.getAllUsers().size());
+    }
+
+    @Test void addMultipleUsersTest() {
+        for (int i = 0; i < 4; i++) {
+            users.add(user);
+        }
+        int size = userService.getAllUsers().size();
+        userService.addUsers(users);
+        assertEquals(size +4, userService.getAllUsers().size());
+    }
+
+    @Test
+    void  removeUserTest() {
+        userService.addUser(user);
+        int size = userService.getAllUsers().size();
+        userService.removeUser(user);
+        assertEquals(size -1, userService.getAllUsers().size());
+    }
+
+    @Test
+    void removeMultipleUsers() {
+        for (int i = 0; i < 8; i++) {
+            users.add(user);
+        }
+        userService.addUsers(users);
+        int size = userService.getAllUsers().size();
+        userService.removeUsers(users);
+        assertEquals(size -8, userService.getAllUsers().size());
+    }
+
+    /*
+    @Test
+    void getOrderTest() throws SessionNotFoundException {
+        order.addSandwich(sandwich);                     TODO refactor classes to make this test workable
+        ...
+        session.setStartDate(LocalDate.now()); session.setEndDate(LocalDate.now());
+        sessions.add(session);
+        course.setSessions(sessions);
+        course.addParticipant(user);
+        user.getCourse().getSessionByDate(LocalDate.now()).getDailyOrder();
+    }
+    */
+
 
 
 

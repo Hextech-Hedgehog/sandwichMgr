@@ -53,12 +53,14 @@ public class UserMemoryRepository implements UserRepository {
 
     @Override
     public User findUser(String firstName) throws UserNotFoundException {
+        if (firstName == null) throw new IllegalArgumentException("No name was passed");
         return this.users.stream().filter(p -> p.getFirstName().equals(firstName)).findFirst().orElseThrow(()-> new UserNotFoundException("No user with this first name found"));
     }
 
     @Override
-    public List<User> findUsers(List<String> firstNames) throws UserNotFoundException {
+    public List<User> findUsers(List<String> firstNames) throws UserNotFoundException, IllegalArgumentException {
         // users.forEach(user -> findUser(user.getFirstName())); // requires a try-catch
+        if (firstNames.contains(null)) throw new IllegalArgumentException("No name passed");  // TODO
         if (users.stream().filter(user -> firstNames.contains(user.getFirstName())).count() != firstNames.size()) {
             throw new UserNotFoundException("At least one of the users passed was not found");
         }
@@ -67,6 +69,7 @@ public class UserMemoryRepository implements UserRepository {
 
     @Override
     public void removeUser(User user) {
+        if (user == null) throw new IllegalArgumentException("Null-object has been passed");
         this.users.remove(user);
     }
 

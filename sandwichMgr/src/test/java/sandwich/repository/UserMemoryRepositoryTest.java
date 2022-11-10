@@ -43,8 +43,8 @@ class UserMemoryRepositoryTest {
     }
 
     @Test
-    public void findUserThrowsUserNotFoundExceptionTest() {
-        assertThrows(UserNotFoundException.class, () -> userRepository.findUser(null));
+    public void findUserNullArgumentThrowsIllegalArgumentExceptionTest() {
+        assertThrows(IllegalArgumentException.class, () -> userRepository.findUser(null));
     }
 
     @Test
@@ -85,7 +85,7 @@ class UserMemoryRepositoryTest {
     public void findUsersWithNullNameInArrayTest() {
         List<String> names = new ArrayList<>();
         names.add("Bob"); names.add("Albus"); names.add(null);
-        assertThrows(UserNotFoundException.class, () -> userRepository.findUsers(names));
+        assertThrows(IllegalArgumentException.class, () -> userRepository.findUsers(names));
     }
 
     @Test
@@ -125,6 +125,11 @@ class UserMemoryRepositoryTest {
         int size = userRepository.getAllUsers().size();
         userRepository.removeUser(user);
         assertEquals(size -1, userRepository.getAllUsers().size());
+    }
+
+    @Test
+    void removeNullUserTest() {
+        assertThrows(IllegalArgumentException.class, ()-> userRepository.removeUser(null));
     }
 
 

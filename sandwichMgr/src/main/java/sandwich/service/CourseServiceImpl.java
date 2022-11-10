@@ -14,6 +14,7 @@ import java.util.List;
 @Profile("production")
 public class CourseServiceImpl implements CourseService {
 
+    @Autowired
     private CourseRepository courseRepository;
 
     @Override
@@ -49,5 +50,10 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     public void setCourseRepository(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
+    }
+
+    @Autowired
+    public List<Course> getAllCourses() {
+        return courseRepository.getAllCourses();
     }
 }

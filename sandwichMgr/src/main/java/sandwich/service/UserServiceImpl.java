@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-        public List<User> findUsers(List<String> firstNames) throws UserNotFoundException {
+        public List<User> findUsers(List<String> firstNames) throws UserNotFoundException, IllegalArgumentException {
         return this.userRepository.findUsers(firstNames);
     }
 
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void removeUser(List<User> users) {
+    public void removeUsers(List<User> users) {
         this.userRepository.removeUsers(users);
     }
 

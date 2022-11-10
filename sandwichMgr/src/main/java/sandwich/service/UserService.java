@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface UserService {
 
-    void addUser(User person);
-    void addUsers(List<User> people);
+    void addUser(User user);
+    void addUsers(List<User> users);
     User findUser(String firstName) throws UserNotFoundException;
     List<User> findUsers(List<String> firstNames) throws UserNotFoundException;
-    void removeUser(User person);
-    void removeUser(List<User> people);
+    void removeUser(User user);
+    void removeUsers(List<User> users);
     List<User> getAllUsers();
-    Order getOrderByUserForCurrentCourseSession(User person);
+    Order getOrderByUserForCurrentCourseSession(User user);
 
 }

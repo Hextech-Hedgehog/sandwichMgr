@@ -1,6 +1,8 @@
 package sandwich.repository;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import sandwich.SpringSandwichApplication;
@@ -19,6 +21,10 @@ class CourseMemoryRepositoryTest {
     @Autowired
     private CourseRepository courseRepository;
 
+    @Mock private Course course;
+    @Spy  private ArrayList<Course> courses;
+
+
     @Test
     public void findCourseFencingTest() throws CourseNotFoundException {
         assertEquals("Medieval fencing", courseRepository.findCourseByName("Medieval fencing").getName());
@@ -35,8 +41,8 @@ class CourseMemoryRepositoryTest {
     }
 
     @Test
-    public void findCourseThrowsCourseNotFoundExceptionTest() {
-        assertThrows(CourseNotFoundException.class, () -> courseRepository.findCourseByName(null));
+    public void findCourseNullCourseIllegalArgumentExceptionTest() {
+        assertThrows(IllegalArgumentException.class, () -> courseRepository.findCourseByName(null));
     }
 
     @Test
@@ -78,6 +84,42 @@ class CourseMemoryRepositoryTest {
         List<String> names = new ArrayList<>();
         names.add("Medieval fencing"); names.add("Java SE programming"); names.add("Mastodon");
         assertThrows(CourseNotFoundException.class, () -> courseRepository.findCoursesByName(names));
+    }
+
+    @Test
+    void addCourseTest() {
+        int size = courseRepository.getAllCourses().size();
+        courseRepository.addCourse(course);
+        assertEquals(size +1, courseRepository.getAllCourses().size());
+    }
+
+    @Test
+    void addCoursesTest() {
+        for (int i = 0; i < 4; i++) {
+            courses.add(course);
+        }
+        int size = courseRepository.getAllCourses().size();
+        courseRepository.addCourses(courses);
+        assertEquals(size +4, courseRepository.getAllCourses().size());
+    }
+
+    @Test
+    void  removeCourseTest() {
+        courseRepository.addCourse(course);
+        int size = courseRepository.getAllCourses().size();
+        courseRepository.removeCourse(course);
+        assertEquals(size -1, courseRepository.getAllCourses().size());
+    }
+
+    @Test
+    void removeMultipleCourses() {
+        for (int i = 0; i < 3; i++) {
+            courses.add(course);
+        }
+        courseRepository.addCourses(courses);
+        int size = courseRepository.getAllCourses().size();
+        courseRepository.removeCourses(courses);
+        assertEquals(size -3, courseRepository.getAllCourses().size());
     }
 
 

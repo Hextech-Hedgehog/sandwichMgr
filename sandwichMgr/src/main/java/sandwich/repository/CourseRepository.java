@@ -14,5 +14,6 @@ public interface CourseRepository {
     List<Course> findCoursesByName(List<String> names) throws CourseNotFoundException;
     void removeCourse(Course course);
     void removeCourses(List<Course> courses);
+    List<Course> getAllCourses();
 
 }

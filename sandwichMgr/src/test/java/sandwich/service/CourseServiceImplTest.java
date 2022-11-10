@@ -1,12 +1,13 @@
 package sandwich.service;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import sandwich.SpringSandwichApplication;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.model.Course;
-import sandwich.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,9 @@ class CourseServiceImplTest {
 
     @Autowired
     private CourseService courseService;
+
+    @Mock private Course course;
+    @Spy  private ArrayList<Course> courses;
 
     @Test
     public void findCourseFencingTest() throws CourseNotFoundException {
@@ -36,8 +40,8 @@ class CourseServiceImplTest {
     }
 
     @Test
-    public void findCourseThrowsCourseNotFoundExceptionTest() throws CourseNotFoundException {
-        assertThrows(CourseNotFoundException.class, () -> courseService.findCourse(null));
+    public void findCourseNullCourseIllegalArgumentExceptionTest() throws CourseNotFoundException {
+        assertThrows(IllegalArgumentException.class, () -> courseService.findCourse(null));
     }
 
     @Test
@@ -72,6 +76,42 @@ class CourseServiceImplTest {
         List<String> names = new ArrayList<>();;
         names.add("Medieval fencing"); names.add("Java SE programming"); names.add(null);
         assertThrows(CourseNotFoundException.class, () -> courseService.findCourses(names));
+    }
+
+    @Test
+    void addCourseTest() {
+        int size = courseService.getAllCourses().size();
+        courseService.addCourse(course);
+        assertEquals(size +1, courseService.getAllCourses().size());
+    }
+
+    @Test
+    void addCoursesTest() {
+        for (int i = 0; i < 4; i++) {
+            courses.add(course);
+        }
+        int size = courseService.getAllCourses().size();
+        courseService.addCourses(courses);
+        assertEquals(size +4, courseService.getAllCourses().size());
+    }
+
+    @Test
+    void  removeCourseTest() {
+        courseService.addCourse(course);
+        int size = courseService.getAllCourses().size();
+        courseService.removeCourse(course);
+        assertEquals(size -1, courseService.getAllCourses().size());
+    }
+
+    @Test
+    void removeMultipleCourses() {
+        for (int i = 0; i < 3; i++) {
+            courses.add(course);
+        }
+        courseService.addCourses(courses);
+        int size = courseService.getAllCourses().size();
+        courseService.removeCourses(courses);
+        assertEquals(size -3, courseService.getAllCourses().size());
     }
 
 }
