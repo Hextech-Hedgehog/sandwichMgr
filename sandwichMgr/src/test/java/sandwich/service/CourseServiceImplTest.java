@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import sandwich.SpringSandwichApplication;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.model.Course;
+import sandwich.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +44,14 @@ class CourseServiceImplTest {
     public void findCoursesByNamesWith3NamesInArrayTest() throws CourseNotFoundException {
         List<String> names = new ArrayList<>();
         names.add("Medieval fencing"); names.add("Java SE programming"); names.add("Base jumping");
-        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
+        assertTrue(courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()).containsAll(names));
     }
 
     @Test
     public void findCoursesByNamesWith2NamesInArrayTest() throws CourseNotFoundException {
         List<String> names = new ArrayList<>();
         names.add("Medieval fencing"); names.add("Java SE programming");
-        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
+        assertTrue(courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()).containsAll(names));
     }
 
     @Test

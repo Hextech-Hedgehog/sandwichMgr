@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SandwichTypeFileRepositoryTest {
 
     @Autowired
-    SandwichTypeRepository sandwichTypeRepo;
+    private SandwichTypeRepository sandwichTypeRepo;
 
     @Test
     void getSandwichSalamiFromPinkysTest() throws SandwichNotFoundException {

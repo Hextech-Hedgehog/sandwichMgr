@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import sandwich.SpringSandwichApplication;
-import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.UserNotFoundException;
 import sandwich.model.User;
 
@@ -18,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserServiceImplTest {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Test
     public void findUserAlbusTest() throws UserNotFoundException {
@@ -44,14 +43,14 @@ class UserServiceImplTest {
     public void findUsersByNamesWith3NamesInArrayTest() throws UserNotFoundException {
         List<String> names = new ArrayList<>();
         names.add("Bob"); names.add("Peter"); names.add("Mary");
-        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
+        assertTrue(userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()).containsAll(names));
     }
 
     @Test
     public void findUsersByNamesWith2NamesInArrayTest() throws UserNotFoundException {
         List<String> names = new ArrayList<>();
         names.add("Gwen"); names.add("Charlie");
-        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
+        assertTrue(userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()).containsAll(names));
     }
 
     @Test

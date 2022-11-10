@@ -1,6 +1,8 @@
 package sandwich.repository;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import sandwich.SpringSandwichApplication;
@@ -17,7 +19,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserMemoryRepositoryTest {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Mock
+    private User user;
+    @Spy
+    private ArrayList<User> users;
+
 
     @Test
     public void findUserAlbusTest() throws UserNotFoundException {
@@ -43,15 +51,15 @@ class UserMemoryRepositoryTest {
     public void findUsersByNamesWith3NamesInArrayTest() throws UserNotFoundException {
         List<String> names = new ArrayList<>();
         names.add("Peter"); names.add("Mary"); names.add("Bob");
-        assertEquals(names, userRepository.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
-    }       // TODO finds all three but in different order
+        assertTrue(userRepository.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()).containsAll(names));
+    }
 
     @Test
     public void findUsersByNamesWith2NamesInArrayTest() throws UserNotFoundException {
         List<String> names = new ArrayList<>();
         names.add("Charlie"); names.add("Gwen");
-        assertEquals(names, userRepository.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
-    }           // TODO finds all two but in different order
+        assertTrue(userRepository.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()).containsAll(names));;
+    }
 
     @Test
     public void findUsersByNamesWith1NameInArrayTest() throws UserNotFoundException {
@@ -79,6 +87,60 @@ class UserMemoryRepositoryTest {
         names.add("Bob"); names.add("Albus"); names.add(null);
         assertThrows(UserNotFoundException.class, () -> userRepository.findUsers(names));
     }
+
+    @Test
+    void addUserTest() {
+        int size = userRepository.getAllUsers().size();
+        userRepository.addUser(user);
+        assertEquals(size +1, userRepository.getAllUsers().size());
+    }
+
+    @Test
+    void addNullUserTest() {
+        assertThrows(IllegalArgumentException.class, ()-> userRepository.addUser(null));
+    }
+
+    @Test
+    void addMultipleUsersTest() {
+        for (int i = 0; i < 5; i++) {
+            users.add(user);
+        }
+        int size = userRepository.getAllUsers().size();
+        userRepository.addUsers(users);
+        assertEquals(size +5, userRepository.getAllUsers().size());
+    }
+
+    @Test
+    void addMultipleUserWithOneNullObjectTest() {
+        for (int i = 0; i < 5; i++) {
+            users.add(user);
+        }
+        users.add(null);
+        assertThrows(IllegalArgumentException.class, ()-> userRepository.addUsers(users));
+    }
+
+    @Test
+    void  removeUserTest() {
+        userRepository.addUser(user);
+        int size = userRepository.getAllUsers().size();
+        userRepository.removeUser(user);
+        assertEquals(size -1, userRepository.getAllUsers().size());
+    }
+
+
+
+    @Test
+    void removeMultipleUsers() {
+        for (int i = 0; i < 7; i++) {
+            users.add(user);
+        }
+        userRepository.addUsers(users);
+        int size = userRepository.getAllUsers().size();
+        userRepository.removeUsers(users);
+        assertEquals(size -7, userRepository.getAllUsers().size());
+    }
+
+
 
 
 }

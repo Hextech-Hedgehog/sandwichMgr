@@ -8,7 +8,6 @@ import sandwich.exception.UserNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
@@ -41,13 +40,15 @@ public class UserMemoryRepository implements UserRepository {
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(User user) throws IllegalArgumentException {
+        if (user == null) throw new IllegalArgumentException("Null-object has been passed");
         this.users.add(user);
     }
 
     @Override
-    public void addUsers(List<User> people) {
-        this.users.addAll(people);
+    public void addUsers(List<User> users) throws IllegalArgumentException {
+        if (users.contains(null)) throw new IllegalArgumentException("Null-object was passed along this lisit of users");
+        this.users.addAll(users);
     }
 
     @Override

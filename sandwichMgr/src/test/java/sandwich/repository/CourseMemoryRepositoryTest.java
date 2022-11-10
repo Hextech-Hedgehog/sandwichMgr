@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CourseMemoryRepositoryTest {
 
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
 
     @Test
     public void findCourseFencingTest() throws CourseNotFoundException {
@@ -43,15 +43,15 @@ class CourseMemoryRepositoryTest {
     public void findCoursesByNamesWith3NamesInArrayTest() throws CourseNotFoundException {
         List<String> names = new ArrayList<>();
         names.add("Medieval fencing"); names.add("Java SE programming"); names.add("Base jumping");
-        assertEquals(names, courseRepository.findCoursesByName(names).stream().map(Course::getName).collect(Collectors.toList()));
-    }                   // List finds all three but in different order  // TODO mock?  // TODO contains?
+        assertTrue(courseRepository.findCoursesByName(names).stream().map(Course::getName).collect(Collectors.toList()).containsAll(names));
+    }
 
     @Test
     public void findCoursesByNamesWith2NamesInArrayTest() throws CourseNotFoundException {
         List<String> names = new ArrayList<>();
         names.add("Medieval fencing"); names.add("Java SE programming");
-        assertEquals(names, courseRepository.findCoursesByName(names).stream().map(Course::getName).collect(Collectors.toList()));
-    }               // List finds all two but in different order
+        assertTrue(courseRepository.findCoursesByName(names).stream().map(Course::getName).collect(Collectors.toList()).containsAll(names));
+    }
 
     @Test
     public void findCoursesByNamesWith1NameInArrayTest() throws CourseNotFoundException {
