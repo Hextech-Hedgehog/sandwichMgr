@@ -9,9 +9,7 @@ import sandwich.exception.UserNotFoundException;
 import sandwich.model.User;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,41 +42,41 @@ class UserServiceImplTest {
 
     @Test
     public void findUsersByNamesWith3NamesInArrayTest() throws UserNotFoundException {
-        Set<String> names = new HashSet<>();
+        List<String> names = new ArrayList<>();
         names.add("Bob"); names.add("Peter"); names.add("Mary");
-        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toSet()));
+        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()()));
     }
 
     @Test
     public void findUsersByNamesWith2NamesInArrayTest() throws UserNotFoundException {
-        Set<String> names = new HashSet<>();
+        List<String> names = new ArrayList<>();
         names.add("Gwen"); names.add("Charlie");
-        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toSet()));
+        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
     }
 
     @Test
     public void findUsersByNamesWith1NameInArrayTest() throws UserNotFoundException {
-        Set<String> names = new HashSet<>();
+        List<String> names = new ArrayList<>();
         names.add("Archibald");
-        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toSet()));
+        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
     }
 
     @Test
     public void findUsersByNamesWithEmptyArrayTest() throws UserNotFoundException {
-        Set<String> names = new HashSet<>();
-        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toSet()));
+        List<String> names = new ArrayList<>();
+        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
     }
 
     @Test
     public void findUsersWithOneFakeNameInArrayTest() {
-        Set<String> names = new HashSet<>();
+        List<String> names = new ArrayList<>();
         names.add("Bob"); names.add("Albus"); names.add("Mastodon");
         assertThrows(UserNotFoundException.class, () -> userService.findUsers(names));
     }
 
     @Test
     public void findUsersWithNullNameInArrayTest() {
-        Set<String> names = new HashSet<>();
+        List<String> names = new ArrayList<>();;
         names.add("Bob"); names.add("Albus"); names.add(null);
         assertThrows(UserNotFoundException.class, () -> userService.findUsers(names));
     }

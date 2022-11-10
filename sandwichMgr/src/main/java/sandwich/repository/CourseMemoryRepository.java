@@ -8,15 +8,13 @@ import sandwich.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
 public class CourseMemoryRepository implements CourseRepository {
 
-    private final Set<Course> courses = new HashSet<>();
+    private final List<Course> courses = new ArrayList<>();
 
     public CourseMemoryRepository(@Autowired UserRepository userRepository) throws IllegalArgumentException, UserNotFoundException {
         Course java = new Course("Java SE programming");
@@ -61,7 +59,7 @@ public class CourseMemoryRepository implements CourseRepository {
     }
 
     @Override
-    public void addCourses(Set<Course> courses) {
+    public void addCourses(List<Course> courses) {
         this.courses.addAll(courses);
     }
 
@@ -72,11 +70,11 @@ public class CourseMemoryRepository implements CourseRepository {
     }
 
     @Override
-    public Set<Course> findCoursesByName(Set<String> names) throws CourseNotFoundException {
+    public List<Course> findCoursesByName(List<String> names) throws CourseNotFoundException {
         if (courses.stream().filter(course -> names.contains(course.getName())).count() != names.size()) {
             throw new CourseNotFoundException("At least one of the courses passed was not found");
         }
-        return this.courses.stream().filter(c -> names.contains(c.getName())).collect(Collectors.toSet());
+        return this.courses.stream().filter(c -> names.contains(c.getName())).collect(Collectors.toList());
 
     }
 
@@ -86,7 +84,7 @@ public class CourseMemoryRepository implements CourseRepository {
     }
 
     @Override
-    public void removeCourses(Set<Course> courses) {
+    public void removeCourses(List<Course> courses) {
         courses.forEach(this.courses::remove);
     }
 

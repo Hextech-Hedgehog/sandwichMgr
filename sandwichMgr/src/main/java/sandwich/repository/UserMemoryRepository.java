@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Repository
 public class UserMemoryRepository implements UserRepository {
 
-    Set<User> users = new HashSet<>();
+    List<User> users = new ArrayList<>();
 
     public UserMemoryRepository() {
         users.add(new User("Albus", "password", new HashSet<UserRole>(){{
@@ -46,7 +46,7 @@ public class UserMemoryRepository implements UserRepository {
     }
 
     @Override
-    public void addUsers(Set<User> people) {
+    public void addUsers(List<User> people) {
         this.users.addAll(people);
     }
 
@@ -56,12 +56,12 @@ public class UserMemoryRepository implements UserRepository {
     }
 
     @Override
-    public Set<User> findUsers(Set<String> firstNames) throws UserNotFoundException {
+    public List<User> findUsers(List<String> firstNames) throws UserNotFoundException {
         // users.forEach(user -> findUser(user.getFirstName())); // requires a try-catch
         if (users.stream().filter(user -> firstNames.contains(user.getFirstName())).count() != firstNames.size()) {
             throw new UserNotFoundException("At least one of the users passed was not found");
         }
-        return this.users.stream().filter(p -> firstNames.contains(p.getFirstName())).collect(Collectors.toSet());
+        return this.users.stream().filter(p -> firstNames.contains(p.getFirstName())).collect(Collectors.toList());
     }
 
     @Override
@@ -70,12 +70,12 @@ public class UserMemoryRepository implements UserRepository {
     }
 
     @Override
-    public void removeUsers(Set<User> people) {
-        this.users.removeAll(people);
+    public void removeUsers(List<User> users) {
+        this.users.removeAll(users);
     }
 
     @Override
-    public Set<User> getAllUsers() {
+    public List<User> getAllUsers() {
         return this.users;
     }
 }

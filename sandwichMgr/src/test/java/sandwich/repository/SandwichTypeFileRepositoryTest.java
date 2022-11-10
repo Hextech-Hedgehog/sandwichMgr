@@ -1,6 +1,7 @@
 package sandwich.repository;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import sandwich.exception.SandwichNotFoundException;
@@ -116,6 +117,13 @@ class SandwichTypeFileRepositoryTest {
         assertEquals("Bread", sandwichTypes.stream().filter(sandwichType -> sandwichType.getSandwichName()
                         .equals("salami")).findFirst().orElseThrow(()-> new SandwichNotFoundException("Sandwich not found in this shop"))
                 .getIngredients().get(0).getName());
+    }
+
+
+    @Test
+    void addSandwichTypeTest() {
+
+
     }
 
 

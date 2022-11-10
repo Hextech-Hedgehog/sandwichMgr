@@ -8,9 +8,7 @@ import sandwich.exception.CourseNotFoundException;
 import sandwich.model.Course;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,34 +41,34 @@ class CourseServiceImplTest {
 
     @Test
     public void findCoursesByNamesWith3NamesInArrayTest() throws CourseNotFoundException {
-        Set<String> names = new HashSet<>();
+        List<String> names = new ArrayList<>();
         names.add("Medieval fencing"); names.add("Java SE programming"); names.add("Base jumping");
-        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toSet()));
+        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
     }
 
     @Test
     public void findCoursesByNamesWith2NamesInArrayTest() throws CourseNotFoundException {
-        Set<String> names = new HashSet<>();
+        List<String> names = new ArrayList<>();
         names.add("Medieval fencing"); names.add("Java SE programming");
-        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toSet()));
+        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
     }
 
     @Test
     public void findCoursesByNamesWith1NameInArrayTest() throws CourseNotFoundException {
-        Set<String> names = new HashSet<>();
+        List<String> names = new ArrayList<>();
         names.add("Medieval fencing");
-        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toSet()));
+        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
     }
 
     @Test
     public void findCoursesByNamesWithEmptyArrayTest() throws CourseNotFoundException {
-        Set<String> names = new HashSet<>();
-        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toSet()));
+        List<String> names = new ArrayList<>();
+        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
     }
 
     @Test
     public void findCoursesWithNullNameInArrayTest() throws CourseNotFoundException {
-        Set<String> names = new HashSet<>();
+        List<String> names = new ArrayList<>();;
         names.add("Medieval fencing"); names.add("Java SE programming"); names.add(null);
         assertThrows(CourseNotFoundException.class, () -> courseService.findCourses(names));
     }

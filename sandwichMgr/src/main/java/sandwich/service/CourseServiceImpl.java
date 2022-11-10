@@ -8,7 +8,7 @@ import sandwich.model.Course;
 import sandwich.repository.CourseRepository;
 
 import java.util.List;
-import java.util.Set;
+
 
 @Service
 @Profile("production")
@@ -22,7 +22,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void addCourses(Set<Course> courses) {
+    public void addCourses(List<Course> courses) {
         this.courseRepository.addCourses(courses);
     }
 
@@ -32,7 +32,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Set<Course> findCourses(Set<String> names) throws CourseNotFoundException {
+    public List<Course> findCourses(List<String> names) throws CourseNotFoundException {
         return this.courseRepository.findCoursesByName(names);
     }
 
@@ -42,7 +42,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void removeCourses(Set<Course> courses) {
+    public void removeCourses(List<Course> courses) {
         this.courseRepository.removeCourses(courses);
     }
 

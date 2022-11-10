@@ -3,16 +3,17 @@ package sandwich.repository;
 import sandwich.model.User;
 import sandwich.exception.UserNotFoundException;
 
-import java.util.Set;
+import java.util.List;
+
 
 public interface UserRepository {
 
     void addUser(User user);
-    void addUsers(Set<User> users);
+    void addUsers(List<User> users);
     User findUser(String firstName) throws UserNotFoundException;
-    Set<User> findUsers(Set<String> firstNames) throws UserNotFoundException;
+    List<User> findUsers(List<String> firstNames) throws UserNotFoundException;
     void removeUser(User user);
-    void removeUsers(Set<User> users);
-    Set<User> getAllUsers();
+    void removeUsers(List<User> users);
+    List<User> getAllUsers();
 
 }

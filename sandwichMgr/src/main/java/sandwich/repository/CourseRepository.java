@@ -3,15 +3,16 @@ package sandwich.repository;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.model.Course;
 
-import java.util.Set;
+import java.util.List;
+
 
 public interface CourseRepository {
 
     void addCourse(Course course);
-    void addCourses(Set<Course> courses);
+    void addCourses(List<Course> courses);
     Course findCourseByName(String name) throws CourseNotFoundException;
-    Set<Course> findCoursesByName(Set<String> names) throws CourseNotFoundException;
+    List<Course> findCoursesByName(List<String> names) throws CourseNotFoundException;
     void removeCourse(Course course);
-    void removeCourses(Set<Course> courses);
+    void removeCourses(List<Course> courses);
 
 }
