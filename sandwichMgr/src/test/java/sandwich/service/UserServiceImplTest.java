@@ -44,7 +44,7 @@ class UserServiceImplTest {
     public void findUsersByNamesWith3NamesInArrayTest() throws UserNotFoundException {
         List<String> names = new ArrayList<>();
         names.add("Bob"); names.add("Peter"); names.add("Mary");
-        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()()));
+        assertEquals(names, userService.findUsers(names).stream().map(User::getFirstName).collect(Collectors.toList()));
     }
 
     @Test
