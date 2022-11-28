@@ -9,10 +9,12 @@ import sandwich.repository.CourseRepository;
 
 import java.util.List;
 
+
 @Service
 @Profile("production")
 public class CourseServiceImpl implements CourseService {
 
+    @Autowired
     private CourseRepository courseRepository;
 
     @Override
@@ -27,12 +29,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course findCourse(String name) throws CourseNotFoundException {
-        return this.courseRepository.findCourse(name);
+        return this.courseRepository.findCourseByName(name);
     }
 
     @Override
-    public List<Course> findCourses(List<String> names) {
-        return this.courseRepository.findCourses(names);
+    public List<Course> findCourses(List<String> names) throws CourseNotFoundException {
+        return this.courseRepository.findCoursesByName(names);
     }
 
     @Override
@@ -48,5 +50,10 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     public void setCourseRepository(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
+    }
+
+    @Autowired
+    public List<Course> getAllCourses() {
+        return courseRepository.getAllCourses();
     }
 }

@@ -1,6 +1,8 @@
 package sandwich.service;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import sandwich.SpringSandwichApplication;
@@ -19,6 +21,9 @@ class CourseServiceImplTest {
     @Autowired
     private CourseService courseService;
 
+    @Mock private Course course;
+    @Spy  private ArrayList<Course> courses;
+
     @Test
     public void findCourseFencingTest() throws CourseNotFoundException {
         assertEquals("Medieval fencing", courseService.findCourse("Medieval fencing").getName());
@@ -26,7 +31,7 @@ class CourseServiceImplTest {
 
     @Test
     public void findCourseJavaTest() throws CourseNotFoundException {
-        assertEquals("Java Se programming", courseService.findCourse("Java Se programming").getName());
+        assertEquals("Java SE programming", courseService.findCourse("Java SE programming").getName());
     }
 
     @Test
@@ -35,42 +40,78 @@ class CourseServiceImplTest {
     }
 
     @Test
-    public void findCourseThrowsCourseNotFoundExceptionTest() throws CourseNotFoundException {
-        assertThrows(CourseNotFoundException.class, () -> courseService.findCourse(null));
+    public void findCourseNullCourseIllegalArgumentExceptionTest() throws CourseNotFoundException {
+        assertThrows(IllegalArgumentException.class, () -> courseService.findCourse(null));
     }
 
     @Test
     public void findCoursesByNamesWith3NamesInArrayTest() throws CourseNotFoundException {
-        List<String> names = new ArrayList<>();         // TODO might work better with a Set than a List
-        names.add("Medieval fencing"); names.add("Java Se programming"); names.add("Base jumping");
-        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
+        List<String> names = new ArrayList<>();
+        names.add("Medieval fencing"); names.add("Java SE programming"); names.add("Base jumping");
+        assertTrue(courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()).containsAll(names));
     }
 
     @Test
     public void findCoursesByNamesWith2NamesInArrayTest() throws CourseNotFoundException {
-        List<String> names = new ArrayList<>();         // TODO might work better with a Set than a List
-        names.add("Medieval fencing"); names.add("Java Se programming");
-        assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
+        List<String> names = new ArrayList<>();
+        names.add("Medieval fencing"); names.add("Java SE programming");
+        assertTrue(courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()).containsAll(names));
     }
 
     @Test
     public void findCoursesByNamesWith1NameInArrayTest() throws CourseNotFoundException {
-        List<String> names = new ArrayList<>();         // TODO might work better with a Set than a List
+        List<String> names = new ArrayList<>();
         names.add("Medieval fencing");
         assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
     }
 
     @Test
     public void findCoursesByNamesWithEmptyArrayTest() throws CourseNotFoundException {
-        List<String> names = new ArrayList<>(); // TODO check if this produces a NullPointerException or not?
+        List<String> names = new ArrayList<>();
         assertEquals(names, courseService.findCourses(names).stream().map(Course::getName).collect(Collectors.toList()));
     }
 
     @Test
-    public void findCoursesWithOneFakeNameInArrayTest() throws CourseNotFoundException {
-        List<String> names = new ArrayList<>();         // TODO give a list of 2 names, and/or an Exception?
-        names.add("Medieval fencing"); names.add("Java Se programming"); names.add(null);
+    public void findCoursesWithNullNameInArrayTest() throws CourseNotFoundException {
+        List<String> names = new ArrayList<>();;
+        names.add("Medieval fencing"); names.add("Java SE programming"); names.add(null);
         assertThrows(CourseNotFoundException.class, () -> courseService.findCourses(names));
+    }
+
+    @Test
+    void addCourseTest() {
+        int size = courseService.getAllCourses().size();
+        courseService.addCourse(course);
+        assertEquals(size +1, courseService.getAllCourses().size());
+    }
+
+    @Test
+    void addCoursesTest() {
+        for (int i = 0; i < 4; i++) {
+            courses.add(course);
+        }
+        int size = courseService.getAllCourses().size();
+        courseService.addCourses(courses);
+        assertEquals(size +4, courseService.getAllCourses().size());
+    }
+
+    @Test
+    void  removeCourseTest() {
+        courseService.addCourse(course);
+        int size = courseService.getAllCourses().size();
+        courseService.removeCourse(course);
+        assertEquals(size -1, courseService.getAllCourses().size());
+    }
+
+    @Test
+    void removeMultipleCourses() {
+        for (int i = 0; i < 3; i++) {
+            courses.add(course);
+        }
+        courseService.addCourses(courses);
+        int size = courseService.getAllCourses().size();
+        courseService.removeCourses(courses);
+        assertEquals(size -3, courseService.getAllCourses().size());
     }
 
 }

@@ -1,7 +1,6 @@
 package sandwich.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Service;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
@@ -18,7 +17,7 @@ public class AppServiceImpl implements AppService {
     @Autowired
     private CourseService courseService;
     @Autowired
-    private PersonService personService;
+    private UserService userService;
 
     @Override
     public BillService getBillService() {
@@ -31,8 +30,8 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public PersonService getPersonService() {
-        return this.personService;
+    public UserService getUserService() {
+        return this.userService;
     }
 
     @Override
@@ -48,11 +47,12 @@ public class AppServiceImpl implements AppService {
     @Override
     public Sandwich orderSandwich(User user, String shopName) throws SessionNotFoundException, CourseNotFoundException {
         Sandwich sandwich = null;
-        if (this.personService.getAllPeople().contains(user)) {
-            Order order = personService.getOrderByUserForCurrentCourseSession(user);
+        if (this.userService.getAllUsers().contains(user)) {
+            Bill bill = this.billService.getThisMonthBill();
+            Order order = userService.getOrderByUserForCurrentCourseSession(user);
             sandwich = this.billService.orderSandwich(Shop.valueOf(shopName));
             order.addSandwich(sandwich);
-            this.billService.getThisMonthBill().addOrder(order);
+            bill.addOrder(order);
         }
 
         return sandwich;
@@ -68,8 +68,9 @@ public class AppServiceImpl implements AppService {
         this.courseService = courseService;
     }
 
+
     @Override
-    public void setPersonService(PersonService personService) {
-        this.personService = personService;
+    public void setUserService(UserService personService) {
+        this.userService = personService;
     }
 }

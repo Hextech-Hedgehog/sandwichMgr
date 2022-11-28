@@ -2,33 +2,22 @@ package sandwich.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.UserDetailsManager;
-
-import java.util.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User extends org.springframework.security.core.userdetails.User {
+public class User {
 
     private int userId;
     private String firstName;
     private String lastName;
+    private String password;
     private Course course;
 
-    public User(int userId, String username) {
-        super(username, "password", new HashSet<UserRole>() {{
-            add(UserRole.USER);
-        }});
-        this.firstName = username;
-        this.userId = userId;
-    }
+    public User() {}
 
-    public User(int userId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
-        this.firstName = username;
-        this.userId = userId;
+    public User(String username, String firstName, String lastName, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
     }
 
     public String getFirstName() {

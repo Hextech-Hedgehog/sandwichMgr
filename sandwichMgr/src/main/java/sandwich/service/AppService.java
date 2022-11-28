@@ -14,9 +14,9 @@ public interface AppService {
 
     BillService getBillService();
     CourseService getCourseService();
-    PersonService getPersonService();
+    UserService getUserService();
     void setBillService(BillService billService);
-    void setPersonService(PersonService personService);
+    void setUserService(UserService personService);
     void setCourseService(CourseService courseService);
     Bill viewBillByDate(LocalDate date);
     Set<Order> viewOrdersByDate(LocalDate date);
