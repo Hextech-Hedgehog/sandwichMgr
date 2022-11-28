@@ -41,6 +41,16 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
+    public User findUser(String username, String password) throws PersonNotFoundException {
+        return this.personRepository.findUser(username, password);
+    }
+
+    @Override
+    public User findUserById(int userId) throws PersonNotFoundException {
+        return this.personRepository.findUserById(userId);
+    }
+
+    @Override
         public List<User> findUsers(List<String> firstNames) throws PersonNotFoundException {
         return this.personRepository.findPeople(firstNames);
     }
@@ -66,6 +76,16 @@ public class PersonServiceImpl implements PersonService{
             throw new CourseNotFoundException(user.getFirstName() + " isn't sign in any course.");
 
         return user.getCourse().getSessionByDate(LocalDate.now()).getDailyOrder();
+    }
+
+    @Override
+    public String getKeyByUserId(int userId) {
+        return this.personRepository.getKeyByUserId(userId);
+    }
+
+    @Override
+    public void login(int userId) {
+        this.personRepository.login(userId);
     }
 
     @Autowired

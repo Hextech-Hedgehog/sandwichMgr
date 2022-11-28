@@ -13,11 +13,15 @@ public interface PersonService {
     void addPerson(User user);
     void addPeople(List<User> users);
     User findUser(User user) throws PersonNotFoundException;
+    User findUser(String username, String password) throws PersonNotFoundException;
+    User findUserById(int userId) throws PersonNotFoundException;
     User findUserByName(String firstName) throws PersonNotFoundException;
     List<User> findUsers(List<String> firstNames) throws PersonNotFoundException;
     void removePerson(User user);
     void removePeople(List<User> users);
     List<User> getAllPeople();
     Order getOrderByUserForCurrentCourseSession(User user) throws SessionNotFoundException, CourseNotFoundException;
+    String getKeyByUserId(int userId);
+    void login(int userId);
 
 }
