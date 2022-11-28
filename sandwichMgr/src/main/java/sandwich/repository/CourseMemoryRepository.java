@@ -3,6 +3,7 @@ package sandwich.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import sandwich.exception.CourseNotFoundException;
+import sandwich.exception.PersonNotFoundException;
 import sandwich.model.*;
 
 import java.time.LocalDate;
@@ -22,37 +23,38 @@ public class CourseMemoryRepository implements CourseRepository {
         Course java = new Course("Java Se programming");
         Course fencing = new Course("Medieval fencing");
         Course baseJump = new Course("Base jumping");
-        User teacher = new User("Albus", "password", new HashSet<UserRole>() {{
-            add(UserRole.TEACHER);
-        }});
-        User teacher2 = new User("Jeff", "password", new HashSet<UserRole>() {{
-            add(UserRole.TEACHER);
-        }});
-        User teacher3 = new User("Melene", "password", new HashSet<UserRole>() {{
-            add(UserRole.TEACHER);
-        }});
+        User teacher = null;
+        User teacher2 = null;
+        User teacher3 = null;
 
-        List<Session> sessionsJava = new ArrayList<Session>(){{
-            add(new Session(java.getName(), teacher, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
-            add(new Session(java.getName(), teacher, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
-            add(new Session(java.getName(),  teacher, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
-            add(new Session(java.getName(),  teacher, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
-        }};
-        List<Session> sessionsFencing = new ArrayList<Session>(){{
-            add(new Session(fencing.getName(), teacher2, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
-            add(new Session(fencing.getName(), teacher2, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
-            add(new Session(fencing.getName(),  teacher2, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
-            add(new Session(fencing.getName(),  teacher2, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
-        }};
-        List<Session> sessionsBaseJump = new ArrayList<Session>(){{
-            add(new Session(baseJump.getName(),teacher3, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
-            add(new Session(baseJump.getName(),  teacher3, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
-            add(new Session(baseJump.getName(), teacher3, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
-            add(new Session(baseJump.getName(), teacher3, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
-        }};
+        try {
+            teacher = personRepository.findUserById(1);
+            teacher2 = personRepository.findUserById(3);
+            teacher3 = personRepository.findUserById(4);
+        } catch (PersonNotFoundException e) {
+            //LogManager.getLogger("error").error("tihi" + e.getMessage());
+        }
+
+        List<Session> sessionsJava = new ArrayList<>();
+        sessionsJava.add(new Session(java.getName(), teacher, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
+        sessionsJava.add(new Session(java.getName(), teacher, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
+        sessionsJava.add(new Session(java.getName(),  teacher, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
+        sessionsJava.add(new Session(java.getName(),  teacher, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
+
+        List<Session> sessionsFencing = new ArrayList<>();
+        sessionsFencing.add(new Session(fencing.getName(), teacher2, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
+        sessionsFencing.add(new Session(fencing.getName(), teacher2, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
+        sessionsFencing.add(new Session(fencing.getName(),  teacher2, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
+        sessionsFencing.add(new Session(fencing.getName(),  teacher2, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
+
+        List<Session> sessionsBaseJump = new ArrayList<>();
+        sessionsBaseJump.add(new Session(baseJump.getName(),teacher3, LocalDate.of(2022, 10, 13), LocalDate.of(2022, 10, 17)));
+        sessionsBaseJump.add(new Session(baseJump.getName(),  teacher3, LocalDate.of(2022, 10, 18), LocalDate.of(2022, 10, 19)));
+        sessionsBaseJump.add(new Session(baseJump.getName(), teacher3, LocalDate.of(2022, 10, 20), LocalDate.of(2022, 10, 31)));
+        sessionsBaseJump.add(new Session(baseJump.getName(), teacher3, LocalDate.of(2022, 11, 1), LocalDate.of(2022, 11, 26)));
 
         java.setSessions(sessionsJava);
-        fencing.setSessions(sessionsFencing);           // TODO this.personRepository is null
+        fencing.setSessions(sessionsFencing);
         baseJump.setSessions(sessionsBaseJump);
         java.addParticipants(this.personRepository.getAllPeople().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).limit(2).collect(Collectors.toList()));
         fencing.addParticipants(this.personRepository.getAllPeople().stream().filter(u -> u.getAuthorities().contains(UserRole.USER)).skip(2).limit(2).collect(Collectors.toList()));

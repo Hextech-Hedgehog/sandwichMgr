@@ -1,10 +1,15 @@
 package sandwich.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.UserDetailsManager;
 
 import java.util.*;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends org.springframework.security.core.userdetails.User {
 
     private int userId;
@@ -12,16 +17,18 @@ public class User extends org.springframework.security.core.userdetails.User {
     private String lastName;
     private Course course;
 
-    public User(String username) {
+    public User(int userId, String username) {
         super(username, "password", new HashSet<UserRole>() {{
             add(UserRole.USER);
         }});
         this.firstName = username;
+        this.userId = userId;
     }
 
-    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public User(int userId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.firstName = username;
+        this.userId = userId;
     }
 
     public String getFirstName() {
