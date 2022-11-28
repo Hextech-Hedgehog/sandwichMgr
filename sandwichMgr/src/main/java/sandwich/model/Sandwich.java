@@ -6,6 +6,7 @@ public class Sandwich {
     private boolean asClub;
     private boolean withButter;
     private String optionalRequirement;
+    //private user user;
 
     public Sandwich(SandwichType sandwichType) {
         this.sandwichType = sandwichType;
