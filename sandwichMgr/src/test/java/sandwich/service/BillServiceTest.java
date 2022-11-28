@@ -12,8 +12,6 @@ import sandwich.SpringSandwichApplication;
 import sandwich.model.Bill;
 import sandwich.model.Sandwich;
 import sandwich.model.Shop;
-import sandwich.repository.BillRepository;
-import sandwich.repository.SandwichRepository;
 import sandwich.utils.SandwichMaker;
 
 import java.time.LocalDate;

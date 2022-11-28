@@ -3,16 +3,11 @@ package sandwich.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import sandwich.exception.SessionNotFoundException;
-import sandwich.factory.SandwichFactory;
 import sandwich.model.*;
-import sandwich.repository.BillRepository;
 import sandwich.utils.SandwichMaker;
 
-import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 @Service

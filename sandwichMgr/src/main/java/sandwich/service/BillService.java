@@ -1,9 +1,7 @@
 package sandwich.service;
 
 import org.springframework.stereotype.Service;
-import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
-import sandwich.repository.BillRepository;
 
 import java.time.LocalDate;
 import java.util.List;

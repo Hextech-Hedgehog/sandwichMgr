@@ -1,7 +1,6 @@
 package sandwich.utils;
 
 import sandwich.model.Shop;
-import sandwich.repository.SandwichTypeFileRepository;
 
 import java.io.IOException;
 

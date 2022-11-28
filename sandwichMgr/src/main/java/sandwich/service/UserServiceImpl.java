@@ -7,9 +7,7 @@ import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
 import sandwich.exception.UserNotFoundException;
-import sandwich.repository.UserRepository;
 
-import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.util.List;
 

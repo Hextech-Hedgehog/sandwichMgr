@@ -2,7 +2,7 @@ package sandwich.model;
 
 public enum Shop {
     PINKYS("sandwichTypePinkys.txt"),
-    VLEUGELS("sandwichTypeVleugels.txt");
+    VLEUGELS("sandwichTypeVleugels.txt");               // TODO refactor
 
     private final String pathWay;
 
