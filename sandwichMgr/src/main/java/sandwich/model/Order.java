@@ -1,76 +1,88 @@
 package sandwich.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+
+@Entity
+@Table(name="orders")
 public class Order {
 
-    private Map<Sandwich, Integer> sandwiches = new HashMap<Sandwich, Integer>();
+    @Id
+    @SequenceGenerator(name="billGen", sequenceName = "bill_bid_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "billGen")
+    @Column(name="orid")
+    private int orderId;
+    @OneToMany(targetEntity = Sandwich.class, cascade = {MERGE, PERSIST})
+    @JoinColumn(name="s_orid")
+    private List<Sandwich> sandwiches = new ArrayList<>();
+    @Column(name="odate")
     private LocalDate date;
 
     public Order () {
         this.date = LocalDate.now();
     }
 
-    public Order(Sandwich sandwich) {
-        this();
-        this.sandwiches.put(sandwich, 1);
-    }
-
-    public Order(Sandwich sandwich, LocalDate date) {
-        this.date = date;
-        this.sandwiches.put(sandwich, 1);
-    }
-
-    public Order(Map<Sandwich, Integer> sandwiches) {
-        this();
+    public Order(List<Sandwich> sandwiches, LocalDate date) {
         this.sandwiches = sandwiches;
-    }
-
-    public Order(Map<Sandwich, Integer> sandwiches, LocalDate date) {
         this.date = date;
-        this.sandwiches = sandwiches;
     }
 
     public void addSandwich(Sandwich sandwich) {
-        if (this.sandwiches.containsKey(sandwich)) {
-            int count = this.sandwiches.get(sandwich);
-            this.sandwiches.put(sandwich, ++count);
-        } else
-            this.sandwiches.put(sandwich, 1);
+        this.sandwiches.add(sandwich);
     }
 
-    public void addSandwiches(Map<Sandwich, Integer> sandwiches) {
-        sandwiches.forEach((k, v) -> this.sandwiches.merge(k, v, (oldV, newV) -> oldV + newV));
+    public void addSandwiches(List<Sandwich> sandwiches) {
+        this.sandwiches.addAll(sandwiches);
     }
 
     public void printOrderInfo() {
         System.out.println(this.getClass().getSimpleName() + " " + this.getDate() + ": ");
-        this.sandwiches.forEach((k, v) -> {
+
+        getSandwiches().forEach((k, v) -> {
             System.out.print(v + " people ordered: ");
-            k.printContents();
+            v.get(0).getSandwichType().printContents();
         });
         System.out.println();
     }
 
-    public Map<Sandwich, Integer> getSandwiches() {
-        return sandwiches;
+    public Map<String, List<Sandwich>> getSandwiches() {
+        Map<String, List<Sandwich>> duplicateSandwiches = new HashMap<>();
+        this.sandwiches.stream().forEach(s -> {
+            duplicateSandwiches.computeIfAbsent(s.getSandwichType().getSandwichName(), v -> new ArrayList<>()).add(s);
+        });
+        return duplicateSandwiches;
     }
 
-    public boolean hasSandwich(Sandwich sandwich) {
-        return this.sandwiches.containsKey(sandwich);
+    public void setSandwiches(List<Sandwich> sandwiches) {
+        this.sandwiches = sandwiches;
     }
 
     public LocalDate getDate() {
         return date;
     }
 
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof Order) {
             Order order = (Order)o;
-            boolean isMapOfSandwichEqual = this.sandwiches.size() == order.sandwiches.size() && this.sandwiches.entrySet().stream().allMatch(elem -> elem.getValue() == order.sandwiches.get(elem.getKey()));
+            Map<String, List<Sandwich>> mySandwiches = getSandwiches();
+            Map<String, List<Sandwich>> theirSandwiches = order.getSandwiches();
+            boolean isMapOfSandwichEqual = mySandwiches.size() == theirSandwiches.size() && mySandwiches.entrySet().stream().allMatch(elem -> (theirSandwiches.get(elem.getKey()) != null) && (elem.getValue().size() == theirSandwiches.get(elem.getKey()).size()));
             return this.date.equals(order.date) && isMapOfSandwichEqual;
         }
         return false;

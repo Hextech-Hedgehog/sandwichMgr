@@ -8,5 +8,14 @@
       <jdbc-url>jdbc:postgresql://soc2-ng:5432/tbd2</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="sandwichMgr/Hibernate" uuid="3ae997a8-c51e-4aa7-a961-20d29c2366ea">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://soc2-ng:5432/tbd2</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

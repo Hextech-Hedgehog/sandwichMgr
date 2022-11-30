@@ -1,45 +1,32 @@
 package sandwich.dto;
 
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import sandwich.model.User;
-
 import javax.validation.constraints.Pattern;
 
 @JsonRootName(value = "user")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDTO {
 
-
-    @JacksonXmlProperty(localName = "userid")
     private int userId;
-    private String username;
     @Pattern(regexp = "\\w{8,}", message = "password needs to be at least 8 characters long")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    private String firstname;
+    private String lastname;
+    ///TODO add pattern validation on mail
+    private String email;
     @JsonProperty(value = "course")
-    private CourseDTO courseDTO;
+    private CourseDTO course;
 
     public UserDTO() {}
 
-    public UserDTO(String username, String password) {
-        this.username = username;
+    public UserDTO(int userId, String password, String firstname, String lastname, String email, CourseDTO course) {
+        this.userId = userId;
         this.password = password;
-    }
-
-    public UserDTO(User user) {
-        this.userId = user.getUserId();
-        this.username = user.getUsername();
-        this.password = user.getPassword();
-        this.courseDTO = new CourseDTO(user.getCourse());
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.course = course;
     }
 
     @JsonIgnore
@@ -59,12 +46,36 @@ public class UserDTO {
         this.userId = userId;
     }
 
-    public CourseDTO getCourseDTO() {
-        return courseDTO;
+    public CourseDTO getCourse() {
+        return course;
     }
 
-    public void setCourseDTO(CourseDTO courseDTO) {
-        this.courseDTO = courseDTO;
+    public void setCourse(CourseDTO courseDTO) {
+        this.course = courseDTO;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
 

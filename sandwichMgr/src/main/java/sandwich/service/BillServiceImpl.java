@@ -3,33 +3,30 @@ package sandwich.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import sandwich.exception.SessionNotFoundException;
-import sandwich.factory.SandwichFactory;
 import sandwich.model.*;
-import sandwich.repository.BillRepository;
+import sandwich.utils.repository.BillJpaRepository;
+import sandwich.utils.repository.ShopJpaRepository;
 import sandwich.utils.SandwichMaker;
 
-import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 @Service
 @Profile("production")
 public class BillServiceImpl implements BillService {
 
-    @Autowired
-    private BillRepository billRepository;
+    private BillJpaRepository billRepository;
+    private ShopJpaRepository shopRepository;
 
     @Override
     public void addBill(Bill bill) {
-        this.billRepository.addBill(bill);
+        this.billRepository.save(bill);
     }
 
     @Override
     public void addBills(List<Bill> bills) {
-        this.billRepository.addBills(bills);
+        this.billRepository.saveAll(bills);
     }
 
     @Override
@@ -38,35 +35,42 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public List<Order> findOrdersByBillDate(LocalDate date) { return this.billRepository.findOrdersByBillDate(date); }
+
+    @Override
     public void removeBill(Bill bill) {
-        this.billRepository.removeBill(bill);
+        this.billRepository.delete(bill);
     }
 
     @Override
     public void removeBills(Set<Bill> bills) {
-        this.billRepository.removeBills(bills);
+        this.billRepository.deleteAll(bills);
     }
 
     @Override
     public List<Bill> getAllBills() {
-        return this.billRepository.getAllBills();
+        return this.billRepository.findAll();
     }
 
     public Bill getThisMonthBill() {
         Bill bill = this.billRepository.findBillByMonth(LocalDate.now());
         if (bill == null)
-            this.billRepository.addBill(new Bill());
+            this.billRepository.save(new Bill());
         return this.billRepository.findBillByMonth(LocalDate.now());
     }
 
     @Autowired
     @Override
-    public void setBillRepository(BillRepository billRepository) {
+    public void setBillRepository(BillJpaRepository billRepository) {
         this.billRepository = billRepository;
     }
 
+    @Autowired
+    public void setShopJpaRepository(ShopJpaRepository shopRepository) { this.shopRepository = shopRepository; }
+
     @Override
-    public Sandwich orderSandwich(Shop shop) {
+    public Sandwich orderSandwich(String shopName) {
+        Shop shop = this.shopRepository.findShopByShopName(shopName);
         return SandwichMaker.makeSandwich(shop);
     }
 

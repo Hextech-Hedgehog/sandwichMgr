@@ -27,7 +27,7 @@ public class UserController {
 
     @PostMapping("user/login")
     public ResponseEntity<? extends Object> findPersonByMailAndPwd(@RequestBody UserDTO userDTO, HttpServletRequest request) throws UserNotFoundException {
-        UserService userService = this.appService.getPersonService();
+        UserService userService = this.appService.getUserService();
         //User user = userService.findUser(userDTO.getUsername(), userDTO.getPassword());
         return null;
     }

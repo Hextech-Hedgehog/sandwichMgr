@@ -8,6 +8,7 @@ import sandwich.model.*;
 
 import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 @Service
 public class AppServiceImpl implements AppService {
@@ -40,8 +41,8 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public Set<Order> viewOrdersByDate(LocalDate date) {
-        return this.billService.findBillByMonth(date).getOrdersByDate(date);
+    public List<Order> viewOrdersByDate(LocalDate date) {
+        return this.billService.findOrdersByBillDate(date);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class AppServiceImpl implements AppService {
         if (this.userService.getAllUsers().contains(user)) {
             Bill bill = this.billService.getThisMonthBill();
             Order order = userService.getOrderByUserForCurrentCourseSession(user);
-            sandwich = this.billService.orderSandwich(Shop.valueOf(shopName));
+            sandwich = this.billService.orderSandwich(shopName);
             order.addSandwich(sandwich);
             bill.addOrder(order);
         }

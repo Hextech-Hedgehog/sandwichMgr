@@ -8,6 +8,7 @@ import sandwich.model.Sandwich;
 import sandwich.model.User;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 public interface AppService {
@@ -19,7 +20,7 @@ public interface AppService {
     void setUserService(UserService personService);
     void setCourseService(CourseService courseService);
     Bill viewBillByDate(LocalDate date);
-    Set<Order> viewOrdersByDate(LocalDate date);
+    List<Order> viewOrdersByDate(LocalDate date);
     Sandwich orderSandwich(User user, String shopName) throws SessionNotFoundException, CourseNotFoundException;
 
 }

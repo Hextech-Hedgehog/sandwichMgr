@@ -7,9 +7,8 @@ import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
 import sandwich.exception.UserNotFoundException;
-import sandwich.repository.UserRepository;
+import sandwich.utils.repository.UserJpaRepository;
 
-import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,41 +17,37 @@ import java.util.List;
 @Profile("production")
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
+    private UserJpaRepository userRepository;
 
     @Override
     public void addUser(User user) {
-        this.userRepository.addUser(user);
+        this.userRepository.save(user);
     }
 
     public void addUsers(List<User> users) {
-        this.userRepository.addUsers(users);
+        this.userRepository.saveAll(users);
     }
 
+    //TODO Exception handling
     @Override
-    public User findUser(String firstName) throws UserNotFoundException {
-        return this.userRepository.findUser(firstName);
-    }
-
-    @Override
-        public List<User> findUsers(List<String> firstNames) throws UserNotFoundException, IllegalArgumentException {
-        return this.userRepository.findUsers(firstNames);
+    public User findUser(String email) throws UserNotFoundException {
+        return this.userRepository.findUserByEmail(email);
     }
 
     @Override
     public void removeUser(User user) {
-        this.userRepository.removeUser(user);
+        this.userRepository.delete(user);
     }
 
     @Override
     public void removeUsers(List<User> users) {
-        this.userRepository.removeUsers(users);
+        this.userRepository.deleteAll(users);
     }
 
 
     @Override
     public List<User> getAllUsers() {
-        return this.userRepository.getAllUsers();
+        return this.userRepository.findAll();
     }
 
     @Override
@@ -60,11 +55,11 @@ public class UserServiceImpl implements UserService {
         if (user.getCourse() == null)
             throw new CourseNotFoundException(user.getFirstName() + " isn't sign in any course.");
 
-        return user.getCourse().getSessionByDate(LocalDate.now()).getDailyOrder();
+        return user.getCourse().getSessions().stream().filter(s -> s.coversDate(LocalDate.now())).findFirst().orElseThrow(() -> new SessionNotFoundException("No session found at this date: " + LocalDate.now())).getDailyOrder();
     }
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
+    public void setUserRepository(UserJpaRepository userRepository) {
         this.userRepository = userRepository;
     }
 
