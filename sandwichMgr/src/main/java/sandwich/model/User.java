@@ -1,16 +1,23 @@
 package sandwich.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
+@Table(name = "users")
 public class User {
 
-    private int userId;
-    private String firstName;
-    private String lastName;
-    private String password;
-    private Course course;
+    @Id @SequenceGenerator(name = "users_generator", sequenceName = "user_uid_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_generator")
+    @Column(name = "uid")                   private int userId;
+    @Column(name = "fname")                 private String firstName;
+    @Column(name = "lname")                 private String lastName;
+    @Column(name = "pwd")                   private String password;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "u_cid")             private Course course;
+
 
     public User() {}
 
@@ -44,8 +51,20 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Course getCourse() {
         return this.course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public void follow(Course course) {

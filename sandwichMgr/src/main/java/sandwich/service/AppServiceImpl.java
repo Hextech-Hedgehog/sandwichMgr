@@ -6,7 +6,6 @@ import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.util.Set;
 @Service
@@ -49,7 +48,7 @@ public class AppServiceImpl implements AppService {
         Sandwich sandwich = null;
         if (this.userService.getAllUsers().contains(user)) {
             Bill bill = this.billService.getThisMonthBill();
-            Order order = userService.getOrderByUserForCurrentCourseSession(user);
+            Order order = userService.getSandwichOrderByUserForCurrentCourseSession(user);
             sandwich = this.billService.orderSandwich(Shop.valueOf(shopName));
             order.addSandwich(sandwich);
             bill.addOrder(order);

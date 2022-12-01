@@ -12,8 +12,9 @@ public class UserDTO {
 
 
     @JacksonXmlProperty(localName = "userid")
-    private int userId;
-    private String username;
+    private int userId;                                         // TODO Quid userId in UserDTO ?
+    private String firstName;
+    private String lastName;
     @Pattern(regexp = "\\w{8,}", message = "password needs to be at least 8 characters long")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
@@ -22,24 +23,34 @@ public class UserDTO {
 
     public UserDTO() {}
 
-    public UserDTO(String username, String password) {
-        this.username = username;
+    public UserDTO(String firstName, String lastName, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
     }
 
     public UserDTO(User user) {
         this.userId = user.getUserId();
-        this.username = user.getUsername();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
         this.password = user.getPassword();
         this.courseDTO = new CourseDTO(user.getCourse());
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @JsonIgnore

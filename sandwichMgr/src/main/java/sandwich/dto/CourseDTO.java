@@ -11,11 +11,9 @@ public class CourseDTO {
     private String name;
 
     public CourseDTO() {}
-
     public CourseDTO(String name) {
         this.name = name;
     }
-
     public CourseDTO(Course course) {
         this.name = course.getName();
     }

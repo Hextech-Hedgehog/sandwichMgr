@@ -1,27 +1,31 @@
 package sandwich.model;
 
-import sandwich.exception.ParticipantNotFoundException;
-import sandwich.exception.SessionNotFoundException;
+import javax.persistence.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
+@Entity
+@Table(name = "course")
 public class Course {
 
-    private String name;
-    private final List<User> courseParticipants = new ArrayList<>();
-    private List<Session> sessions;
+    @Id @SequenceGenerator(name = "course_generator", sequenceName = "course_cid_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_generator")
+    @Column(name = "cid")               private int courseId;
+    @Column(name = "cname")             private String name;
+
+
+    public Course() {}
 
     public Course(String name) throws IllegalArgumentException {
         if (name == null) throw new IllegalArgumentException("Name is a required parameter for course");
         this.name = name;
     }
 
-    public void printParticipants() {
-        for (User participant: courseParticipants) {
-            System.out.println(participant.getFirstName());
-        }
+
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
     public String getName() {
@@ -33,36 +37,5 @@ public class Course {
         this.name = name;
     }
 
-    public List<User> getCourseParticipants() {
-        return courseParticipants;
-    }
 
-    public User getCourseParticipantByName(String firstName) throws ParticipantNotFoundException {
-        return this.courseParticipants.stream().filter(e -> e.getFirstName().equalsIgnoreCase(firstName)).findFirst().orElseThrow(() -> new ParticipantNotFoundException("Particpant " + firstName + " not found"));
-    }
-
-    public void addParticipants(List<User> courseParticipants) {
-        this.courseParticipants.addAll(courseParticipants);
-        this.courseParticipants.forEach(participant -> participant.follow(this));
-    }
-
-    public List<Session> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(List<Session> sessions) {
-        this.sessions = sessions;
-    }
-
-    public Session getSessionByDate(LocalDate date) throws SessionNotFoundException {
-        return this.sessions.stream().filter(elem -> elem.coversDate(date)).findFirst().orElseThrow(() -> new SessionNotFoundException("No session found at this date: " + date));
-    }
-
-    public boolean hasSession(LocalDate date) {
-        return this.sessions.stream().anyMatch(elem -> elem.coversDate(date));
-    }
-
-    public void addParticipant(User participant) {
-        this.courseParticipants.add(participant);
-    }
 }

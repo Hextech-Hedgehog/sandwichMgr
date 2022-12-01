@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.model.Course;
+import sandwich.repository.CourseJpaRepository;
 
 import java.util.List;
 
@@ -14,45 +15,38 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseJpaRepository courseRepository;
 
     @Override
     public void addCourse(Course course) {
-        this.courseRepository.addCourse(course);
+        this.courseRepository.save(course);
     }
 
     @Override
     public void addCourses(List<Course> courses) {
-        this.courseRepository.addCourses(courses);
+        this.courseRepository.saveAll(courses);
     }
 
     @Override
     public Course findCourse(String name) throws CourseNotFoundException {
-        return this.courseRepository.findCourseByName(name);
-    }
-
-    @Override
-    public List<Course> findCourses(List<String> names) throws CourseNotFoundException {
-        return this.courseRepository.findCoursesByName(names);
+        return this.courseRepository.findByName(name);
     }
 
     @Override
     public void removeCourse(Course course) {
-        this.courseRepository.removeCourse(course);
+        this.courseRepository.delete(course);
     }
 
     @Override
     public void removeCourses(List<Course> courses) {
-        this.courseRepository.removeCourses(courses);
+        this.courseRepository.deleteAll(courses);
     }
 
-    @Autowired
-    public void setCourseRepository(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    }
 
-    @Autowired
+    @Override
     public List<Course> getAllCourses() {
-        return courseRepository.getAllCourses();
+        return courseRepository.findAll();
     }
+
+
 }

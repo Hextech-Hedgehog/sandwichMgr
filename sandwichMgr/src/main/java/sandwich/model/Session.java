@@ -9,6 +9,7 @@ public class Session {
     private LocalDate startDate;
     private LocalDate endDate;
     private Order dailyOrder;
+    private Course course;  // TODO
 
     public Session(String sessionName, User instructor, LocalDate startDate, LocalDate endDate) throws IllegalArgumentException {
         this.sessionName = sessionName;
