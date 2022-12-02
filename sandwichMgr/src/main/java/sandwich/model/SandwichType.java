@@ -55,7 +55,6 @@ public class SandwichType {
         } catch (SandwichNotFoundException e) {
             LogManager.getLogger("error").error(e.getMessage());
         }
-
         return sd;
     }*/
 
