@@ -7,22 +7,12 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IngredientDTO {
 
-    private int ingredientId;
     private String name;
 
     public IngredientDTO() {}
 
-    public IngredientDTO(int ingredientId, String name) {
-        this.ingredientId = ingredientId;
+    public IngredientDTO(String name) {
         this.name = name;
-    }
-
-    public int getIngredientId() {
-        return ingredientId;
-    }
-
-    public void setIngredientId(int ingredientId) {
-        this.ingredientId = ingredientId;
     }
 
     public String getName() {

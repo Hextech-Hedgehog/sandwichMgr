@@ -7,7 +7,7 @@ import sandwich.model.Ingredient;
 @Component
 public class IngredientMapper {
     public static IngredientDTO toDto(Ingredient ingredient) {
-        return new IngredientDTO(ingredient.getIngredientId(), ingredient.getName());
+        return new IngredientDTO(ingredient.getName());
     }
 
     public static Ingredient toIngredient(IngredientDTO ingredient) {

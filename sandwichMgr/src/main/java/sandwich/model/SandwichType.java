@@ -13,12 +13,12 @@ public class SandwichType {
     @SequenceGenerator(name="sandwichTypeGen", sequenceName = "sandwich_type_stid_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sandwichTypeGen")
     @Column(name="stid")
-    private int SandwichTypeId;
+    private int sandwichTypeId;
     @Column(name="stname")
     private String sandwichName;
     @ManyToMany
     @JoinTable(name = "SANDWICHINGREDIENTS",
-            joinColumns = @JoinColumn(name = "si_shid"),
+            joinColumns = @JoinColumn(name = "si_stid"),
             inverseJoinColumns = @JoinColumn(name = "si_iid"))
     private List<Ingredient> ingredients = new ArrayList<>();
 
@@ -29,9 +29,15 @@ public class SandwichType {
         IntStream.range(1, sandwichTypeContents.length).forEach(idx -> ingredients.add(new Ingredient(sandwichTypeContents[idx])));
     }
 
+    public SandwichType(int sandwichTypeId, String sandwichName) {
+        sandwichTypeId = sandwichTypeId;
+        this.sandwichName = sandwichName;
+    }
+
     public SandwichType(String sandwichName, List<Ingredient> ingredients) {
         this.sandwichName = sandwichName;
-        this.ingredients.addAll(ingredients);
+        if (ingredients != null)
+            this.ingredients.addAll(ingredients);
     }
 
     public void printContents() {
@@ -68,7 +74,7 @@ public class SandwichType {
     }
 
     public int getSandwichTypeId() {
-        return SandwichTypeId;
+        return sandwichTypeId;
     }
 
     public String getSandwichName() {

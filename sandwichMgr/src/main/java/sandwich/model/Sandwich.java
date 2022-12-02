@@ -1,5 +1,7 @@
 package sandwich.model;
 
+import sandwich.converter.SandwichExtraConverter;
+
 import javax.persistence.*;
 
 import static javax.persistence.CascadeType.MERGE;
@@ -18,8 +20,10 @@ public class Sandwich {
     @JoinColumn(name = "s_stid")
     private SandwichType sandwichType;
     @Column(name="club")
+    @Convert(converter = SandwichExtraConverter.class)
     private boolean asClub;
     @Column(name="butter")
+    @Convert(converter = SandwichExtraConverter.class)
     private boolean withButter;
     @Column(name="optional")
     private String optionalRequirement;

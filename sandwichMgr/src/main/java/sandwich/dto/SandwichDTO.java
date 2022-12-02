@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SandwichDTO {
 
-    private int orderId;
+    private int sandwichId;
     @JsonProperty(value = "sandwichtype")
     private SandwichTypeDTO sandwichType;
     private boolean asClub;
@@ -19,8 +19,7 @@ public class SandwichDTO {
 
     public SandwichDTO(){}
 
-    public SandwichDTO(int orderId, SandwichTypeDTO sandwichType, boolean asClub, boolean withButter, String optionalRequirement, UserDTO user) {
-        this.orderId = orderId;
+    public SandwichDTO(SandwichTypeDTO sandwichType, boolean asClub, boolean withButter, String optionalRequirement, UserDTO user) {
         this.sandwichType = sandwichType;
         this.asClub = asClub;
         this.withButter = withButter;
@@ -28,12 +27,17 @@ public class SandwichDTO {
         this.user = user;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public SandwichDTO(int sandwichId, SandwichTypeDTO sandwichType, boolean asClub, boolean withButter, String optionalRequirement, UserDTO user) {
+        this(sandwichType, asClub, withButter, optionalRequirement, user);
+        this.sandwichId = sandwichId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public int getSandwichId() {
+        return this.sandwichId;
+    }
+
+    public void setSandwichId(int orderId) {
+        this.sandwichId = orderId;
     }
 
     public SandwichTypeDTO getSandwichType() {

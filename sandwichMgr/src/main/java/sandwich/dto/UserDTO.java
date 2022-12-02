@@ -15,18 +15,19 @@ public class UserDTO {
     private String lastname;
     ///TODO add pattern validation on mail
     private String email;
-    @JsonProperty(value = "course")
-    private CourseDTO course;
 
     public UserDTO() {}
 
-    public UserDTO(int userId, String password, String firstname, String lastname, String email, CourseDTO course) {
-        this.userId = userId;
+    public UserDTO(String password, String firstname, String lastname, String email) {
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-        this.course = course;
+    }
+
+    public UserDTO(int userId, String password, String firstname, String lastname, String email) {
+        this(password, firstname, lastname, email);
+        this.userId = userId;
     }
 
     @JsonIgnore
@@ -44,14 +45,6 @@ public class UserDTO {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public CourseDTO getCourse() {
-        return course;
-    }
-
-    public void setCourse(CourseDTO courseDTO) {
-        this.course = courseDTO;
     }
 
     public String getFirstname() {

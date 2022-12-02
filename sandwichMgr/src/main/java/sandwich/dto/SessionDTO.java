@@ -22,13 +22,17 @@ public class SessionDTO {
 
     public SessionDTO() {}
 
-    public SessionDTO(int sessionId, String sessionName, UserDTO instructor, LocalDate startDate, LocalDate endDate, OrderDTO dailyOrder) {
-        this.sessionId = sessionId;
+    public SessionDTO(String sessionName, UserDTO instructor, LocalDate startDate, LocalDate endDate, OrderDTO dailyOrder) {
         this.sessionName = sessionName;
         this.instructor = instructor;
         this.startDate = startDate;
         this.endDate = endDate;
         this.dailyOrder = dailyOrder;
+    }
+
+    public SessionDTO(int sessionId, String sessionName, UserDTO instructor, LocalDate startDate, LocalDate endDate, OrderDTO dailyOrder) {
+        this(sessionName, instructor, startDate, endDate, dailyOrder);
+        this.sessionId = sessionId;
     }
 
     public int getSessionId() {

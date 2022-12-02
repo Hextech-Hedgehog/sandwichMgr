@@ -1,4 +1,4 @@
-package sandwich.utils.repository;
+package sandwich.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,8 +12,10 @@ import java.util.List;
 @Repository
 public interface ShopJpaRepository extends JpaRepository<Shop, Integer> {
     Shop findShopByShopName(String name);
-    @Query(value="select * from sandwichtype st where st.stname=:sname and st_shid=:id", nativeQuery = true)
-    SandwichType findSandwichByShopAndName(@Param("id") int shopId, @Param("sname") String sandwichName);
+    @Query(value="select stid, stname from sandwichtype st where st.stname=:sname and st_shid=:id", nativeQuery = true)
+    List<Object[]> findSandwichByShopAndName(@Param("id") int shopId, @Param("sname") String sandwichName);
     @Query(value = "select * from sandwichtype st where st_shid=:id", nativeQuery = true)
     List<SandwichType> findSandwichesByShop(@Param("id") int shopId);
+    @Query(value="select * from shop where shid in (select st_shid from sandwichtype where stid=:id)", nativeQuery = true)
+    Shop findShopOfSandwichType(@Param("id") int sandwichTypeId);
 }

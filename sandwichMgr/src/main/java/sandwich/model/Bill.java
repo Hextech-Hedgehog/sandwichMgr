@@ -1,11 +1,13 @@
 package sandwich.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.repository.cdi.Eager;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.*;
 
 @Entity
 @Table(name="bill")
@@ -16,32 +18,35 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "billGen")
     @Column(name="bid")
     private int billId;
-    @OneToMany(targetEntity = Order.class, cascade = {MERGE, PERSIST})
+    @JsonIgnore
+    @OneToMany(targetEntity = Order.class, fetch = FetchType.LAZY, cascade = {MERGE, PERSIST})
     @JoinColumn(name="o_bid")
     private List<Order> orders = new ArrayList<>();
     @Column(name="bdate")
     private LocalDate billDate;
 
-    public Bill () {
+    public Bill() {
         LocalDate now = LocalDate.now();
         this.billDate = LocalDate.of(now.getYear(), now.getMonth(), 1);
     }
 
     public Bill(LocalDate date) {
-        this.billDate = date;
+        int dayOfMonth = date.getDayOfMonth();
+        this.billDate = date.minusDays(dayOfMonth - 1);
     }
 
     public Bill(LocalDate billDate, List<Order> orders) {
+        this(billDate);
         this.orders = orders;
-        this.billDate = billDate;
     }
 
     public void addOrder(Order order) {
-        this.orders.add(order);
+        if (!orders.contains(order))
+            this.orders.add(order);
     }
 
     public void addOrders(List<Order> orders) {
-        orders.addAll(orders);
+        this.orders.addAll(orders);
     }
 
     public LocalDate getBillDate() {

@@ -1,4 +1,4 @@
-package sandwich.utils.repository;
+package sandwich.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,7 +18,9 @@ public interface OrderJpaRepository extends JpaRepository<Order, Integer> {
     @Query(value="insert into orders (odate) values (:date)", nativeQuery = true)
     void addOrder(@Param("date") LocalDate date);
     @Query(value = "select * from orders where odate=:date", nativeQuery = true)
-    List<Order> findOrderByDate(@Param("date") LocalDate date);
+    List<Order> findOrdersByDate(@Param("date") LocalDate date);
+    @Query(value="select * from orders where o_bid=:billId and odate=:date", nativeQuery = true)
+    List<Order> findOrdersByBillAndDate(@Param("billId") int billId, @Param("date") LocalDate date);
     @Query(value="select * from orders where orid=:id", nativeQuery = true)
     Order findOrderById(@Param("id") int orderId);
     @Modifying
@@ -26,4 +28,7 @@ public interface OrderJpaRepository extends JpaRepository<Order, Integer> {
     void removeOrder(@Param("id") int orderId);
     @Query(value="select * from orders", nativeQuery = true)
     List<Order> getOrders();
+    @Query(value="insert into orders (odate, o_bid) values (:orderDate, :id)", nativeQuery = true)
+    @Modifying
+    void addOrderToBill(@Param("id") int billId, @Param("orderDate") LocalDate orderDate);
 }

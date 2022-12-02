@@ -1,5 +1,7 @@
 package sandwich.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "billGen")
     @Column(name="orid")
     private int orderId;
-    @OneToMany(targetEntity = Sandwich.class, cascade = {MERGE, PERSIST})
+    @OneToMany(targetEntity = Sandwich.class, fetch = FetchType.LAZY, cascade = {MERGE, PERSIST})
     @JoinColumn(name="s_orid")
     private List<Sandwich> sandwiches = new ArrayList<>();
     @Column(name="odate")
@@ -27,6 +29,10 @@ public class Order {
 
     public Order () {
         this.date = LocalDate.now();
+    }
+
+    public Order(LocalDate date) {
+        this.date = date;
     }
 
     public Order(List<Sandwich> sandwiches, LocalDate date) {
@@ -54,9 +60,10 @@ public class Order {
 
     public Map<String, List<Sandwich>> getSandwiches() {
         Map<String, List<Sandwich>> duplicateSandwiches = new HashMap<>();
-        this.sandwiches.stream().forEach(s -> {
-            duplicateSandwiches.computeIfAbsent(s.getSandwichType().getSandwichName(), v -> new ArrayList<>()).add(s);
-        });
+        if (this.sandwiches.size() != 0)
+            this.sandwiches.stream().forEach(s -> {
+                duplicateSandwiches.computeIfAbsent(s.getSandwichType().getSandwichName(), v -> new ArrayList<>()).add(s);
+            });
         return duplicateSandwiches;
     }
 
@@ -80,10 +87,11 @@ public class Order {
     public boolean equals(Object o) {
         if (o instanceof Order) {
             Order order = (Order)o;
-            Map<String, List<Sandwich>> mySandwiches = getSandwiches();
-            Map<String, List<Sandwich>> theirSandwiches = order.getSandwiches();
-            boolean isMapOfSandwichEqual = mySandwiches.size() == theirSandwiches.size() && mySandwiches.entrySet().stream().allMatch(elem -> (theirSandwiches.get(elem.getKey()) != null) && (elem.getValue().size() == theirSandwiches.get(elem.getKey()).size()));
-            return this.date.equals(order.date) && isMapOfSandwichEqual;
+            //TODO compare based on session and course, not on sandwiches
+            //Map<String, List<Sandwich>> mySandwiches = getSandwiches();
+            //Map<String, List<Sandwich>> theirSandwiches = order.getSandwiches();
+            //boolean isMapOfSandwichEqual = mySandwiches.size() == theirSandwiches.size() && mySandwiches.entrySet().stream().allMatch(elem -> (theirSandwiches.get(elem.getKey()) != null) && (elem.getValue().size() == theirSandwiches.get(elem.getKey()).size()));
+            return this.date.isEqual(order.getDate());
         }
         return false;
     }

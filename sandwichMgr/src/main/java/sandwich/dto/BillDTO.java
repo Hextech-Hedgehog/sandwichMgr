@@ -16,10 +16,14 @@ public class BillDTO {
 
     public BillDTO(){}
 
-    public BillDTO(int billId, List<OrderDTO> orders, LocalDate billDate) {
-        this.billId = billId;
+    public BillDTO(List<OrderDTO> orders, LocalDate billDate) {
         this.orders = orders;
         this.billDate = billDate;
+    }
+
+    public BillDTO(int billId, List<OrderDTO> orders, LocalDate billDate) {
+        this(orders, billDate);
+        this.billId = billId;
     }
 
     public int getBillId() {

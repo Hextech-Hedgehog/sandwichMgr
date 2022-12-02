@@ -5,13 +5,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.model.Course;
-import sandwich.utils.repository.CourseJpaRepository;
+import sandwich.repository.CourseJpaRepository;
 
 import java.util.List;
 
 
 @Service
-@Profile("production")
 public class CourseServiceImpl implements CourseService {
 
     private CourseJpaRepository courseRepository;

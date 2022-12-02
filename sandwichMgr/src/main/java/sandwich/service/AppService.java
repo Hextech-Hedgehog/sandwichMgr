@@ -20,7 +20,7 @@ public interface AppService {
     void setUserService(UserService personService);
     void setCourseService(CourseService courseService);
     Bill viewBillByDate(LocalDate date);
-    List<Order> viewOrdersByDate(LocalDate date);
-    Sandwich orderSandwich(User user, String shopName) throws SessionNotFoundException, CourseNotFoundException;
+    List<Order> viewOrdersByBillAndDate(int billId, LocalDate date);
+    Sandwich orderSandwich(User user, String shopName, Sandwich sandwich) throws SessionNotFoundException, CourseNotFoundException;
 
 }

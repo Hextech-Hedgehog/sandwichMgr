@@ -16,11 +16,15 @@ public class CourseDTO {
 
     public CourseDTO() {}
 
-    public CourseDTO(int courseId, String name, List<UserDTO> courseParticipants, List<SessionDTO> sessions) {
-        this.courseId = courseId;
+    public CourseDTO(String name, List<UserDTO> courseParticipants, List<SessionDTO> sessions) {
         this.name = name;
         this.courseParticipants = courseParticipants;
         this.sessions = sessions;
+    }
+
+    public CourseDTO(int courseId, String name, List<UserDTO> courseParticipants, List<SessionDTO> sessions) {
+        this(name, courseParticipants, sessions);
+        this.courseId = courseId;
     }
 
     public CourseDTO(String name) {

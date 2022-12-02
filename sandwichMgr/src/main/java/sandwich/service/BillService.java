@@ -2,7 +2,7 @@ package sandwich.service;
 
 import org.springframework.stereotype.Service;
 import sandwich.model.*;
-import sandwich.utils.repository.BillJpaRepository;
+import sandwich.repository.BillJpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +19,10 @@ public interface BillService {
     List<Bill> getAllBills();
     Bill getThisMonthBill();
     Sandwich orderSandwich(String shopName);
+    Sandwich orderSandwich(String shopName, Sandwich sandwich);
     void setBillRepository(BillJpaRepository billRepository);
-    List<Order> findOrdersByBillDate(LocalDate date);
+    List<Order> findOrdersByBillAndDate(int billId, LocalDate date);
+    List<Order> findOrdersByDate(LocalDate date);
+    void updateBill(Bill bill);
 
 }

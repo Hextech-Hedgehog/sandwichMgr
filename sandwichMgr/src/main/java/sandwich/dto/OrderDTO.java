@@ -17,10 +17,14 @@ public class OrderDTO {
 
     public OrderDTO(){}
 
-    public OrderDTO(int orderId, Map<String, List<SandwichDTO>> sandwiches, LocalDate date) {
-        this.orderId = orderId;
+    public OrderDTO(Map<String, List<SandwichDTO>> sandwiches, LocalDate date) {
         this.sandwiches = sandwiches;
         this.date = date;
+    }
+
+    public OrderDTO(int orderId, Map<String, List<SandwichDTO>> sandwiches, LocalDate date) {
+        this(sandwiches, date);
+        this.orderId = orderId;
     }
 
     public int getOrderId() {

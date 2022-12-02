@@ -1,5 +1,7 @@
 package sandwich.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 import static javax.persistence.CascadeType.MERGE;
@@ -22,10 +24,19 @@ public class User {
     private String email;
     @Column(name="pwd")
     private String password;
+    @JsonIgnore
     @ManyToOne(cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "u_cid")
     private Course course;
 
     public User() {}
+
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
 
     public User(String firstName, String lastName, String email, String password, Course course) {
         this.userId = userId;
@@ -84,7 +95,7 @@ public class User {
     public boolean equals(Object o) {
         if (o instanceof User) {
             User user = (User)o;
-            return user.userId == this.userId && user.firstName.equals(this.firstName);
+            return user.email.equalsIgnoreCase(email);
         }
 
         return false;

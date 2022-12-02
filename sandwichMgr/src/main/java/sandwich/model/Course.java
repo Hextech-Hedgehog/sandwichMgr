@@ -18,7 +18,7 @@ public class Course {
     @Id
     @SequenceGenerator(name="courseGen", sequenceName = "course_cid_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "courseGen")
-    @Column(name="shid")
+    @Column(name="cid")
     private int courseId;
     @Column(name="cname")
     private String name;

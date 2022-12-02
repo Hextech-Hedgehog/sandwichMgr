@@ -11,14 +11,20 @@ public class SandwichTypeDTO {
 
     private int SandwichTypeId;
     private String sandwichName;
+    private String shop;
     private List<IngredientDTO> ingredients;
 
     public SandwichTypeDTO(){}
 
-    public SandwichTypeDTO(int sandwichTypeId, String sandwichName, List<IngredientDTO> ingredients) {
-        SandwichTypeId = sandwichTypeId;
+    public SandwichTypeDTO(String sandwichName, String shop, List<IngredientDTO> ingredients) {
         this.sandwichName = sandwichName;
+        this.shop = shop;
         this.ingredients = ingredients;
+    }
+
+    public SandwichTypeDTO(int sandwichTypeId, String sandwichName, String shop, List<IngredientDTO> ingredients) {
+        this(sandwichName, shop, ingredients);
+        SandwichTypeId = sandwichTypeId;
     }
 
     public int getSandwichTypeId() {
@@ -35,6 +41,14 @@ public class SandwichTypeDTO {
 
     public void setSandwichName(String sandwichName) {
         this.sandwichName = sandwichName;
+    }
+
+    public String getShop() {
+        return shop;
+    }
+
+    public void setShop(String shop) {
+        this.shop = shop;
     }
 
     public List<IngredientDTO> getIngredients() {

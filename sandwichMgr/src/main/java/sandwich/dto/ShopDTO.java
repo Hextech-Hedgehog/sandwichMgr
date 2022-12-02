@@ -15,10 +15,14 @@ public class ShopDTO {
 
     public ShopDTO(){}
 
-    public ShopDTO(int shopId, String shopName, List<SandwichTypeDTO> sandwiches) {
-        this.shopId = shopId;
+    public ShopDTO(String shopName, List<SandwichTypeDTO> sandwiches) {
         this.shopName = shopName;
         this.sandwiches = sandwiches;
+    }
+
+    public ShopDTO(int shopId, String shopName, List<SandwichTypeDTO> sandwiches) {
+        this(shopName, sandwiches);
+        this.shopId = shopId;
     }
 
     public int getShopId() {

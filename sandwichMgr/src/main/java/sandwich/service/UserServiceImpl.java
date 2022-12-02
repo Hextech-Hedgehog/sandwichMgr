@@ -7,14 +7,13 @@ import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
 import sandwich.exception.UserNotFoundException;
-import sandwich.utils.repository.UserJpaRepository;
+import sandwich.repository.UserJpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
 
 
 @Service
-@Profile("production")
 public class UserServiceImpl implements UserService {
 
     private UserJpaRepository userRepository;
@@ -30,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     //TODO Exception handling
     @Override
-    public User findUser(String email) throws UserNotFoundException {
+    public User findUserByMail(String email) {
         return this.userRepository.findUserByEmail(email);
     }
 
