@@ -2,10 +2,7 @@ package sandwich.service;
 
 import org.springframework.stereotype.Service;
 import sandwich.model.*;
-<<<<<<< HEAD
 import sandwich.repository.BillJpaRepository;
-=======
->>>>>>> 0bb6aae4f84f17213497ebb1a1e18e3d6d05e413
 
 import java.time.LocalDate;
 import java.util.List;
