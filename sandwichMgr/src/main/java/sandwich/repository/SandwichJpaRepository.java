@@ -8,10 +8,9 @@ import org.springframework.stereotype.Repository;
 import sandwich.model.Sandwich;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
-public interface SandwichJpaRepository extends JpaRepository {
+public interface SandwichJpaRepository extends JpaRepository<Sandwich, Integer> {
 
     @Modifying
     @Query(value="insert into sandwich (club, butter, optional, s_uid, s_orid) values (:club, :butter, :rq, :u_id, :st_id)", nativeQuery = true)

@@ -1,9 +1,8 @@
 package sandwich.service;
 
 import org.springframework.stereotype.Service;
-import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
-import sandwich.repository.BillRepository;
+import sandwich.repository.BillJpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +18,11 @@ public interface BillService {
     void removeBills(Set<Bill> bills);
     List<Bill> getAllBills();
     Bill getThisMonthBill();
-    Sandwich orderSandwich(Shop shop);
-    void setBillRepository(BillRepository billRepository);
+    Sandwich orderSandwich(String shopName);
+    Sandwich orderSandwich(String shopName, Sandwich sandwich);
+    void setBillRepository(BillJpaRepository billRepository);
+    List<Order> findOrdersByBillAndDate(int billId, LocalDate date);
+    List<Order> findOrdersByDate(LocalDate date);
+    void updateBill(Bill bill);
 
 }

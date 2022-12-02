@@ -7,7 +7,9 @@ import sandwich.exception.SessionNotFoundException;
 import sandwich.model.*;
 
 import javax.annotation.security.RolesAllowed;
+import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 @Service
 public class AppServiceImpl implements AppService {
@@ -40,22 +42,27 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public Set<Order> viewOrdersByDate(LocalDate date) {
-        return this.billService.findBillByMonth(date).getOrdersByDate(date);
+    public List<Order> viewOrdersByBillAndDate(int billId, LocalDate date) {
+        return this.billService.findOrdersByBillAndDate(billId, date);
     }
 
     @Override
-    public Sandwich orderSandwich(User user, String shopName) throws SessionNotFoundException, CourseNotFoundException {
-        Sandwich sandwich = null;
-        if (this.userService.getAllUsers().contains(user)) {
+    public Sandwich orderSandwich(User user, String shopName, Sandwich sandwich) throws SessionNotFoundException, CourseNotFoundException {
+        if ((user = this.userService.findUserByMail(user.getEmail())) != null) {
             Bill bill = this.billService.getThisMonthBill();
             Order order = userService.getOrderByUserForCurrentCourseSession(user);
-            sandwich = this.billService.orderSandwich(Shop.valueOf(shopName));
-            order.addSandwich(sandwich);
-            bill.addOrder(order);
+            sandwich = this.billService.orderSandwich(shopName, sandwich);
+            if (sandwich != null && bill.getOrders().contains(order)) {
+                sandwich.setUser(user);
+                bill.getOrders().stream().filter(o -> o.equals(order)).findFirst().orElse(null).addSandwich(sandwich);
+                //order.addSandwich(sandwich);
+                //bill.addOrder(order);
+                this.billService.updateBill(bill);
+            }
+
         }
 
-        return sandwich;
+        return null; //TODO add exception handling
     }
 
     @Override

@@ -24,7 +24,7 @@ public class SandwichMaker {
 
         while(true) {
             String sandwichName = sc.nextLine();
-            SandwichType sd = SandwichType.getSandwichByName(shop, sandwichName);
+            SandwichType sd = shop.getSandwiches().stream().filter(s -> s.getSandwichName().equals(sandwichName)).findFirst().orElse(null);
 
             if (sd != null) {
                 boolean asClub = selectExtra("Would you like your sandwich as a club ?");

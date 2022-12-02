@@ -1,27 +1,43 @@
 package sandwich.model;
 
-import sandwich.exception.SandwichNotFoundException;
-import org.apache.logging.log4j.LogManager;
-import sandwich.repository.SandwichRepository;
-import sandwich.repository.SandwichTypeFileRepository;
-
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+@Entity
+@Table(name="sandwichtype")
 public class SandwichType {
 
-    private final String sandwichName;
-    private final List<Ingredient> ingredients = new ArrayList<>();
+    @Id
+    @SequenceGenerator(name="sandwichTypeGen", sequenceName = "sandwich_type_stid_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sandwichTypeGen")
+    @Column(name="stid")
+    private int sandwichTypeId;
+    @Column(name="stname")
+    private String sandwichName;
+    @ManyToMany
+    @JoinTable(name = "SANDWICHINGREDIENTS",
+            joinColumns = @JoinColumn(name = "si_stid"),
+            inverseJoinColumns = @JoinColumn(name = "si_iid"))
+    private List<Ingredient> ingredients = new ArrayList<>();
+
+    public SandwichType(){}
 
     public SandwichType(String ...sandwichTypeContents) {
         sandwichName = sandwichTypeContents[0];
         IntStream.range(1, sandwichTypeContents.length).forEach(idx -> ingredients.add(new Ingredient(sandwichTypeContents[idx])));
     }
 
+    public SandwichType(int sandwichTypeId, String sandwichName) {
+        sandwichTypeId = sandwichTypeId;
+        this.sandwichName = sandwichName;
+    }
+
     public SandwichType(String sandwichName, List<Ingredient> ingredients) {
         this.sandwichName = sandwichName;
-        this.ingredients.addAll(ingredients);
+        if (ingredients != null)
+            this.ingredients.addAll(ingredients);
     }
 
     public void printContents() {
@@ -31,17 +47,8 @@ public class SandwichType {
         System.out.println();
     }
 
-    public String getSandwichName() {
-        return sandwichName;
-    }
-
-    public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-
     //TODO move function inside repo
-    public static SandwichType getSandwichByName(Shop shop, String sandwichName) {
+    /*public static SandwichType getSandwichByName(Shop shop, String sandwichName) {
         SandwichType sd = null;
         try {
             sd = new SandwichTypeFileRepository().getSandwich(shop, sandwichName);
@@ -50,7 +57,7 @@ public class SandwichType {
         }
 
         return sd;
-    }
+    }*/
 
     @Override
     public int hashCode() {
@@ -66,4 +73,23 @@ public class SandwichType {
         return false;
     }
 
+    public int getSandwichTypeId() {
+        return sandwichTypeId;
+    }
+
+    public String getSandwichName() {
+        return sandwichName;
+    }
+
+    public void setSandwichName(String sandwichName) {
+        this.sandwichName = sandwichName;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
 }

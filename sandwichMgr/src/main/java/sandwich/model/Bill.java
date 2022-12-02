@@ -1,61 +1,52 @@
 package sandwich.model;
 
-import org.apache.logging.log4j.LogManager;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.repository.cdi.Eager;
 
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import static javax.persistence.CascadeType.*;
+
+@Entity
+@Table(name="bill")
 public class Bill {
 
-    private Map<LocalDate, Set<Order>> orders;
+    @Id
+    @SequenceGenerator(name="billGen", sequenceName = "bill_bid_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "billGen")
+    @Column(name="bid")
+    private int billId;
+    @JsonIgnore
+    @OneToMany(targetEntity = Order.class, fetch = FetchType.LAZY, cascade = {MERGE, PERSIST})
+    @JoinColumn(name="o_bid")
+    private List<Order> orders = new ArrayList<>();
+    @Column(name="bdate")
     private LocalDate billDate;
 
-    public Bill () {
-        this.orders = new HashMap<>();
+    public Bill() {
         LocalDate now = LocalDate.now();
         this.billDate = LocalDate.of(now.getYear(), now.getMonth(), 1);
     }
 
-    public Bill(Set<Order> orders) {
-        this();
-        this.addOrders(orders);
+    public Bill(LocalDate date) {
+        int dayOfMonth = date.getDayOfMonth();
+        this.billDate = date.minusDays(dayOfMonth - 1);
+    }
+
+    public Bill(LocalDate billDate, List<Order> orders) {
+        this(billDate);
+        this.orders = orders;
     }
 
     public void addOrder(Order order) {
-        Set<Order> orders = this.orders.get(order.getDate());
-        if (orders == null) {
-            orders = new HashSet<>();
-            orders.add(order);
-            this.orders.put(order.getDate(), orders);
-        } else
-            orders.add(order);
+        if (!orders.contains(order))
+            this.orders.add(order);
     }
 
-    public void addOrders(Set<Order> orders) {
-        orders.stream().forEach(o -> addOrder(o));
-    }
-
-    public void viewOrderByDate(LocalDate date) {
-        Set<Order> orders = this.orders.get(date);
-        if (orders == null)
-            LogManager.getLogger().error("No order found at date " + date);
-        else
-            orders.forEach(Order::printOrderInfo);
-    }
-
-    public Set<Order> getOrdersByDate(LocalDate date) {
-        return this.orders.get(date);
-    }
-
-    public Map<LocalDate, Set<Order>> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Map<LocalDate, Set<Order>> orders) {
-        this.orders = orders;
+    public void addOrders(List<Order> orders) {
+        this.orders.addAll(orders);
     }
 
     public LocalDate getBillDate() {
@@ -66,7 +57,19 @@ public class Bill {
         this.billDate = billDate;
     }
 
-    public boolean containsOrder(Order order) {
-        return this.orders.get(order.getDate()).contains(order);
+    public int getBillId() {
+        return billId;
+    }
+
+    public void setBillId(int billId) {
+        this.billId = billId;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
