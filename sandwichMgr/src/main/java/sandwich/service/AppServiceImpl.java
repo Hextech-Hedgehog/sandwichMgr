@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
-import sandwich.model.*;
+import sandwich.model.entities.Bill;
+import sandwich.model.entities.Order;
+import sandwich.model.entities.Sandwich;
+import sandwich.model.entities.User;
 
-import javax.annotation.security.RolesAllowed;
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
+
 @Service
 public class AppServiceImpl implements AppService {
 

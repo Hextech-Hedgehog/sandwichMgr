@@ -1,8 +1,8 @@
 package sandwich.mapper;
 
 import org.springframework.stereotype.Component;
-import sandwich.dto.BillDTO;
-import sandwich.model.Bill;
+import sandwich.model.dto.BillDTO;
+import sandwich.model.entities.Bill;
 
 import java.util.stream.Collectors;
 

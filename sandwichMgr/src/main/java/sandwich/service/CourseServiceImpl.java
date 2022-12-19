@@ -1,10 +1,9 @@
 package sandwich.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import sandwich.exception.CourseNotFoundException;
-import sandwich.model.Course;
+import sandwich.model.entities.Course;
 import sandwich.repository.CourseJpaRepository;
 
 import java.util.List;
@@ -17,6 +16,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void addCourse(Course course) {
+        this.courseRepository.save(course);
+    }
+
+    @Override
+    public void updateCourse(Course course) {
         this.courseRepository.save(course);
     }
 

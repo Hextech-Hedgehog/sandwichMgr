@@ -1,8 +1,8 @@
 package sandwich.mapper;
 
 import org.springframework.stereotype.Component;
-import sandwich.dto.SessionDTO;
-import sandwich.model.Session;
+import sandwich.model.dto.SessionDTO;
+import sandwich.model.entities.Session;
 
 @Component
 public class SessionMapper {

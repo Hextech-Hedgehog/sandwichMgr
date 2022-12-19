@@ -1,9 +1,9 @@
 package sandwich.utils;
 
 import sandwich.factory.SandwichFactory;
-import sandwich.model.Sandwich;
-import sandwich.model.SandwichType;
-import sandwich.model.Shop;
+import sandwich.model.entities.Sandwich;
+import sandwich.model.entities.SandwichType;
+import sandwich.model.entities.Shop;
 
 import java.util.Scanner;
 

@@ -4,15 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
-import sandwich.dto.BillDTO;
-import sandwich.dto.OrderDTO;
-import sandwich.dto.SandwichDTO;
+import sandwich.mapper.UserMapper;
+import sandwich.model.dto.BillDTO;
+import sandwich.model.dto.OrderDTO;
+import sandwich.model.dto.SandwichDTO;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
 import sandwich.mapper.BillMapper;
 import sandwich.mapper.OrderMapper;
 import sandwich.mapper.SandwichMapper;
-import sandwich.model.Sandwich;
+import sandwich.model.dto.UserDTO;
+import sandwich.model.entities.Sandwich;
 import sandwich.service.AppService;
 
 import java.time.LocalDate;
@@ -20,12 +22,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@EnableGlobalMethodSecurity(jsr250Enabled = true)
 @RequestMapping("user")
 public class UserController {
 
     @Autowired
     AppService appService;
+
+    @GetMapping("")
+    public List<UserDTO> getAllUsers() {
+        return this.appService.getUserService().getAllUsers().stream().map(UserMapper::toDto).collect(Collectors.toList());
+    }
 
     @GetMapping(path = "bill")
     public BillDTO getBillByDate(@RequestParam(name = "date") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {

@@ -1,8 +1,8 @@
 package sandwich.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import sandwich.model.SandwichType;
-import sandwich.model.Shop;
+import sandwich.model.entities.SandwichType;
+import sandwich.model.entities.Shop;
 import sandwich.repository.ShopJpaRepository;
 
 import java.io.IOException;

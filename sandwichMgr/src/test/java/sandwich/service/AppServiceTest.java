@@ -10,7 +10,7 @@ import sandwich.SpringSandwichApplication;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.PersonNotFoundException;
 import sandwich.exception.SessionNotFoundException;
-import sandwich.model.*;
+import sandwich.model.entities.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;

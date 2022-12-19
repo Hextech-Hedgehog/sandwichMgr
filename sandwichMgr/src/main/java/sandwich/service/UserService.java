@@ -1,15 +1,15 @@
 package sandwich.service;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
-import sandwich.model.Order;
-import sandwich.model.User;
-import sandwich.exception.UserNotFoundException;
+import sandwich.model.entities.Order;
+import sandwich.model.entities.User;
 
 import java.util.List;
 
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     void addUser(User user);
     void addUsers(List<User> users);

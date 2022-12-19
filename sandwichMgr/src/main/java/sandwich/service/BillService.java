@@ -1,7 +1,9 @@
 package sandwich.service;
 
 import org.springframework.stereotype.Service;
-import sandwich.model.*;
+import sandwich.model.entities.Bill;
+import sandwich.model.entities.Order;
+import sandwich.model.entities.Sandwich;
 import sandwich.repository.BillJpaRepository;
 
 import java.time.LocalDate;

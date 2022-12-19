@@ -1,9 +1,8 @@
 package sandwich.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import sandwich.model.*;
+import sandwich.model.entities.*;
 import sandwich.repository.BillJpaRepository;
 import sandwich.repository.OrderJpaRepository;
 import sandwich.repository.ShopJpaRepository;
@@ -84,6 +83,7 @@ public class BillServiceImpl implements BillService {
         return SandwichMaker.makeSandwich(shop);
     }
 
+    //TODO refactor
     @Override
     public Sandwich orderSandwich(String shopName, Sandwich sandwich) {
         Shop shop = this.shopRepository.findShopByShopName(shopName);

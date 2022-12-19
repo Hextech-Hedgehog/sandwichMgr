@@ -1,10 +1,10 @@
 package sandwich.mapper;
 
 import org.springframework.stereotype.Component;
-import sandwich.dto.OrderDTO;
-import sandwich.dto.SandwichDTO;
-import sandwich.model.Order;
-import sandwich.model.Sandwich;
+import sandwich.model.dto.OrderDTO;
+import sandwich.model.dto.SandwichDTO;
+import sandwich.model.entities.Order;
+import sandwich.model.entities.Sandwich;
 
 import java.util.List;
 import java.util.Map;

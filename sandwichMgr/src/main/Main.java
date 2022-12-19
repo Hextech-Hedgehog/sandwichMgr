@@ -7,9 +7,9 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        Map<sandwich.model.Sandwich, Integer> sandwiches = new HashMap<Sandwich, Integer>(){{
-            put(new sandwich.model.Sandwich(sandwich.model.SandwichType.getSandwichByName(Shop.PINKYS, "meat ball"), true, false), 5);
-            put(new sandwich.model.Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "martino"), false, false), 2);
+        Map<sandwich.model.entities.Sandwich, Integer> sandwiches = new HashMap<Sandwich, Integer>(){{
+            put(new sandwich.model.entities.Sandwich(sandwich.model.entities.SandwichType.getSandwichByName(Shop.PINKYS, "meat ball"), true, false), 5);
+            put(new sandwich.model.entities.Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "martino"), false, false), 2);
             put(new Sandwich(SandwichType.getSandwichByName(Shop.PINKYS, "ham"), true, true), 1);
         }};
         Map<Sandwich, Integer> sandwiches2 = new HashMap<Sandwich, Integer>(){{

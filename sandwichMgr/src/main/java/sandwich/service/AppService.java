@@ -2,14 +2,13 @@ package sandwich.service;
 
 import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
-import sandwich.model.Bill;
-import sandwich.model.Order;
-import sandwich.model.Sandwich;
-import sandwich.model.User;
+import sandwich.model.entities.Bill;
+import sandwich.model.entities.Order;
+import sandwich.model.entities.Sandwich;
+import sandwich.model.entities.User;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 public interface AppService {
 

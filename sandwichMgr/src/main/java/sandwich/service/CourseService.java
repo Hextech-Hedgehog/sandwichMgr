@@ -1,7 +1,7 @@
 package sandwich.service;
 
 import sandwich.exception.CourseNotFoundException;
-import sandwich.model.Course;
+import sandwich.model.entities.Course;
 
 import java.util.List;
 
@@ -9,6 +9,8 @@ import java.util.List;
 public interface CourseService {
 
     void addCourse(Course course);
+    void updateCourse(Course course);
+
     void addCourses(List<Course> courses);
     Course findCourse(String name) throws CourseNotFoundException;
     void removeCourse(Course course);

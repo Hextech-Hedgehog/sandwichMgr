@@ -1,8 +1,8 @@
 package sandwich.mapper;
 
 import org.springframework.stereotype.Component;
-import sandwich.dto.SandwichDTO;
-import sandwich.model.Sandwich;
+import sandwich.model.dto.SandwichDTO;
+import sandwich.model.entities.Sandwich;
 
 @Component
 public class SandwichMapper {

@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import sandwich.model.Course;
+import sandwich.model.entities.Course;
 
 @Repository
 public interface CourseJpaRepository extends JpaRepository<Course, Integer> {

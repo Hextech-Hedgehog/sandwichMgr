@@ -1,12 +1,13 @@
 package sandwich.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
-import sandwich.model.*;
-import sandwich.exception.UserNotFoundException;
+import sandwich.model.entities.Order;
+import sandwich.model.entities.User;
 import sandwich.repository.UserJpaRepository;
 
 import java.time.LocalDate;
@@ -62,4 +63,11 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserDetails userDetails = this.userRepository.findByUsername(username);
+        if (userDetails == null)
+            throw new IllegalArgumentException("User does not exist!");
+        return userDetails;
+    }
 }

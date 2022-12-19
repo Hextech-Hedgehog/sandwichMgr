@@ -3,8 +3,8 @@ package sandwich.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import sandwich.model.Bill;
-import sandwich.model.Order;
+import sandwich.model.entities.Bill;
+import sandwich.model.entities.Order;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;

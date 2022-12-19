@@ -9,7 +9,7 @@ public class PointCuts {
     public void executeFind() { }
     */
 
-    @Pointcut("execution(* sandwich.model.Course.getCourseParticipant*(..))")
+    @Pointcut("execution(* sandwich.model.entities.Course.getCourseParticipant*(..))")
     public void executeGetCourseParticipant() {
   //      System.out.println("PointCut called");
     }

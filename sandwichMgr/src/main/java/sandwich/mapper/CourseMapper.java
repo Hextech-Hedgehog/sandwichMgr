@@ -1,10 +1,10 @@
 package sandwich.mapper;
 
 import org.springframework.stereotype.Component;
-import sandwich.dto.CourseDTO;
-import sandwich.model.Course;
-import sandwich.model.Session;
-import sandwich.model.User;
+import sandwich.model.dto.CourseDTO;
+import sandwich.model.entities.Course;
+import sandwich.model.entities.Session;
+import sandwich.model.entities.User;
 
 import java.util.List;
 import java.util.stream.Collectors;

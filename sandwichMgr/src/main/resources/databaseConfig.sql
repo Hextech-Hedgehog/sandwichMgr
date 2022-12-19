@@ -51,11 +51,17 @@ CREATE TABLE COURSE
 
 CREATE TABLE USERS
 (UID       INT  primary key default nextval('user_uid_seq'),
+ UNAME VARCHAR(40) not null,
  FNAME  VARCHAR(40) not null,
  LNAME varchar(40) not null,
  MAIL varchar(40) not null,
- PWD varchar(40) not null,
+ PWD varchar(80) not null,
+ ACC_NO_EXP  VARCHAR(1) not null,
+ ACC_NO_LOC   VARCHAR(1) not null,
+ CRED_NO_EXP  VARCHAR(1) not null,
+ ENABL  VARCHAR(1) not null,
  U_CID int,
+ CONSTRAINT UNIQUE_USERNAME UNIQUE (UNAME),
  CONSTRAINT UNIQUE_MAIL UNIQUE (MAIL),
  CONSTRAINT FK_COURSE FOREIGN KEY (U_CID) REFERENCES COURSE
 );
@@ -128,16 +134,15 @@ insert into shop (shid, shname) values (1, 'Vleugels'), (2, 'Pinky''s');
 insert into sandwichtype (stid, stname, st_shid) values (1, 'Meat ball', 1), (2, 'Ham', 1), (3, 'Roasted beef', 1),
                                                         (4, 'Martino', 1), (5, 'Salami', 1), (6, 'Special', 2), (7, 'Club', 2);
 insert into course (cid, cname) values (1, 'Java course programming'), (2, 'Dotnet course initiation'), (3, 'Angular advanced course'), (4, 'Web programming basics');
-insert into users (uid, fname, lname, mail, pwd, u_cid) values (1, 'Henry', 'Stockau', 'Henry.St@gmail.com', 'HnrSt456', 1),
-                                                          (2, 'Charlotte', 'Morau', 'Charlotte.Morau@skynet.be', 'ChrMo456', 1),
-
-                                                          (3, 'Alexandre', 'VandeMittenaere', 'luthor@hotmail.com.be', 'AlxMi456', 1),
-                                                          (4, 'Laurent', 'Zachow', 'ZcLaurent@yahoo.com', 'LauZa456', 1),
-                                                          (5, 'Chloe', 'Wilowski', 'MagicaGirl@icloud.com', 'ChlWi456', 1),
-                                                          (6, 'Maria', 'La Fiora', 'Overlord@protonmail.it', 'MarFi456', 1),
-                                                          (7, 'Selene', 'Kepner', 'nolife.game@gmx.com', 'SelKe456', 1);
-insert into users (uid, fname, lname, mail, pwd) values (8, 'Archibald', 'VandeWeyer', 'Astrologer35@outlook.com', 'ArcWe456');
-insert into users (uid, fname, lname, mail, pwd) values (9, 'Gaetan', 'Esther', 'Gaetan.Esther@yandex.com', 'GaeEs456');
+insert into users (uid, uname, fname, lname, mail, pwd, u_cid, ACC_NO_EXP, ACC_NO_LOC, CRED_NO_EXP, ENABL) values (1, 'green-goblin', 'Henry', 'Stockau', 'Henry.St@gmail.com', 'HnrSt456', 1, 'y', 'y', 'y', 'y'),
+                                                          (2, 'magika_madoka', 'Charlotte', 'Morau', 'Charlotte.Morau@skynet.be', 'ChrMo456', 1, 'y', 'y', 'y', 'y'),
+                                                          (3, 'SuperEdgeLord45', 'Alexandre', 'VandeMittenaere', 'luthor@hotmail.com.be', 'AlxMi456', 1, 'y', 'y', 'y', 'y'),
+                                                          (4, 'Ziepler', 'Laurent', 'Zachow', 'ZcLaurent@yahoo.com', 'LauZa456', 1, 'y', 'y', 'y', 'y'),
+                                                          (5, 'Artemis', 'Chloe', 'Wilowski', 'MagicaGirl@icloud.com', 'ChlWi456', 1, 'y', 'y', 'y', 'y'),
+                                                          (6, 'aura', 'Maria', 'La Fiora', 'Overlord@protonmail.it', 'MarFi456', 1, 'y', 'y', 'y', 'y'),
+                                                          (7, 'planet15', 'Selene', 'Kepner', 'nolife.game@gmx.com', 'SelKe456', 1, 'y', 'y', 'y', 'y');
+insert into users (uid, uname, fname, lname, mail, pwd, ACC_NO_EXP, ACC_NO_LOC, CRED_NO_EXP, ENABL) values (8, 'theCorruptor', 'Archibald', 'VandeWeyer', 'Astrologer35@outlook.com', 'ArcWe456', 'y', 'y', 'y', 'y');
+insert into users (uid, uname, fname, lname, mail, pwd, ACC_NO_EXP, ACC_NO_LOC, CRED_NO_EXP, ENABL) values (9, 'plague_doctor', 'Gaetan', 'Esther', 'Gaetan.Esther@yandex.com', 'GaeEs456', 'y', 'y', 'y', 'y');
 insert into bill (bid, bdate) values (1, '2022-12-01'), (2, '2023-01-01');
 insert into orders (orid, odate, o_bid) values (1, '2022-12-01', 1), (2, '2022-12-02', 1), (3, '2022-12-03', 1), (4, '2022-12-11', 1),
                                                (5, '2022-12-20', 1), (6, '2022-12-27', 1), (7, '2023-01-07', 2), (8, '2023-01-13', 2);

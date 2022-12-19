@@ -2,10 +2,9 @@ package sandwich.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sandwich.dto.IngredientDTO;
-import sandwich.dto.SandwichTypeDTO;
-import sandwich.model.Ingredient;
-import sandwich.model.SandwichType;
+import sandwich.model.dto.SandwichTypeDTO;
+import sandwich.model.entities.Ingredient;
+import sandwich.model.entities.SandwichType;
 import sandwich.repository.ShopJpaRepository;
 
 import javax.annotation.PostConstruct;

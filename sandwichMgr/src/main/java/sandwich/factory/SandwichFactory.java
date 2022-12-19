@@ -1,7 +1,7 @@
 package sandwich.factory;
 
-import sandwich.model.Sandwich;
-import sandwich.model.SandwichType;
+import sandwich.model.entities.Sandwich;
+import sandwich.model.entities.SandwichType;
 
 public class SandwichFactory {
 

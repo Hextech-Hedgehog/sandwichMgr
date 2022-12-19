@@ -1,8 +1,8 @@
 package sandwich.mapper;
 
 import org.springframework.stereotype.Component;
-import sandwich.dto.ShopDTO;
-import sandwich.model.Shop;
+import sandwich.model.dto.ShopDTO;
+import sandwich.model.entities.Shop;
 
 import java.util.stream.Collectors;
 
