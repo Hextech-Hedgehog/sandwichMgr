@@ -16,6 +16,8 @@ public interface ShopJpaRepository extends JpaRepository<Shop, Integer> {
     List<Object[]> findSandwichByShopAndName(@Param("id") int shopId, @Param("sname") String sandwichName);
     @Query(value = "select * from sandwichtype st where st_shid=:id", nativeQuery = true)
     List<SandwichType> findSandwichesByShop(@Param("id") int shopId);
+    @Query(value = "select * from sandwichtype st where st_shid=:id and LOWER(STNAME) ~ :keyword", nativeQuery = true)
+    List<Object[]> findSandwichesByShopAndKeyword(@Param("id") int shopId, @Param("keyword") String keyWord);//@Param("keyword") String keyWord
     @Query(value="select * from shop where shid in (select st_shid from sandwichtype where stid=:id)", nativeQuery = true)
     Shop findShopOfSandwichType(@Param("id") int sandwichTypeId);
 }

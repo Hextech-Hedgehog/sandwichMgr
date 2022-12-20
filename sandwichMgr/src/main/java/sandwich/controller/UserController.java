@@ -4,16 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
-import sandwich.mapper.UserMapper;
-import sandwich.model.dto.BillDTO;
-import sandwich.model.dto.OrderDTO;
-import sandwich.model.dto.SandwichDTO;
+import sandwich.mapper.*;
+import sandwich.model.dto.*;
 import sandwich.exception.CourseNotFoundException;
 import sandwich.exception.SessionNotFoundException;
-import sandwich.mapper.BillMapper;
-import sandwich.mapper.OrderMapper;
-import sandwich.mapper.SandwichMapper;
-import sandwich.model.dto.UserDTO;
 import sandwich.model.entities.Sandwich;
 import sandwich.service.AppService;
 
@@ -57,6 +51,11 @@ public class UserController {
     public void OrderSandwich(@RequestBody SandwichDTO sandwich) throws CourseNotFoundException, SessionNotFoundException {
         Sandwich sdwch = SandwichMapper.toSandwich(sandwich);
         this.appService.orderSandwich(sdwch.getUser(), sandwich.getSandwichType().getShop(), sdwch);
+    }
+
+    @GetMapping("/sandwich/{keywords}")
+    public List<SandwichTypeDTO> findSandwiches(@PathVariable("keywords") String keywords) {
+        return this.appService.getBillService().findSandwichesByKeyword(keywords).stream().map(SandwichTypeMapper::toDto).collect(Collectors.toList());
     }
 
 }

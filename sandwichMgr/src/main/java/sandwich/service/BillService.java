@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import sandwich.model.entities.Bill;
 import sandwich.model.entities.Order;
 import sandwich.model.entities.Sandwich;
+import sandwich.model.entities.SandwichType;
 import sandwich.repository.BillJpaRepository;
 
 import java.time.LocalDate;
@@ -26,5 +27,5 @@ public interface BillService {
     List<Order> findOrdersByBillAndDate(int billId, LocalDate date);
     List<Order> findOrdersByDate(LocalDate date);
     void updateBill(Bill bill);
-
+    List<SandwichType> findSandwichesByKeyword(String keywords);
 }

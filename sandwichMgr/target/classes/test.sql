@@ -4,3 +4,5 @@ select * from orders, bill where cast(extract(MONTH from bdate) as int)=:month a
 
 
 select * from shop where shid in (select st_shid from sandwichtype where stid=:id);
+
+select * from sandwichtype st where st_shid=:id and STNAME ~ 'H';

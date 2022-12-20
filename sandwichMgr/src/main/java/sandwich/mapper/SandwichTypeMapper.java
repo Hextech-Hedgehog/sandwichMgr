@@ -17,6 +17,8 @@ public class SandwichTypeMapper {
     private static ShopJpaRepository shopRepo;
     private ShopJpaRepository shopRepository;
     public static SandwichTypeDTO toDto(SandwichType sandwich) {
+        System.out.println(sandwich);
+        System.out.println(sandwich.getSandwichTypeId());
         String shopName = shopRepo.findShopOfSandwichType(sandwich.getSandwichTypeId()).getShopName();
         return new SandwichTypeDTO(sandwich.getSandwichName(), shopName,sandwich.getIngredients().stream().map(IngredientMapper::toDto).collect(Collectors.toList()));
     }

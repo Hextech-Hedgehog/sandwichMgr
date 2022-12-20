@@ -10,6 +10,7 @@ import sandwich.utils.SandwichMaker;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -101,6 +102,25 @@ public class BillServiceImpl implements BillService {
     @Transactional
     public void updateBill(Bill bill) {
         this.billRepository.save(bill);
+    }
+
+    @Override
+    public List<SandwichType> findSandwichesByKeyword(String keywords) {
+        //TODO input proper shop
+        System.out.println(keywords);
+        System.out.println(keywords);
+        System.out.println(keywords);
+        System.out.println(keywords);
+        System.out.println(keywords);
+        System.out.println(keywords);
+        System.out.println(keywords);
+        System.out.println(keywords);
+        List<Object[]> arr = this.shopRepository.findSandwichesByShopAndKeyword(1, keywords);
+        List<SandwichType> sandwiches = new ArrayList<>();
+        for (Object[] objArr: arr) {
+            sandwiches.add(new SandwichType(Integer.parseInt(objArr[0].toString()), objArr[1].toString()));
+        }
+        return sandwiches;//keywords
     }
 
 }

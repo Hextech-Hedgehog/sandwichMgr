@@ -30,7 +30,7 @@ public class SandwichType {
     }
 
     public SandwichType(int sandwichTypeId, String sandwichName) {
-        sandwichTypeId = sandwichTypeId;
+        this.sandwichTypeId = sandwichTypeId;
         this.sandwichName = sandwichName;
     }
 
