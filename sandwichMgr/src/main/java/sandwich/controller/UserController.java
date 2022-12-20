@@ -33,6 +33,11 @@ public class UserController {
         return this.appService.getUserService().getAllUsers().stream().map(UserMapper::toDto).collect(Collectors.toList());
     }
 
+    @GetMapping("/{id}")
+    public UserDTO getUser(@PathVariable("id") int id) {
+        return UserMapper.toDto(this.appService.getUserService().getUserById(id));
+    }
+
     @GetMapping(path = "bill")
     public BillDTO getBillByDate(@RequestParam(name = "date") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {
         return BillMapper.toDto(this.appService.getBillService().findBillByMonth(date));

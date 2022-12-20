@@ -20,7 +20,7 @@ public class User implements UserDetails {
     @SequenceGenerator(name="userGen", sequenceName = "user_uid_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userGen")
     @Column(name="uid")
-    private int userId;
+    private int id;
     @Column(name="uname", nullable = false, unique = true)
     private String username;
     @Column(name="fname", nullable = false)
@@ -50,7 +50,8 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(String username, String firstName, String lastName, String email, String password) {
+    public User(int userId, String username, String firstName, String lastName, String email, String password) {
+        this.id = userId;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -58,8 +59,8 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public User(String username, String firstName, String lastName, String email, String password, Course course) {
-        this.userId = userId;
+    public User(int userId, String username, String firstName, String lastName, String email, String password, Course course) {
+        this.id = userId;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -85,8 +86,8 @@ public class User implements UserDetails {
         this.firstName = firstName;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
 
     public String getLastName() {
@@ -175,7 +176,7 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         int hash = 13;
-        hash *= 31 + this.userId;
+        hash *= 31 + this.id;
         hash *= 31 + this.firstName.hashCode();
         return hash;
     }

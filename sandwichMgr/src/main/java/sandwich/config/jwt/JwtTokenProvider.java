@@ -28,6 +28,7 @@ public class JwtTokenProvider {
     public String createToken(User user)
     {
         return TOKEN_PREFIX + JWT.create()
+                .withClaim("id", user.getId())
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(JWT_KEY));

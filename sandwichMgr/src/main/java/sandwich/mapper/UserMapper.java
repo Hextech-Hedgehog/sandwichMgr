@@ -15,11 +15,11 @@ public class UserMapper {
     }
 
     public static UserDTO toDto(User user) {
-        return new UserDTO(user.getUserId(), user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmail());
+        return new UserDTO(user.getId(), user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmail());
     }
 
     public static User toUser(UserDTO user) {
-        User u = new User(user.getUsername(), user.getFirstname(), user.getLastname(), user.getEmail(), user.getPassword());
+        User u = new User(user.getId(), user.getUsername(), user.getFirstname(), user.getLastname(), user.getEmail(), user.getPassword());
         u.setCredentialsNonExpired(user.isCredentialsNonExpired());
         u.setAccountNonExpired(user.isAccountNonExpired());
         u.setAccountNonLocked(user.isAccountNonLocked());

@@ -16,6 +16,9 @@ public interface UserService extends UserDetailsService {
     User findUserByMail(String email);
     void removeUser(User user);
     void removeUsers(List<User> users);
+
+    User getUserById(int userId);
+
     List<User> getAllUsers();
     Order getOrderByUserForCurrentCourseSession(User user) throws CourseNotFoundException, SessionNotFoundException;
 

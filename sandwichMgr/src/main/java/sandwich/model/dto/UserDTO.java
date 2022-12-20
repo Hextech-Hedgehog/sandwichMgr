@@ -7,7 +7,8 @@ import javax.validation.constraints.Pattern;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDTO {
 
-    private int userId;
+    @JsonProperty("id")
+    private int id;
     private String username;
     private String token;
     @Pattern(regexp = "\\w{8,}", message = "password needs to be at least 8 characters long")
@@ -35,7 +36,7 @@ public class UserDTO {
 
     public UserDTO(int userId, String username, String password, String firstname, String lastname, String email) {
         this(username, password, firstname, lastname, email);
-        this.userId = userId;
+        this.id = userId;
     }
 
     public String getUsername() {
@@ -63,12 +64,12 @@ public class UserDTO {
         this.password = password;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int userId) {
+        this.id = userId;
     }
 
     public String getFirstname() {

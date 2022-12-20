@@ -40,6 +40,7 @@ public class AuthServiceImpl implements AuthService {
 
             manager.authenticate(new UsernamePasswordAuthenticationToken(form.getUsername(), form.getPassword()));
             UserDTO dto = mapper.toDto(u);
+            System.out.println(provider.createToken(u));
             dto.setToken(provider.createToken(u));
 
             return dto;
